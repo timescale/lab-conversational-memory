@@ -56,7 +56,7 @@ interface ClaudeResult {
 }
 
 async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeResult> {
-  const args = ["claude", "-p", prompt, "--output-format", "json", "--model", "sonnet"];
+  const args = ["claude", "-p", prompt, "--output-format", "json", "--verbose", "--model", "sonnet"];
   if (useMcp) {
     args.push("--mcp-config", MCP_CONFIG, "--allowedTools", MCP_TOOLS);
   }
@@ -73,15 +73,21 @@ async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeRes
   }
 
   try {
-    const json = JSON.parse(stdout);
-    const answer = (json.result ?? "").trim();
-    // num_turns tracks how many API round-trips happened (1 = no tools, 3 = 1 tool call, etc.)
-    const numTurns: number = json.num_turns ?? 1;
+    const events = JSON.parse(stdout);
+    // --verbose returns an array of stream events
     const toolCalls: ClaudeResult["toolCalls"] = [];
-    // Approximate tool call count from turns: each tool call adds 2 turns (call + result)
-    const estimatedToolCalls = Math.max(0, Math.floor((numTurns - 1) / 2));
-    if (estimatedToolCalls > 0) {
-      toolCalls.push({ tool: "estimated", args: { count: estimatedToolCalls, num_turns: numTurns } });
+    let answer = "";
+    for (const evt of events) {
+      if (evt.type === "assistant") {
+        for (const block of evt.message?.content ?? []) {
+          if (block.type === "tool_use") {
+            toolCalls.push({ tool: block.name, args: block.input ?? {} });
+          }
+        }
+      }
+      if (evt.type === "result") {
+        answer = (evt.result ?? "").trim();
+      }
     }
     return { answer, toolCalls };
   } catch {

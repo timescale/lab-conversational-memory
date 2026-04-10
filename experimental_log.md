@@ -104,3 +104,39 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **Decision**: **Reverted.** Net F1 -0.013.
 
 ---
+
+## Exp 10: RRF weight tuning
+- **Hypothesis**: Adjusting the balance between semantic and fulltext search in RRF fusion could improve precision.
+- **Changes**: mcp-server.ts: changed default weights from 1.0/1.0.
+- **Targets**: Cat 1 (multi-hop), cat 4 (single-hop).
+- **Results**:
+
+| Weights (sem/ft) | F1 | Cat 1 | Cat 2 | Cat 3 | Cat 4 | Cat 5 |
+|-------------------|------|-------|-------|-------|-------|-------|
+| 1.0/1.0 (baseline) | 0.535 | 0.282 | 0.699 | 0.228 | 0.524 | 0.681 |
+| 1.5/0.5 | 0.540 | 0.321 | 0.657 | 0.257 | 0.551 | 0.660 |
+| 0.5/1.5 | 0.525 | 0.241 | 0.647 | 0.378 | 0.514 | 0.681 |
+
+- **Analysis**: All three within noise (~0.015 spread). RRF weights are not a meaningful lever at this stage. The hybrid fusion is already working well with equal weights.
+- **Decision**: **Reverted to 1.0/1.0.** No signal.
+
+---
+
+## Exp 7: Speaker-specific tree paths
+- **Hypothesis**: Using speaker-specific tree paths (`conv.s5.caroline` instead of `conv.s5`) enables tree filtering by speaker, which could help adversarial questions distinguish between speakers.
+- **Changes**: memory.ts: tree path includes speaker name. E.g., `conv.s3.melanie`.
+- **Targets**: Cat 5 (adversarial), cat 4 (single-hop).
+- **Result**: F1=0.556 EM=0.377
+
+| Cat | Name | F1 | vs prev (exp4) |
+|-----|------|------|----------------|
+| 1 | multi-hop | 0.273 | -0.009 |
+| 2 | temporal | 0.683 | -0.016 |
+| 3 | open-domain | 0.323 | +0.095 |
+| 4 | single-hop | 0.550 | +0.026 |
+| 5 | adversarial | 0.723 | +0.042 |
+
+- **Analysis**: Overall +0.021. Adversarial improved +0.042 (at noise boundary but directionally positive). Only 8/344 searches actually used tree filters — the gain likely comes from speaker names being indexed in the tree, subtly improving search discrimination. No adversarial regression, which is the key constraint.
+- **Decision**: **Adopted.** F1=0.556.
+
+---

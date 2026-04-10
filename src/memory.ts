@@ -106,8 +106,9 @@ export async function ingest(
         meta.blip_caption = turn.blip_caption;
       }
 
-      // ltree labels: alphanumeric + underscore, no leading digit
-      const tree = `conv.s${session.sessionNum}`;
+      // ltree: conv.s{N}.{speaker} — speaker-specific paths aid filtering
+      const speakerLabel = turn.speaker.toLowerCase().replace(/[^a-z0-9]/g, "_");
+      const tree = `conv.s${session.sessionNum}.${speakerLabel}`;
 
       rows.push({ content, meta, tree, temporal });
     }

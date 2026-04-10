@@ -140,3 +140,21 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **Decision**: **Adopted.** F1=0.556.
 
 ---
+
+## Exp 7b: Prompt Claude to use tree filtering by speaker
+- **Hypothesis**: Claude only used tree filters 8/344 times. Explicitly telling it about the tree structure and when to filter by speaker should boost adversarial.
+- **Changes**: memory.ts: added tree path documentation and usage guidance to prompt.
+- **Result**: F1=0.542 EM=0.352
+
+| Cat | Name | F1 | vs exp7 |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.367 | +0.094 |
+| 2 | temporal | 0.676 | -0.007 |
+| 3 | open-domain | 0.340 | +0.017 |
+| 4 | single-hop | 0.524 | -0.026 |
+| 5 | adversarial | 0.638 | -0.085 |
+
+- **Analysis**: Tree filter usage surged from 8 to 317/650 searches. But overall F1 dropped -0.014. Filtering by speaker misses cross-speaker context needed for answers (e.g., "What does Melanie think about Caroline's adoption?" needs both speakers' turns). Adversarial dipped because aggressive filtering produces fewer results, leading Claude to answer from partial evidence rather than reject.
+- **Decision**: **Reverted.** Tree paths help passively but explicit filtering hurts.
+
+---

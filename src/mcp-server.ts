@@ -145,7 +145,7 @@ Search modes: semantic (meaning), fulltext (keywords), or both (hybrid). Combine
         .map(([id, score]) => ({ id, score }));
 
       if (topIds.length === 0) {
-        return { content: [{ type: "text" as const, text: JSON.stringify({ results: [], total: 0, limit }) }] };
+        return { content: [{ type: "text" as const, text: "No results found." }] };
       }
 
       const rows = await sql.unsafe<Array<{ id: string; content: string; meta: Record<string, unknown>; temporal: string | null; tree: string | null }>>(
@@ -172,20 +172,23 @@ Search modes: semantic (meaning), fulltext (keywords), or both (hybrid). Combine
       results = rows.map((r) => ({ ...r, score: 0 }));
     }
 
-    // Format response matching memory-engine
-    const formatted = results.map((r) => ({
-      id: r.id,
-      content: r.content,
-      meta: r.meta,
-      tree: r.tree,
-      temporal: r.temporal,
-      score: Math.round(r.score * 1000) / 1000,
-    }));
+    // Format as concise lines: date + content + id
+    const lines = results.map((r, i) => {
+      let date = "";
+      if (r.temporal) {
+        const m = r.temporal.match(/(\d{4}-\d{2}-\d{2})/);
+        if (m) {
+          const d = new Date(m[1]!);
+          date = `[${d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}] `;
+        }
+      }
+      return `${i + 1}. ${date}${r.content} (id: ${r.id})`;
+    });
 
     return {
       content: [{
         type: "text" as const,
-        text: JSON.stringify({ results: formatted, total: formatted.length, limit }, null, 2),
+        text: lines.length > 0 ? lines.join("\n") : "No results found.",
       }],
     };
   },

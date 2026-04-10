@@ -47,3 +47,22 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **Decision**: **Adopted.** New best F1=0.523.
 
 ---
+
+## Exp 4: Concise search result formatting
+- **Hypothesis**: MCP search returns verbose JSON (meta, tree, score fields). Simplifying to `"1. [date] content (id: uuid)"` reduces token overhead so Claude parses results faster and more accurately.
+- **Changes**: mcp-server.ts: replaced JSON.stringify response with numbered lines showing date + content + id.
+- **Targets**: All categories — less noise in tool responses.
+- **Result**: F1=0.535 EM=0.372
+
+| Cat | Name | F1 | vs prev |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.282 | +0.080 |
+| 2 | temporal | **0.699** | **+0.142** |
+| 3 | open-domain | 0.228 | -0.062 |
+| 4 | single-hop | 0.524 | -0.007 |
+| 5 | adversarial | 0.681 | -0.085 |
+
+- **Analysis**: Temporal surged +0.142 — dates are now prominently visible in the format `[7 May 2023]` rather than buried in JSON. Multi-hop gained +0.080. Adversarial dipped (within noise). Overall +0.012.
+- **Decision**: **Adopted.** F1=0.535.
+
+---

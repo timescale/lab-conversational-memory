@@ -262,3 +262,21 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **Decision**: **Both reverted.** Keep defaults 30/10.
 
 ---
+
+## Exp 3b: Per-speaker entity profiles
+- **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
+- **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.
+- **Result**: F1=0.526 EM=0.322
+
+| Cat | Name | F1 | vs prev |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.362 | +0.064 |
+| 2 | temporal | 0.655 | -0.043 |
+| 3 | open-domain | 0.363 | +0.007 |
+| 4 | single-hop | 0.545 | -0.024 |
+| 5 | adversarial | **0.553** | **-0.128** |
+
+- **Analysis**: Adversarial collapsed -0.128. The giant profile strings are highly retrievable for any query mentioning a speaker, so adversarial questions find loosely related content and Claude answers instead of rejecting. Same adversarial constraint pattern.
+- **Decision**: **Reverted.**
+
+---

@@ -158,3 +158,22 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **Decision**: **Reverted.** Tree paths help passively but explicit filtering hurts.
 
 ---
+
+## Exp 8: LLM fact extraction per session
+- **Hypothesis**: Extract structured, speaker-attributed facts from each session via LLM (haiku). Facts like "Caroline moved from Sweden 4 years ago" directly answer multi-hop questions that raw turns fragment. Speaker attribution preserves adversarial.
+- **Changes**: memory.ts: added fact extraction loop using `claude -p --model haiku`. Facts stored with tree `facts.s{N}.{speaker}`.
+- **Targets**: Cat 1 (multi-hop), cat 4 (single-hop).
+- **Result**: **F1=0.560 EM=0.367** — new best. 837 memories (419 turns + 418 facts).
+
+| Cat | Name | F1 | vs exp7 |
+|-----|------|------|---------|
+| 1 | multi-hop | **0.363** | **+0.090** |
+| 2 | temporal | 0.671 | -0.012 |
+| 3 | open-domain | 0.323 | 0.000 |
+| 4 | single-hop | 0.554 | +0.004 |
+| 5 | adversarial | 0.681 | -0.042 |
+
+- **Analysis**: Multi-hop surged +0.090 — extracted facts consolidate scattered evidence into single searchable memories. Adversarial -0.042 within noise — speaker-attributed facts don't pollute cross-speaker queries. Ingestion slower (142s) due to LLM calls but answer phase fast (153s).
+- **Decision**: **Adopted.** F1=0.560, new best.
+
+---

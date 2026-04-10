@@ -116,6 +116,58 @@ export async function ingest(
 
   if (rows.length === 0) return;
 
+  // Extract facts per session via LLM
+  console.log(`  Extracting facts from ${sessions.length} sessions...`);
+  const EXTRACT_CONCURRENCY = 5;
+  for (let b = 0; b < sessions.length; b += EXTRACT_CONCURRENCY) {
+    const batch = sessions.slice(b, b + EXTRACT_CONCURRENCY);
+    await Promise.all(batch.map(async (session) => {
+      const sessionDate = parseLocomoDate(session.dateTime);
+      const temporal = sessionDate ? formatTemporal(sessionDate) : null;
+      const dialog = session.turns
+        .map((t) => `${t.speaker}: ${t.text}`)
+        .join("\n");
+
+      const prompt = `Extract key facts from this conversation session as a list. Each fact must name the specific person it's about. Include: activities, events, plans, opinions, relationships, dates, and attributes. One fact per line, no numbering.
+
+${dialog}
+
+Facts:`;
+
+      const proc = Bun.spawn(
+        ["claude", "-p", prompt, "--output-format", "text", "--model", "haiku"],
+        { stdout: "pipe", stderr: "pipe" },
+      );
+      const stdout = await new Response(proc.stdout).text();
+      await proc.exited;
+
+      const facts = stdout.trim().split("\n").filter((f) => f.trim().length > 5);
+      for (const fact of facts) {
+        // Determine speaker from fact content
+        const speakers = session.turns.map((t) => t.speaker);
+        const uniqueSpeakers = [...new Set(speakers)];
+        let speakerLabel = "shared";
+        for (const s of uniqueSpeakers) {
+          if (fact.toLowerCase().includes(s.toLowerCase())) {
+            speakerLabel = s.toLowerCase().replace(/[^a-z0-9]/g, "_");
+            break;
+          }
+        }
+
+        rows.push({
+          content: fact.trim(),
+          meta: {
+            type: "fact",
+            session_num: session.sessionNum,
+            sample_id: sample.sample_id,
+          },
+          tree: `facts.s${session.sessionNum}.${speakerLabel}`,
+          temporal,
+        });
+      }
+    }));
+  }
+
   // Batch embed
   const contents = rows.map((r) => r.content);
   console.log(`  Embedding ${contents.length} memories...`);

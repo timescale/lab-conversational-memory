@@ -247,3 +247,18 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **Decision**: **Adopted limit=6.** F1=0.562, EM=0.392 — new best on both metrics.
 
 ---
+
+## Exp 12+13: candidateLimit and top-K tuning
+- **Hypothesis**: More candidates before RRF fusion (30→50) or more results returned (10→15) could surface more relevant memories.
+- **Results**:
+
+| Change | F1 | Cat 1 | Cat 5 |
+|--------|------|-------|-------|
+| Baseline (30/10) | 0.562 | 0.298 | 0.681 |
+| candidateLimit=50 | 0.548 | 0.335 | 0.702 |
+| limit=15 | 0.558 | 0.393 | 0.638 |
+
+- **Analysis**: Both within noise. limit=15 improved multi-hop +0.095 but hurt adversarial -0.043 (same pattern). candidateLimit=50 had no clear effect. These knobs don't move the needle meaningfully.
+- **Decision**: **Both reverted.** Keep defaults 30/10.
+
+---

@@ -60,3 +60,14 @@ QA answering uses `claude -p` (Claude Code CLI), so no separate API key needed.
 - `results/history.jsonl` — one-line summary per eval run (scan this first)
 - `results/eval-{timestamp}.json` — full per-question details
 - Git log — experiment history with scores in commit messages
+
+## Experiment Log
+
+`experimental_log.md` is the detailed record of all experiments. For every experiment, log:
+- The hypothesis and what you changed
+- Which categories it targets
+- Full per-category results table with deltas vs baseline
+- Analysis of why it helped or hurt
+- The decision (adopted, reverted, or combined with another experiment)
+
+Update the log immediately after each experiment, before moving on to the next one.

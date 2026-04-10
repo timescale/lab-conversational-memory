@@ -195,3 +195,21 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **Decision**: **Reverted.** Original exp8 prompt retained.
 
 ---
+
+## Exp 5: Category-aware prompting
+- **Hypothesis**: Tailored instructions for multi-hop ("try different search queries") and temporal ("look at dates in brackets") could improve those categories.
+- **Changes**: memory.ts: category-specific prompt suffixes for cat 1 and cat 2.
+- **Result**: F1=0.525 EM=0.327
+
+| Cat | Name | F1 | vs exp8 |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.292 | -0.071 |
+| 2 | temporal | 0.558 | -0.113 |
+| 3 | open-domain | 0.337 | +0.014 |
+| 4 | single-hop | 0.515 | -0.039 |
+| 5 | adversarial | 0.723 | +0.042 |
+
+- **Analysis**: Both targeted categories regressed. The extra instructions may cause Claude to overthink or waste tool calls on suboptimal search strategies instead of its default behavior which already works reasonably well.
+- **Decision**: **Reverted.**
+
+---

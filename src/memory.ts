@@ -240,3 +240,24 @@ export async function retrieve(
 
   return lines.join("\n");
 }
+
+// -- Prompt ------------------------------------------------------------------
+
+export function buildPrompt(
+  question: string,
+  context: string,
+  category: number,
+): string {
+  const base = `Based on the following retrieved memories from a conversation, write an answer in the form of a short phrase for the following question. Answer with exact words from the memories whenever possible. If the information is not available, say "no information available".
+
+Memories:
+${context}
+
+`;
+
+  if (category === 2) {
+    return `${base}Question: ${question} Use dates from the memories to answer with an approximate date.\nShort answer:`;
+  }
+
+  return `${base}Question: ${question}\nShort answer:`;
+}

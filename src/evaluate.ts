@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, appendFileSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import postgres from "postgres";
-import { ingest, retrieve } from "./memory.ts";
+import { ingest, retrieve, buildPrompt } from "./memory.ts";
 import { scoreBatch } from "./scoring.ts";
 import type { LoCoMoSample, QAResult, EvalRun } from "./types.ts";
 import { CATEGORY_NAMES } from "./types.ts";
@@ -32,28 +32,17 @@ function parseArgs() {
 // LLM answering
 // ---------------------------------------------------------------------------
 
-function buildPrompt(
-  question: string,
-  context: string,
-  category: number,
-): string {
-  const base = `Based on the following retrieved memories from a conversation, write an answer in the form of a short phrase for the following question. Answer with exact words from the memories whenever possible. If the information is not available, say "no information available".
 
-Memories:
-${context}
-
-`;
-
-  if (category === 2) {
-    return `${base}Question: ${question} Use dates from the memories to answer with an approximate date.\nShort answer:`;
-  }
-
-  if (category === 5) {
-    return `${base}Question: ${question}\nShort answer:`;
-  }
-
-  return `${base}Question: ${question}\nShort answer:`;
-}
+// MCP config for memory tool — enable by adding to askClaude args:
+//   "--mcp-config", MCP_CONFIG, "--allowedTools", "mcp__memory__get_memory_by_id"
+const MCP_CONFIG = JSON.stringify({
+  mcpServers: {
+    memory: {
+      command: "bun",
+      args: ["src/mcp-server.ts"],
+    },
+  },
+});
 
 async function askClaude(prompt: string): Promise<string> {
   const proc = Bun.spawn(

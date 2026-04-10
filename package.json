@@ -1,0 +1,17 @@
+{
+  "name": "autoresearch-memory",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "setup": "bun src/prepare.ts",
+    "eval": "bun src/evaluate.ts",
+    "eval:quick": "bun src/evaluate.ts --samples 2"
+  },
+  "dependencies": {
+    "postgres": "^3.4.7"
+  },
+  "devDependencies": {
+    "bun-types": "^1.3.11",
+    "typescript": "^6.0.2"
+  }
+}

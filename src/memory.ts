@@ -248,6 +248,18 @@ export function buildPrompt(
   context: string,
   category: number,
 ): string {
+  // Tool mode: no pre-retrieved context, Claude searches via MCP tools
+  if (!context) {
+    const base = `You have access to a memory search tool. Use search_memories to find relevant conversation memories, then answer the question as a short phrase. You can use get_memory_by_id to see adjacent turns for more context. Use at most 3 tool calls total. Answer with exact words from the memories whenever possible. If the information is not available, say "no information available".
+
+`;
+    if (category === 2) {
+      return `${base}Question: ${question} Use dates from the memories to answer with an approximate date.\nShort answer:`;
+    }
+    return `${base}Question: ${question}\nShort answer:`;
+  }
+
+  // Context mode: pre-retrieved context in prompt
   const base = `Based on the following retrieved memories from a conversation, write an answer in the form of a short phrase for the following question. Answer with exact words from the memories whenever possible. If the information is not available, say "no information available".
 
 Memories:

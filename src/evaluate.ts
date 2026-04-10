@@ -2,6 +2,9 @@ import { readFileSync, writeFileSync, appendFileSync, mkdirSync } from "node:fs"
 import { createHash } from "node:crypto";
 import postgres from "postgres";
 import { ingest, retrieve, buildPrompt } from "./memory.ts";
+
+// Mode: "tool" = Claude searches via MCP tools, "context" = pre-retrieved context in prompt
+const EVAL_MODE = (process.env.EVAL_MODE ?? "tool") as "tool" | "context";
 import { scoreBatch } from "./scoring.ts";
 import type { LoCoMoSample, QAResult, EvalRun } from "./types.ts";
 import { CATEGORY_NAMES } from "./types.ts";
@@ -33,22 +36,23 @@ function parseArgs() {
 // ---------------------------------------------------------------------------
 
 
-// MCP config for memory tool — enable by adding to askClaude args:
-//   "--mcp-config", MCP_CONFIG, "--allowedTools", "mcp__memory__get_memory_by_id"
 const MCP_CONFIG = JSON.stringify({
   mcpServers: {
-    memory: {
+    recall: {
       command: "bun",
       args: ["src/mcp-server.ts"],
     },
   },
 });
 
-async function askClaude(prompt: string): Promise<string> {
-  const proc = Bun.spawn(
-    ["claude", "-p", prompt, "--output-format", "text", "--model", "sonnet"],
-    { stdout: "pipe", stderr: "pipe" },
-  );
+const MCP_TOOLS = "mcp__recall__search_memories,mcp__recall__get_memory_by_id";
+
+async function askClaude(prompt: string, useMcp: boolean): Promise<string> {
+  const args = ["claude", "-p", prompt, "--output-format", "text", "--model", "sonnet"];
+  if (useMcp) {
+    args.push("--mcp-config", MCP_CONFIG, "--allowedTools", MCP_TOOLS);
+  }
+  const proc = Bun.spawn(args, { stdout: "pipe", stderr: "pipe" });
   const stdout = await new Response(proc.stdout).text();
   const stderr = await new Response(proc.stderr).text();
   const exitCode = await proc.exited;
@@ -125,53 +129,77 @@ async function main() {
     const [row] = await sql`SELECT count(*)::int as count FROM memory`;
     console.log(`  ${row!.count} memories stored (${((performance.now() - t0) / 1000).toFixed(1)}s)`);
 
-    // Retrieve contexts in parallel
-    t0 = performance.now();
-    const RETRIEVE_CONCURRENCY = 10;
-    const qaContexts: string[] = new Array(conv.qa.length);
-    let retrieveCompleted = 0;
-    for (let batch = 0; batch < conv.qa.length; batch += RETRIEVE_CONCURRENCY) {
-      const end = Math.min(batch + RETRIEVE_CONCURRENCY, conv.qa.length);
-      const promises = [];
-      for (let qi = batch; qi < end; qi++) {
-        const qa = conv.qa[qi]!;
-        promises.push(
-          retrieve(qa.question, sql).then((ctx) => {
-            qaContexts[qi] = ctx;
-            retrieveCompleted++;
-            if (retrieveCompleted % 10 === 0 || retrieveCompleted === conv.qa.length) {
-              process.stdout.write(`\r  Retrieve: ${retrieveCompleted}/${conv.qa.length}`);
-            }
-          }),
-        );
-      }
-      await Promise.all(promises);
-    }
-    console.log(` (${((performance.now() - t0) / 1000).toFixed(1)}s)`);
-
-    // Ask Claude in parallel (CONCURRENCY concurrent processes)
-    t0 = performance.now();
     const CONCURRENCY = 50;
     const predictions: Array<{ prediction: string; context: string }> = new Array(conv.qa.length);
-    let completed = 0;
-    for (let batch = 0; batch < conv.qa.length; batch += CONCURRENCY) {
-      const end = Math.min(batch + CONCURRENCY, conv.qa.length);
-      const promises = [];
-      for (let qi = batch; qi < end; qi++) {
-        const qa = conv.qa[qi]!;
-        const context = qaContexts[qi]!;
-        const prompt = buildPrompt(qa.question, context, qa.category);
-        promises.push(
-          askClaude(prompt).then((prediction) => {
-            predictions[qi] = { prediction, context };
-            completed++;
-            process.stdout.write(`\r  Answer: ${completed}/${conv.qa.length}`);
-          }),
-        );
+
+    if (EVAL_MODE === "context") {
+      // Pre-retrieve contexts, then answer with context in prompt
+      t0 = performance.now();
+      const RETRIEVE_CONCURRENCY = 10;
+      const qaContexts: string[] = new Array(conv.qa.length);
+      let retrieveCompleted = 0;
+      for (let batch = 0; batch < conv.qa.length; batch += RETRIEVE_CONCURRENCY) {
+        const end = Math.min(batch + RETRIEVE_CONCURRENCY, conv.qa.length);
+        const promises = [];
+        for (let qi = batch; qi < end; qi++) {
+          const qa = conv.qa[qi]!;
+          promises.push(
+            retrieve(qa.question, sql).then((ctx) => {
+              qaContexts[qi] = ctx;
+              retrieveCompleted++;
+              if (retrieveCompleted % 10 === 0 || retrieveCompleted === conv.qa.length) {
+                process.stdout.write(`\r  Retrieve: ${retrieveCompleted}/${conv.qa.length}`);
+              }
+            }),
+          );
+        }
+        await Promise.all(promises);
       }
-      await Promise.all(promises);
+      console.log(` (${((performance.now() - t0) / 1000).toFixed(1)}s)`);
+
+      t0 = performance.now();
+      let completed = 0;
+      for (let batch = 0; batch < conv.qa.length; batch += CONCURRENCY) {
+        const end = Math.min(batch + CONCURRENCY, conv.qa.length);
+        const promises = [];
+        for (let qi = batch; qi < end; qi++) {
+          const qa = conv.qa[qi]!;
+          const context = qaContexts[qi]!;
+          const prompt = buildPrompt(qa.question, context, qa.category);
+          promises.push(
+            askClaude(prompt, false).then((prediction) => {
+              predictions[qi] = { prediction, context };
+              completed++;
+              process.stdout.write(`\r  Answer: ${completed}/${conv.qa.length}`);
+            }),
+          );
+        }
+        await Promise.all(promises);
+      }
+      console.log(` (${((performance.now() - t0) / 1000).toFixed(1)}s)`);
+    } else {
+      // Tool mode: Claude searches via MCP tools
+      console.log(`  Mode: tool (Claude searches via MCP)`);
+      t0 = performance.now();
+      let completed = 0;
+      for (let batch = 0; batch < conv.qa.length; batch += CONCURRENCY) {
+        const end = Math.min(batch + CONCURRENCY, conv.qa.length);
+        const promises = [];
+        for (let qi = batch; qi < end; qi++) {
+          const qa = conv.qa[qi]!;
+          const prompt = buildPrompt(qa.question, "", qa.category);
+          promises.push(
+            askClaude(prompt, true).then((prediction) => {
+              predictions[qi] = { prediction, context: "(tool mode)" };
+              completed++;
+              process.stdout.write(`\r  Answer: ${completed}/${conv.qa.length}`);
+            }),
+          );
+        }
+        await Promise.all(promises);
+      }
+      console.log(` (${((performance.now() - t0) / 1000).toFixed(1)}s)`);
     }
-    console.log(` (${((performance.now() - t0) / 1000).toFixed(1)}s)`);
 
     // Batch score with Python scorer (exact LoCoMo evaluation.py)
     t0 = performance.now();

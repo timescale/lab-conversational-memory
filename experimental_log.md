@@ -129,3 +129,42 @@
 
 - **Analysis**: **0.034 F1 variance** between identical runs. Adversarial shows the most volatility (0.064 swing). This means all exp 2-MCP results (0.448, 0.451) were within noise of exp 3. Only deltas >0.04 should be considered signal.
 - **Implication**: Previous experiments exp 1 (+0.061 over baseline) and exp 3 (+0.089 over baseline) are clearly above noise. The MCP tool experiments were inconclusive.
+
+---
+
+## Exp tool-search: Claude searches via MCP tools (3 call limit)
+- **Hypothesis**: Instead of pre-retrieving context, give Claude search_memories and get_memory_by_id tools. Claude decides what to search for, can decompose queries, and follow neighbor links. More realistic agent setup.
+- **Changes**: (1) Added search_memories tool to MCP server (hybrid BM25+semantic, same as retrieve()). (2) evaluate.ts supports tool/context modes via EVAL_MODE env var. (3) buildPrompt handles empty context (tool mode) with tool-use instructions. (4) Prompt limits to 3 tool calls max.
+- **Targets**: All categories, especially multi-hop (query decomposition) and adversarial (better rejection).
+- **Result**: F1=0.287 EM=0.271 (500s, ~4x slower)
+
+| Cat | Name | F1 | vs exp3 |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.039 | -0.221 |
+| 2 | temporal | 0.007 | -0.452 |
+| 3 | open-domain | 0.219 | -0.078 |
+| 4 | single-hop | 0.124 | -0.356 |
+| 5 | adversarial | **0.936** | **+0.234** |
+
+- **Analysis**: Adversarial surged to 0.936 (from ~0.66-0.70) — Claude correctly rejects unanswerable questions when it searches and finds no evidence. But all other categories collapsed. Likely causes: (1) Claude's auto-generated search queries don't match as well as the raw question used by retrieve(). (2) Temporal crashed hardest — search results include dates but Claude may not be synthesizing them. (3) 500s runtime means each question spawns an MCP server + multiple API round-trips. (4) The "short answer" instruction may conflict with the agentic flow.
+- **Key insight**: Tool-based search dramatically improves adversarial (knowing what you don't know) but hurts factual recall. A hybrid approach — pre-retrieved context PLUS tools for follow-up — might get the best of both worlds.
+- **Decision**: Not adopted. Results were invalid — MCP server name "memory" conflicted with system "me" memory tools, so tools never connected.
+
+---
+
+## Exp tool-search v2: Fixed MCP server name (recall)
+- **Hypothesis**: Same as v1 but with MCP server renamed from "memory" to "recall" to avoid conflict with system `me` MCP server.
+- **Changes**: Renamed server to "recall", updated tool allowlist. Concurrency reduced to 10 for tool mode.
+- **Result**: F1=0.423 EM=0.266 (707s)
+
+| Cat | Name | F1 | vs exp3 |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.253 | -0.007 |
+| 2 | temporal | 0.254 | **-0.205** |
+| 3 | open-domain | 0.188 | -0.109 |
+| 4 | single-hop | 0.419 | -0.061 |
+| 5 | adversarial | **0.745** | **+0.043** |
+
+- **Analysis**: With tools actually working, adversarial still improved (+0.043, above noise floor). Multi-hop roughly flat. But temporal regressed -0.205 — Claude's reformulated search queries lose temporal specificity. The raw question works better as a direct search key than Claude's rewritten version. Runtime 6x slower (707s vs ~120s).
+- **Key insight**: Tool-based search trades factual recall for better rejection of unanswerable questions. The raw question is a surprisingly good search query — Claude's "smarter" reformulation actually hurts.
+- **Decision**: Not adopted as-is. Hybrid approach (pre-retrieved context + tools for follow-up) is the promising direction.

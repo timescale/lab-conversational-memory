@@ -250,7 +250,7 @@ export function buildPrompt(
 ): string {
   // Tool mode: no pre-retrieved context, Claude searches via MCP tools
   if (!context) {
-    const base = `You have access to memory tools. Use me_memory_search to find relevant conversation memories, then answer the question. You can use me_memory_get to retrieve a specific memory by ID for more detail. Use at most 3 tool calls total. If the information is not available, say "no information available".
+    const base = `You have access to memory tools. Use me_memory_search to find relevant conversation memories, then answer the question. You can use me_memory_get to retrieve a specific memory by ID for more detail. Use at most 5 tool calls. If the information is not available, say "no information available".
 
 IMPORTANT: Your final answer must be ONLY a short phrase — no explanations, no reasoning, no markdown. Just the answer itself.
 

@@ -58,7 +58,7 @@ interface ClaudeResult {
 async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeResult> {
   const args = ["claude", "-p", prompt, "--output-format", "json", "--verbose", "--model", "sonnet"];
   if (useMcp) {
-    args.push("--mcp-config", MCP_CONFIG, "--allowedTools", MCP_TOOLS);
+    args.push("--mcp-config", MCP_CONFIG, "--strict-mcp-config", "--tools", MCP_TOOLS, "--allowedTools", MCP_TOOLS);
   }
   const proc = Bun.spawn(args, { stdout: "pipe", stderr: "pipe" });
 

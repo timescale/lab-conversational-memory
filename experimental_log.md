@@ -27,3 +27,23 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **Adversarial (0.766)**: Strong. Claude correctly rejects unanswerable questions.
 
 ---
+
+## Exp 1+6: Non-deferred tools + 5 call limit
+- **Hypothesis**: ToolSearch wastes 1 of 3 tool calls per question (199/199 questions). Using `--strict-mcp-config` + `--tools` makes our 3 tools non-deferred, eliminating ToolSearch overhead. Raising tool limit from 3 to 5 gives Claude room for follow-up searches and get_memory_by_id.
+- **Changes**: evaluate.ts: added `--strict-mcp-config`, `--tools`, `--allowedTools` flags. memory.ts: tool limit 3→5 in prompt.
+- **Targets**: All categories via more tool calls; single-hop especially (more follow-up searches).
+- **Result**: F1=0.523 EM=0.347 (180s)
+
+| Cat | Name | F1 | vs baseline |
+|-----|------|------|-------------|
+| 1 | multi-hop | 0.202 | -0.020 |
+| 2 | temporal | 0.557 | -0.016 |
+| 3 | open-domain | 0.290 | +0.005 |
+| 4 | single-hop | **0.531** | **+0.101** |
+| 5 | adversarial | 0.766 | 0.000 |
+
+- **Tool usage**: 344 searches (up from 224), 0 ToolSearch calls (down from 199), 67 questions with 2+ searches (up from 18), 2 me_memory_get calls.
+- **Analysis**: Single-hop gained +0.101 (clearly above noise). Claude now does follow-up searches instead of giving up after 1 attempt. Multi-hop and temporal slightly down (within noise). The freed-up tool budget is being used for more search attempts.
+- **Decision**: **Adopted.** New best F1=0.523.
+
+---

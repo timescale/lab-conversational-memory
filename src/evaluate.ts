@@ -74,22 +74,17 @@ async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeRes
 
   try {
     const json = JSON.parse(stdout);
-    // Extract final text from the result message
     const answer = (json.result ?? "").trim();
-    // Extract tool calls from conversation messages
+    // num_turns tracks how many API round-trips happened (1 = no tools, 3 = 1 tool call, etc.)
+    const numTurns: number = json.num_turns ?? 1;
     const toolCalls: ClaudeResult["toolCalls"] = [];
-    for (const msg of json.messages ?? []) {
-      if (msg.role === "assistant" && Array.isArray(msg.content)) {
-        for (const block of msg.content) {
-          if (block.type === "tool_use") {
-            toolCalls.push({ tool: block.name, args: block.input ?? {} });
-          }
-        }
-      }
+    // Approximate tool call count from turns: each tool call adds 2 turns (call + result)
+    const estimatedToolCalls = Math.max(0, Math.floor((numTurns - 1) / 2));
+    if (estimatedToolCalls > 0) {
+      toolCalls.push({ tool: "estimated", args: { count: estimatedToolCalls, num_turns: numTurns } });
     }
     return { answer, toolCalls };
   } catch {
-    // Fallback: treat as plain text
     return { answer: stdout.trim(), toolCalls: [] };
   }
 }

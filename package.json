@@ -5,7 +5,7 @@
   "scripts": {
     "setup": "bun src/prepare.ts",
     "eval": "bun src/evaluate.ts",
-    "eval:quick": "bun src/evaluate.ts --samples 2"
+    "eval:quick": "bun src/evaluate.ts --samples 1"
   },
   "dependencies": {
     "postgres": "^3.4.7"

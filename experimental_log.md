@@ -177,3 +177,21 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **Decision**: **Adopted.** F1=0.560, new best.
 
 ---
+
+## Exp 8b: More thorough fact extraction prompt
+- **Hypothesis**: The original extraction misses specific details (pets, books, gifts). A more thorough prompt with date context and explicit categories should capture more.
+- **Changes**: memory.ts: expanded extraction prompt with date context, relative→absolute date conversion, "be thorough — extract even minor details".
+- **Result**: F1=0.522 EM=0.357. 1049 memories (vs 837 in exp8).
+
+| Cat | Name | F1 | vs exp8 |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.256 | -0.107 |
+| 2 | temporal | 0.687 | +0.016 |
+| 3 | open-domain | 0.314 | -0.009 |
+| 4 | single-hop | 0.504 | -0.050 |
+| 5 | adversarial | 0.660 | -0.021 |
+
+- **Analysis**: More facts (1049 vs 837) diluted search quality. Multi-hop dropped -0.107 — too many facts compete for the top-10 results, pushing out the relevant ones. Temporal slightly up from date context. The concise extraction is better than exhaustive.
+- **Decision**: **Reverted.** Original exp8 prompt retained.
+
+---

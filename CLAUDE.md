@@ -13,14 +13,15 @@ bun run eval           # evaluate on all 10 samples (full run)
 
 ## Architecture (Autoresearch Pattern)
 
-- `src/memory.ts` — **THE ONLY FILE YOU MODIFY.** Contains `ingest()` and `retrieve()`.
-- Everything else is fixed infrastructure. Do not modify other source files.
+- `src/memory.ts` — Contains `ingest()`, `retrieve()`, and `buildPrompt()`. Primary experiment surface.
+- `src/mcp-server.ts` — MCP tool definitions (me_memory_search, me_memory_get, me_memory_tree). Also fair game to modify.
+- These two files are what you modify in the autoresearch loop. Everything else is fixed infrastructure.
 - Read `program.md` for research instructions and experiment ideas.
 
 ## Workflow
 
 1. Read `program.md` and `results/history.jsonl`
-2. Modify `src/memory.ts` to improve retrieval
+2. Modify `src/memory.ts` and/or `src/mcp-server.ts` to improve retrieval
 3. Run `bun run eval:quick --desc "what changed"`
 4. If F1 improved: `git commit` with scores in the message
 5. If F1 regressed: `git checkout src/memory.ts`

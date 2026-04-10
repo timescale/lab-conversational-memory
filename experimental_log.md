@@ -66,3 +66,41 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **Decision**: **Adopted.** F1=0.535.
 
 ---
+
+## Exp 9: Reduce false "no information" via prompt
+- **Hypothesis**: 38 false "no information available" on answerable questions. Prompting Claude to "answer based on what you find, even if it requires inference" should recover some.
+- **Changes**: memory.ts: added inference encouragement, changed "no info" to only when search returns nothing relevant.
+- **Result**: F1=0.477 EM=0.307
+
+| Cat | Name | F1 | vs prev |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.289 | +0.007 |
+| 2 | temporal | 0.708 | +0.009 |
+| 3 | open-domain | **0.398** | **+0.170** |
+| 4 | single-hop | 0.533 | +0.009 |
+| 5 | adversarial | **0.362** | **-0.319** |
+
+- **Analysis**: Open-domain surged +0.170 and other non-adversarial categories improved slightly. But adversarial collapsed from 0.681 to 0.362 — Claude now answers questions it should reject. The inference encouragement directly undermines adversarial rejection. Net negative.
+- **Decision**: **Reverted.** The adversarial cost (-0.319) far outweighs non-adversarial gains.
+
+---
+
+## Exp 2: 3-turn sliding window chunks
+- **Hypothesis**: Multi-hop evidence is fragmented across single turns. Adding 3-turn sliding window memories captures adjacent Q&A pairs and cross-turn context.
+- **Changes**: memory.ts: added sliding window loop creating additional memories for every 3 consecutive turns per session (~370 extra memories).
+- **Targets**: Cat 1 (multi-hop), cat 4 (single-hop).
+- **Result**: F1=0.522 EM=0.327
+
+| Cat | Name | F1 | vs prev |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.306 | +0.024 |
+| 2 | temporal | 0.657 | -0.042 |
+| 3 | open-domain | 0.217 | -0.011 |
+| 4 | single-hop | **0.642** | **+0.118** |
+| 5 | adversarial | **0.468** | **-0.213** |
+
+- **Analysis**: Single-hop surged +0.118 — window memories capture Q&A pairs that single turns split. But adversarial collapsed -0.213 — window memories mix both speakers' topics, so adversarial questions about the wrong person now find loosely related content. Same pattern as exp 9: more context helps factual recall but hurts rejection.
+- **Key insight**: Adversarial performance is the binding constraint. Any change that adds more retrievable content hurts adversarial. Need to improve factual recall WITHOUT increasing false positives for unanswerable questions.
+- **Decision**: **Reverted.** Net F1 -0.013.
+
+---

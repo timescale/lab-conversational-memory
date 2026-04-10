@@ -232,3 +232,18 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **Decision**: **Adopted.** Adversarial improvement is reliable signal.
 
 ---
+
+## Exp 11b/c: Tool call limit tuning (5 → 6 → 8)
+- **Hypothesis**: More tool calls let Claude do follow-up searches and get_memory_by_id navigation.
+- **Results**:
+
+| Limit | F1 | EM | Cat 1 | Cat 2 | Cat 4 | Cat 5 |
+|-------|------|------|-------|-------|-------|-------|
+| 5 | 0.552 | 0.367 | 0.278 | 0.655 | 0.513 | 0.787 |
+| **6** | **0.562** | **0.392** | 0.298 | 0.698 | 0.569 | 0.681 |
+| 8 | 0.554 | 0.357 | 0.354 | 0.661 | 0.577 | 0.638 |
+
+- **Analysis**: 6 is the sweet spot. 8 gives more multi-hop/single-hop but adversarial drops. At 6, temporal peaks at 0.698 and overall F1+EM are both best. Claude self-regulates at avg 2.2 calls even with limit 8 — the limit mainly affects edge cases.
+- **Decision**: **Adopted limit=6.** F1=0.562, EM=0.392 — new best on both metrics.
+
+---

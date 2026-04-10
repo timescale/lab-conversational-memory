@@ -188,3 +188,23 @@
 - **Analysis**: Every category at or above previous best. Temporal improvement is extraordinary (+0.574 over baseline) — Claude now resolves relative dates correctly AND formats answers concisely. Multi-hop nearly doubled from baseline. Adversarial strong at 0.830. Runtime dropped to 165s (from 707s in tool v2) — likely because the relaxed prompt lets Claude answer faster without agonizing over word count.
 - **Key insight**: The prompt is as important as the retrieval system. "Short phrase" works; "1-5 words" breaks everything.
 - **Decision**: **Adopted.** New best F1=0.584.
+
+---
+
+## Exp me-tools: Memory-engine compatible MCP interface
+- **Hypothesis**: Replace simple `search_memories(query)` with the full memory-engine interface: `me_memory_search(semantic, fulltext, meta, tree, temporal, weights, candidateLimit, limit, order_by)` + `me_memory_get(id)` + `me_memory_tree(tree, levels)`. More realistic eval matching production tools.
+- **Changes**: Rewrote MCP server to match memory-engine tool names, descriptions, and parameter schemas. Downgraded to Zod v3 (MCP SDK's zod-to-json-schema incompatible with Zod v4). Multiple iterations to debug tool registration failures.
+- **Targets**: Realism — not expected to improve scores.
+- **Result**: F1=0.493 EM=0.322 (157s)
+
+| Cat | Name | F1 | vs best (simple tools) |
+|-----|------|------|----------------------|
+| 1 | multi-hop | 0.222 | -0.182 |
+| 2 | temporal | 0.573 | -0.099 |
+| 3 | open-domain | 0.285 | -0.046 |
+| 4 | single-hop | 0.430 | -0.072 |
+| 5 | adversarial | 0.766 | -0.064 |
+
+- **Analysis**: ~0.09 F1 cost from the more complex interface. The 9-param schema with required nullable fields adds friction — Claude must fill in all params even when only using semantic search. Multi-hop hit hardest (-0.182), likely because Claude spends its 3-tool-call budget on schema fetching (ToolSearch) instead of follow-up searches.
+- **Key insight**: Tool schema complexity directly affects LLM performance. Simpler tools score better, but production tools are complex. This is the realistic baseline.
+- **Decision**: **Adopted** — matches reality. F1=0.493 is the new realistic baseline to improve from.

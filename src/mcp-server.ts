@@ -8,6 +8,14 @@ const RRF_K = 60;
 
 const sql = postgres(process.env.DATABASE_URL!, { onnotice: () => {} });
 
+function formatDate(temporal: string | null): string {
+  if (!temporal) return "";
+  const m = temporal.match(/(\d{4}-\d{2}-\d{2})/);
+  if (!m) return "";
+  const d = new Date(m[1]!);
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+
 const server = new McpServer({
   name: "recall",
   version: "1.0.0",
@@ -174,15 +182,9 @@ Search modes: semantic (meaning), fulltext (keywords), or both (hybrid). Combine
 
     // Format as concise lines: date + content + id
     const lines = results.map((r, i) => {
-      let date = "";
-      if (r.temporal) {
-        const m = r.temporal.match(/(\d{4}-\d{2}-\d{2})/);
-        if (m) {
-          const d = new Date(m[1]!);
-          date = `[${d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}] `;
-        }
-      }
-      return `${i + 1}. ${date}${r.content} (id: ${r.id})`;
+      const date = formatDate(r.temporal);
+      const datePrefix = date ? `[${date}] ` : "";
+      return `${i + 1}. ${datePrefix}${r.content} (id: ${r.id})`;
     });
 
     return {
@@ -202,31 +204,47 @@ server.tool(
   "me_memory_get",
   `Retrieve a single memory by its ID.
 
-Returns full memory including content, tree, meta, temporal, and embedding status. Use after search to get full details, or before update to see current state.`,
+Returns the memory content, date, and adjacent conversation turns (prev/next). Use to get surrounding context for a search result.`,
   {
     id: z.string().describe("The UUID of the memory"),
   },
   async ({ id }) => {
     const rows = await sql`
-      SELECT id, content, meta, temporal::text, tree::text,
-             (embedding IS NOT NULL) as has_embedding, created_at, updated_at
+      SELECT id, content, meta, temporal::text, tree::text
       FROM memory WHERE id = ${id}::uuid
     `;
     if (rows.length === 0) {
       return { content: [{ type: "text" as const, text: "Memory not found" }] };
     }
     const row = rows[0]!;
-    const result = {
-      id: row.id,
-      content: row.content,
-      meta: row.meta,
-      tree: row.tree,
-      temporal: row.temporal,
-      hasEmbedding: row.has_embedding,
-      createdAt: row.created_at,
-      updatedAt: row.updated_at,
-    };
-    return { content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }] };
+    const meta = row.meta as Record<string, unknown>;
+
+    // Format as concise text with adjacent turns inline
+    const lines: string[] = [];
+
+    // Fetch prev turn
+    if (meta.prev_id) {
+      const [prev] = await sql`SELECT content, temporal::text FROM memory WHERE id = ${meta.prev_id as string}::uuid`;
+      if (prev) {
+        const date = formatDate(prev.temporal as string | null);
+        lines.push(`[prev] ${date ? `[${date}] ` : ""}${prev.content}`);
+      }
+    }
+
+    // Current memory
+    const date = formatDate(row.temporal as string | null);
+    lines.push(`[this] ${date ? `[${date}] ` : ""}${row.content} (id: ${row.id})`);
+
+    // Fetch next turn
+    if (meta.next_id) {
+      const [next] = await sql`SELECT content, temporal::text FROM memory WHERE id = ${meta.next_id as string}::uuid`;
+      if (next) {
+        const date = formatDate(next.temporal as string | null);
+        lines.push(`[next] ${date ? `[${date}] ` : ""}${next.content}`);
+      }
+    }
+
+    return { content: [{ type: "text" as const, text: lines.join("\n") }] };
   },
 );
 

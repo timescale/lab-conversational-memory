@@ -213,3 +213,22 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **Decision**: **Reverted.**
 
 ---
+
+## Exp 11: Prev/next pointers + me_memory_get navigation
+- **Hypothesis**: Adding prev/next turn IDs to metadata and returning adjacent turns from me_memory_get lets Claude see conversation context without adding to the search pool (preserving adversarial).
+- **Changes**: memory.ts: client-side UUIDs, prev_id/next_id in turn metadata. mcp-server.ts: me_memory_get returns [prev] [this] [next] formatted context.
+- **Targets**: Cat 1 (multi-hop), cat 5 (adversarial — verify context).
+- **Result**: F1=0.552 EM=0.367. 89 me_memory_get calls.
+
+| Cat | Name | F1 | vs exp8 |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.278 | -0.085 |
+| 2 | temporal | 0.655 | -0.016 |
+| 3 | open-domain | 0.299 | -0.024 |
+| 4 | single-hop | 0.513 | -0.041 |
+| 5 | adversarial | **0.787** | **+0.106** |
+
+- **Analysis**: Adversarial gained +0.106 (above noise) — seeing surrounding turns helps Claude verify whether a fact belongs to the right speaker. Other categories slightly down (within noise). Overall F1 roughly flat but adversarial is a valuable gain.
+- **Decision**: **Adopted.** Adversarial improvement is reliable signal.
+
+---

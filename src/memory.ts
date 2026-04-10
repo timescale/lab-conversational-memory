@@ -79,8 +79,9 @@ export async function ingest(
 ): Promise<void> {
   const sessions = parseSessions(sample.conversation);
 
-  // Build rows
+  // Build rows with client-side UUIDs for prev/next linking
   const rows: Array<{
+    id: string;
     content: string;
     meta: Record<string, unknown>;
     tree: string;
@@ -90,6 +91,7 @@ export async function ingest(
   for (const session of sessions) {
     const sessionDate = parseLocomoDate(session.dateTime);
     const temporal = sessionDate ? formatTemporal(sessionDate) : null;
+    const turnIds = session.turns.map(() => crypto.randomUUID());
 
     for (let i = 0; i < session.turns.length; i++) {
       const turn = session.turns[i]!;
@@ -102,6 +104,8 @@ export async function ingest(
         dia_id: turn.dia_id,
         sample_id: sample.sample_id,
       };
+      if (i > 0) meta.prev_id = turnIds[i - 1];
+      if (i < session.turns.length - 1) meta.next_id = turnIds[i + 1];
       if (turn.blip_caption) {
         meta.blip_caption = turn.blip_caption;
       }
@@ -110,7 +114,7 @@ export async function ingest(
       const speakerLabel = turn.speaker.toLowerCase().replace(/[^a-z0-9]/g, "_");
       const tree = `conv.s${session.sessionNum}.${speakerLabel}`;
 
-      rows.push({ content, meta, tree, temporal });
+      rows.push({ id: turnIds[i]!, content, meta, tree, temporal });
     }
   }
 
@@ -155,6 +159,7 @@ Facts:`;
         }
 
         rows.push({
+          id: crypto.randomUUID(),
           content: fact.trim(),
           meta: {
             type: "fact",
@@ -183,8 +188,9 @@ Facts:`;
         const row = rows[i]!;
         const vec = `[${embeddings[i]!.join(",")}]`;
         await tx`
-          INSERT INTO memory (content, meta, tree, temporal, embedding)
+          INSERT INTO memory (id, content, meta, tree, temporal, embedding)
           VALUES (
+            ${row.id}::uuid,
             ${row.content},
             ${sql.json(row.meta)},
             ${row.tree}::ltree,

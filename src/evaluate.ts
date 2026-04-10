@@ -47,20 +47,67 @@ const MCP_CONFIG = JSON.stringify({
 
 const MCP_TOOLS = "mcp__recall__search_memories,mcp__recall__get_memory_by_id";
 
-async function askClaude(prompt: string, useMcp: boolean): Promise<string> {
-  const args = ["claude", "-p", prompt, "--output-format", "text", "--model", "sonnet"];
+const TIMEOUT_MS = 240_000; // 4 minutes per question
+const MAX_RETRIES = 2;
+
+interface ClaudeResult {
+  answer: string;
+  toolCalls: Array<{ tool: string; args: Record<string, unknown> }>;
+}
+
+async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeResult> {
+  const args = ["claude", "-p", prompt, "--output-format", "json", "--model", "sonnet"];
   if (useMcp) {
     args.push("--mcp-config", MCP_CONFIG, "--allowedTools", MCP_TOOLS);
   }
   const proc = Bun.spawn(args, { stdout: "pipe", stderr: "pipe" });
+
+  const timeout = setTimeout(() => proc.kill(), TIMEOUT_MS);
   const stdout = await new Response(proc.stdout).text();
   const stderr = await new Response(proc.stderr).text();
   const exitCode = await proc.exited;
+  clearTimeout(timeout);
+
   if (exitCode !== 0) {
-    console.error(`  claude error: ${stderr.slice(0, 200)}`);
-    return "";
+    throw new Error(stderr.slice(0, 200) || `exit code ${exitCode}`);
   }
-  return stdout.trim();
+
+  try {
+    const json = JSON.parse(stdout);
+    // Extract final text from the result message
+    const answer = (json.result ?? "").trim();
+    // Extract tool calls from conversation messages
+    const toolCalls: ClaudeResult["toolCalls"] = [];
+    for (const msg of json.messages ?? []) {
+      if (msg.role === "assistant" && Array.isArray(msg.content)) {
+        for (const block of msg.content) {
+          if (block.type === "tool_use") {
+            toolCalls.push({ tool: block.name, args: block.input ?? {} });
+          }
+        }
+      }
+    }
+    return { answer, toolCalls };
+  } catch {
+    // Fallback: treat as plain text
+    return { answer: stdout.trim(), toolCalls: [] };
+  }
+}
+
+async function askClaude(prompt: string, useMcp: boolean): Promise<ClaudeResult> {
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      return await askClaudeOnce(prompt, useMcp);
+    } catch (e: any) {
+      if (attempt < MAX_RETRIES) {
+        process.stderr.write(`  retry(${attempt + 1}) `);
+      } else {
+        console.error(`  claude failed after ${MAX_RETRIES + 1} attempts: ${e.message?.slice(0, 100)}`);
+        return { answer: "", toolCalls: [] };
+      }
+    }
+  }
+  return { answer: "", toolCalls: [] };
 }
 
 // ---------------------------------------------------------------------------
@@ -130,7 +177,7 @@ async function main() {
     console.log(`  ${row!.count} memories stored (${((performance.now() - t0) / 1000).toFixed(1)}s)`);
 
     const CONCURRENCY = 50;
-    const predictions: Array<{ prediction: string; context: string }> = new Array(conv.qa.length);
+    const predictions: Array<{ prediction: string; context: string; toolCalls: ClaudeResult["toolCalls"] }> = new Array(conv.qa.length);
 
     if (EVAL_MODE === "context") {
       // Pre-retrieve contexts, then answer with context in prompt
@@ -148,7 +195,7 @@ async function main() {
               qaContexts[qi] = ctx;
               retrieveCompleted++;
               if (retrieveCompleted % 10 === 0 || retrieveCompleted === conv.qa.length) {
-                process.stdout.write(`\r  Retrieve: ${retrieveCompleted}/${conv.qa.length}`);
+                process.stdout.write(`  Retrieve: ${retrieveCompleted}/${conv.qa.length}\n`);
               }
             }),
           );
@@ -167,10 +214,10 @@ async function main() {
           const context = qaContexts[qi]!;
           const prompt = buildPrompt(qa.question, context, qa.category);
           promises.push(
-            askClaude(prompt, false).then((prediction) => {
-              predictions[qi] = { prediction, context };
+            askClaude(prompt, false).then((result) => {
+              predictions[qi] = { prediction: result.answer, context, toolCalls: result.toolCalls };
               completed++;
-              process.stdout.write(`\r  Answer: ${completed}/${conv.qa.length}`);
+              process.stdout.write(`  Answer: ${completed}/${conv.qa.length}\n`);
             }),
           );
         }
@@ -189,10 +236,10 @@ async function main() {
           const qa = conv.qa[qi]!;
           const prompt = buildPrompt(qa.question, "", qa.category);
           promises.push(
-            askClaude(prompt, true).then((prediction) => {
-              predictions[qi] = { prediction, context: "(tool mode)" };
+            askClaude(prompt, true).then((result) => {
+              predictions[qi] = { prediction: result.answer, context: "(tool mode)", toolCalls: result.toolCalls };
               completed++;
-              process.stdout.write(`\r  Answer: ${completed}/${conv.qa.length}`);
+              process.stdout.write(`  Answer: ${completed}/${conv.qa.length}\n`);
             }),
           );
         }
@@ -222,7 +269,8 @@ async function main() {
         f1: scores[i]!.f1,
         em: scores[i]!.em,
         context: predictions[i]!.context,
-      });
+        toolCalls: predictions[i]!.toolCalls,
+      } as any);
     }
 
     // Per-sample summary

@@ -168,3 +168,23 @@
 - **Analysis**: With tools actually working, adversarial still improved (+0.043, above noise floor). Multi-hop roughly flat. But temporal regressed -0.205 — Claude's reformulated search queries lose temporal specificity. The raw question works better as a direct search key than Claude's rewritten version. Runtime 6x slower (707s vs ~120s).
 - **Key insight**: Tool-based search trades factual recall for better rejection of unanswerable questions. The raw question is a surprisingly good search query — Claude's "smarter" reformulation actually hurts.
 - **Decision**: Not adopted as-is. Hybrid approach (pre-retrieved context + tools for follow-up) is the promising direction.
+
+---
+
+## Exp tool-prompt-v2: Relaxed short-answer formatting
+- **Hypothesis**: The v1 strict prompt ("1-5 words only") caused Claude to default to "no information available" too aggressively. Relaxing to "short phrase — no explanations, no reasoning, no markdown" should retain brevity while allowing real answers.
+- **Changes**: Prompt updated to remove word count constraint. Also: temporal prompt changed from "approximate date" to "specific date or time period". Concurrency 50, 4-min timeout with 2 retries.
+- **Targets**: All categories — fixing answer format across the board.
+- **Result**: **F1=0.584 EM=0.397** (165s) — best result by far.
+
+| Cat | Name | F1 | vs baseline | vs exp3 |
+|-----|------|------|-------------|---------|
+| 1 | multi-hop | **0.404** | +0.160 | +0.144 |
+| 2 | temporal | **0.672** | +0.574 | +0.213 |
+| 3 | open-domain | 0.331 | -0.011 | +0.034 |
+| 4 | single-hop | **0.502** | +0.057 | +0.022 |
+| 5 | adversarial | **0.830** | +0.170 | +0.128 |
+
+- **Analysis**: Every category at or above previous best. Temporal improvement is extraordinary (+0.574 over baseline) — Claude now resolves relative dates correctly AND formats answers concisely. Multi-hop nearly doubled from baseline. Adversarial strong at 0.830. Runtime dropped to 165s (from 707s in tool v2) — likely because the relaxed prompt lets Claude answer faster without agonizing over word count.
+- **Key insight**: The prompt is as important as the retrieval system. "Short phrase" works; "1-5 words" breaks everything.
+- **Decision**: **Adopted.** New best F1=0.584.

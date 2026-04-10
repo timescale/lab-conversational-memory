@@ -214,15 +214,28 @@ export async function retrieve(
 
   if (topIds.length === 0) return "(no relevant memories found)";
 
-  // Fetch full content for top results, preserving RRF rank order
-  const rows = await sql.unsafe<Array<{ id: string; content: string }>>(
-    `SELECT id, content FROM memory WHERE id = ANY($1::uuid[])`,
+  // Fetch full content + temporal for top results, preserving RRF rank order
+  const rows = await sql.unsafe<Array<{ id: string; content: string; temporal: string | null }>>(
+    `SELECT id, content, temporal::text FROM memory WHERE id = ANY($1::uuid[])`,
     [topIds],
   );
 
-  const contentMap = new Map(rows.map((r) => [r.id, r.content]));
+  const rowMap = new Map(rows.map((r) => [r.id, r]));
   const lines = topIds
-    .map((id, i) => `${i + 1}. ${contentMap.get(id) ?? ""}`)
+    .map((id, i) => {
+      const row = rowMap.get(id);
+      if (!row) return "";
+      // Extract date from temporal range like ["2023-05-07 ...","2023-05-07 ..."]
+      let datePrefix = "";
+      if (row.temporal) {
+        const m = row.temporal.match(/(\d{4}-\d{2}-\d{2})/);
+        if (m) {
+          const d = new Date(m[1]!);
+          datePrefix = `[${d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}] `;
+        }
+      }
+      return `${i + 1}. ${datePrefix}${row.content}`;
+    })
     .filter((line) => line.length > 3);
 
   return lines.join("\n");

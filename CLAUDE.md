@@ -26,6 +26,8 @@ bun run eval           # evaluate on all 10 samples (full run)
 5. If F1 regressed: `git checkout src/memory.ts`
 6. Repeat
 
+**Always test one experiment at a time.** Do not batch multiple hypotheses into a single eval run. This ensures clean signal on what helped or hurt.
+
 ## DB Schema
 
 The `memory` table matches memory-engine's layout:

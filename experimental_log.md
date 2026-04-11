@@ -329,6 +329,16 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp 2-retry: Sliding window + adversarial prompt
+- **Result**: F1=0.583. Single-hop +0.080 but temporal -0.148. Adversarial held at 0.830 (better than before but still costs). **Reverted.**
+
+## Exp 22b: Fact extraction with date context
+- **Hypothesis**: Adding session date to extraction prompt ("convert relative dates to absolute") should help temporal.
+- **Result**: F1=0.597, EM=0.442 (new best EM). Temporal 0.595 (didn't recover), adversarial 0.915 (+0.043). Date context improved EM but not F1.
+- **Decision**: **Reverted.** F1 is primary metric.
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

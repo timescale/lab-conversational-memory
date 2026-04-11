@@ -363,6 +363,35 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Full 10-sample eval
+- **Result**: F1=0.615 EM=0.438 (1986 QA). Close to 1-sample estimate (0.620). Adversarial even stronger on full set (0.922).
+
+---
+
+## Exp 23+24: Stronger adversarial rejection + exact words
+- **Result**: F1=0.485. "Exact words" instruction too restrictive — Claude can't synthesize. **Reverted.**
+
+## Exp 23: Stronger adversarial rejection only
+- **Result**: F1=0.591. "Never correct premise" too conservative — multi-hop dropped -0.127. **Reverted.**
+
+## Exp 25: Remove tool call limit
+- **Hypothesis**: Multi-hop list questions need more searches. Removing the limit lets Claude search as much as needed.
+- **Changes**: memory.ts: "Use at most 6 tool calls" → "Use as many tool calls as needed."
+- **Result**: **F1=0.641 EM=0.437** — new best F1.
+
+| Cat | Name | F1 | vs prev |
+|-----|------|------|---------|
+| 1 | multi-hop | **0.417** | +0.030 |
+| 2 | temporal | 0.684 | +0.017 |
+| 3 | open-domain | 0.412 | +0.012 |
+| 4 | single-hop | **0.595** | +0.021 |
+| 5 | adversarial | 0.894 | +0.022 |
+
+- **Analysis**: Avg 3.9 tool calls (up from 2.2). 209 me_memory_get calls (up from 89) — more context navigation. Every category improved. Adversarial held strong because get calls help verify speaker attribution.
+- **Decision**: **Adopted.** F1=0.641.
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

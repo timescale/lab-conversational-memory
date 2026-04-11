@@ -309,7 +309,7 @@ export function buildPrompt(
 ): string {
   // Tool mode: no pre-retrieved context, Claude searches via MCP tools
   if (!context) {
-    const base = `You have access to memory tools. Use me_memory_search to find relevant conversation memories, then answer the question. You can use me_memory_get to retrieve a specific memory by ID for more detail. Use at most 6 tool calls.
+    const base = `You have access to memory tools. Use me_memory_search to find relevant conversation memories, then answer the question. You can use me_memory_get to retrieve a specific memory by ID for more detail. Use as many tool calls as needed.
 
 Pay attention to WHO is mentioned in each memory. If the question asks about one person but the search results only mention a different person doing that thing, say "no information available". If the information is not available, say "no information available".
 

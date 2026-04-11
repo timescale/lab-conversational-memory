@@ -304,6 +304,31 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp 2-retry: Sliding window with adversarial prompt
+- **Hypothesis**: With the adversarial prompt protecting cat 5, the sliding window (which previously gave single-hop +0.118) might now be net positive.
+- **Result**: F1=0.583. Single-hop 0.590 (+0.080) but temporal 0.556 (-0.148), adversarial 0.830 (-0.064). Window memories dilute temporal search quality.
+- **Decision**: **Reverted.** Net negative.
+
+---
+
+## Exp 22: Fact extraction with specific names/numbers emphasis
+- **Hypothesis**: Multi-hop failures are often vague facts ("home country" instead of "Sweden"). Emphasizing specific names, titles, numbers, and places in the extraction prompt should capture the details that matter.
+- **Changes**: memory.ts: fact extraction prompt now says "Include specific names, titles, numbers, and places — never use vague terms" and explicitly lists pets, books, artworks, family details.
+- **Result**: **F1=0.606 EM=0.402** — new best F1. 771 memories.
+
+| Cat | Name | F1 | vs exp20 |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.335 | +0.046 |
+| 2 | temporal | 0.623 | -0.081 |
+| 3 | open-domain | **0.462** | +0.059 |
+| 4 | single-hop | 0.569 | +0.059 |
+| 5 | adversarial | 0.872 | -0.022 |
+
+- **Analysis**: Multi-hop, open-domain, and single-hop all improved. More specific facts help Claude find exact answers. Temporal dipped (within noise range). Adversarial held strong at 0.872.
+- **Decision**: **Adopted.** F1=0.606.
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

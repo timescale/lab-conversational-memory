@@ -132,7 +132,7 @@ export async function ingest(
         .map((t) => `${t.speaker}: ${t.text}`)
         .join("\n");
 
-      const prompt = `Extract key facts from this conversation session as a list. Each fact must name the specific person it's about. Include: activities, events, plans, opinions, relationships, dates, and attributes. One fact per line, no numbering.
+      const prompt = `Extract key facts from this conversation session as a list. Each fact must name the specific person it's about. Include specific names, titles, numbers, and places — never use vague terms like "home country" when the actual name is mentioned. Include: activities, events, plans, opinions, relationships, dates, attributes, pets, books, artworks, and family details. One fact per line, no numbering.
 
 ${dialog}
 

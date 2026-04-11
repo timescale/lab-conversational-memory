@@ -284,6 +284,26 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp 20: Adversarial-aware prompt (speaker attribution check)
+- **Hypothesis**: 15/47 adversarial failures are entity swaps — question asks about person A but search finds the info attributed to person B. Telling Claude to check speaker attribution should fix this.
+- **Changes**: memory.ts: added "If the question asks about one person but the search results only mention a different person doing that thing, say no information available."
+- **Targets**: Cat 5 (adversarial).
+- **Result**: **F1=0.594 EM=0.407** — new best F1.
+
+| Cat | Name | F1 | vs prev |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.289 | -0.009 |
+| 2 | temporal | **0.704** | +0.006 |
+| 3 | open-domain | **0.403** | +0.047 |
+| 4 | single-hop | 0.510 | -0.059 |
+| 5 | adversarial | **0.894** | **+0.213** |
+
+- **Analysis**: Adversarial surged +0.213 — the speaker check directly addresses entity-swap questions. Temporal and open-domain also improved. Single-hop dipped slightly (some questions cross-reference speakers, so the check makes Claude too cautious).
+- **Follow-up (exp20+21)**: Adding "essential words only" format pushed adversarial to 0.936 and EM to 0.427 but temporal dropped to 0.610 (too tight). Reverted format change.
+- **Decision**: **Adopted.** F1=0.594, EM=0.407.
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

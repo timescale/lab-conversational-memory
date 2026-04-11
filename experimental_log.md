@@ -339,6 +339,13 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp paper-1: Set-union merging instead of RRF (from Omni-SimpleMem paper)
+- **Hypothesis**: Paper reports +44% from replacing score-based fusion with set-union (keep semantic ranking, append BM25-only results). Might improve our search.
+- **Result**: F1=0.540. Single-hop collapsed to 0.363 (-0.206). Paper's finding doesn't transfer — their context was pre-retrieved context mode with FAISS, not tool-based search where Claude controls queries. RRF works better in our setup.
+- **Decision**: **Reverted.**
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

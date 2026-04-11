@@ -56,7 +56,8 @@ interface ClaudeResult {
 }
 
 async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeResult> {
-  const args = ["claude", "-p", prompt, "--output-format", "json", "--verbose", "--model", "sonnet"];
+  const JSON_SCHEMA = '{"type":"object","properties":{"answer":{"type":"string"}},"required":["answer"]}';
+  const args = ["claude", "-p", prompt, "--output-format", "json", "--verbose", "--model", "sonnet", "--json-schema", JSON_SCHEMA];
   if (useMcp) {
     args.push("--mcp-config", MCP_CONFIG, "--strict-mcp-config", "--tools", MCP_TOOLS, "--allowedTools", MCP_TOOLS);
   }
@@ -86,7 +87,8 @@ async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeRes
         }
       }
       if (evt.type === "result") {
-        answer = (evt.result ?? "").trim();
+        // Prefer structured_output.answer (from --json-schema), fallback to result
+        answer = (evt.structured_output?.answer ?? evt.result ?? "").trim();
       }
     }
     return { answer, toolCalls };

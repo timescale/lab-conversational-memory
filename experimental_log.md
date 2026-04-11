@@ -346,6 +346,23 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp json-schema: Structured output via --json-schema
+- **Hypothesis**: Using `--json-schema` forces Claude to output `{"answer": "..."}`. Eliminates format bloat.
+- **Changes**: evaluate.ts: added `--json-schema`, extract from `structured_output.answer`.
+- **Result**: **F1=0.620 EM=0.442** — new best on both.
+
+| Cat | Name | F1 | vs exp22 |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.387 | +0.052 |
+| 2 | temporal | 0.667 | +0.044 |
+| 3 | open-domain | 0.400 | -0.062 |
+| 4 | single-hop | 0.574 | +0.005 |
+| 5 | adversarial | 0.872 | 0.000 |
+
+- **Decision**: **Adopted.** F1=0.620, EM=0.442.
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

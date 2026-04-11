@@ -287,5 +287,37 @@ Shows how memories are organized and how many exist at each level. Use to unders
   },
 );
 
+// ---------------------------------------------------------------------------
+// me_memory_grep — exact substring matching
+// ---------------------------------------------------------------------------
+
+server.tool(
+  "me_memory_grep",
+  `Search memories by exact substring match (case-insensitive). Use for finding specific names, titles, numbers, or phrases that semantic search might miss.`,
+  {
+    pattern: z.string().describe("Substring to search for (case-insensitive)"),
+    limit: z.number().int().min(1).max(100).nullable().describe("Maximum results (default 10)"),
+  },
+  async ({ pattern, limit: maxResults }) => {
+    const lim = maxResults ?? 10;
+    const rows = await sql`
+      SELECT id, content, temporal::text
+      FROM memory
+      WHERE content ILIKE ${"%" + pattern + "%"}
+      ORDER BY created_at DESC
+      LIMIT ${lim}
+    `;
+    if (rows.length === 0) {
+      return { content: [{ type: "text" as const, text: "No matches found." }] };
+    }
+    const lines = rows.map((r, i) => {
+      const date = formatDate(r.temporal as string | null);
+      const datePrefix = date ? `[${date}] ` : "";
+      return `${i + 1}. ${datePrefix}${r.content} (id: ${r.id})`;
+    });
+    return { content: [{ type: "text" as const, text: lines.join("\n") }] };
+  },
+);
+
 const transport = new StdioServerTransport();
 await server.connect(transport);

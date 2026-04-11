@@ -263,6 +263,27 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp 15: Score-based truncation
+- **Hypothesis**: Drop search results below a threshold relative to the top score. Fewer low-quality results should help adversarial rejection.
+- **Results**: 30% threshold F1=0.535, 50% threshold F1=0.540. Neither improved adversarial (0.660, 0.638). RRF scores are too clustered for thresholding to discriminate.
+- **Decision**: **Reverted.**
+
+---
+
+## Exp 14: Show relevance scores in results
+- **Hypothesis**: Adding `[score: 0.023]` to results lets Claude judge confidence and reject low-quality matches.
+- **Result**: F1=0.559. Multi-hop 0.377 (+0.079), open-domain 0.405 (+0.049), but adversarial flat at 0.660. Within noise overall.
+- **Decision**: **Reverted.** Scores add token overhead without clear benefit.
+
+---
+
+## Exp 19: me_memory_grep exact substring tool
+- **Hypothesis**: A grep-like tool for exact substring matching could find specific nouns (book titles, pet names) that BM25/semantic misses.
+- **Result**: F1=0.529. Only 24/413 tool calls used grep. Claude barely uses it. Adversarial dropped to 0.596 — 4th tool adds schema complexity.
+- **Decision**: **Reverted.** Tool kept in mcp-server.ts but not in allowed list.
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

@@ -434,6 +434,24 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp 26: No adversarial corrections — just reject
+- **Hypothesis**: 7 adversarial failures where Claude corrects the premise ("No, Oscar is Caroline's"). Adding "do not correct or clarify" should force rejection.
+- **Changes**: memory.ts: added "do not correct or clarify who it actually belongs to" to speaker attribution prompt.
+- **Result**: **F1=0.659 EM=0.462** — new best on both.
+
+| Cat | Name | F1 | vs prev |
+|-----|------|------|---------|
+| 1 | multi-hop | 0.447 | -0.011 |
+| 2 | temporal | 0.689 | -0.017 |
+| 3 | open-domain | 0.488 | +0.022 |
+| 4 | single-hop | 0.627 | +0.010 |
+| 5 | adversarial | 0.872 | +0.021 |
+
+- **Analysis**: Adversarial failures reduced from 7 to 6. One "Oscar" correction still slips through. Overall +0.006 F1, +0.020 EM.
+- **Decision**: **Adopted.** F1=0.659, EM=0.462.
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

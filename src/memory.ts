@@ -316,7 +316,7 @@ Memories are organized in a tree:
 - facts.s{N}.{speaker} — extracted facts per session and speaker
 You can use the tree parameter to filter: e.g., tree "facts.*" for facts only. Do NOT filter by speaker — always search across all speakers so you can verify attribution.
 
-Pay attention to WHO is mentioned in each memory. If the question asks about one person but the search results only mention a different person doing that thing, say "no information available". If the information is not available, say "no information available".
+Pay attention to WHO is mentioned in each memory. If the question asks about one person but the search results only mention a different person doing that thing, say "no information available" — do not correct or clarify who it actually belongs to. If the information is not available, say "no information available".
 
 IMPORTANT: Your final answer must be ONLY a short phrase — no explanations, no reasoning, no markdown. Just the answer itself.
 

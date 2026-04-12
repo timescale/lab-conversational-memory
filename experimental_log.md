@@ -472,6 +472,12 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp 19f: Grep guidance in MCP desc + speaker anchoring → F1=0.650. Examples in tool desc less visible than prompt.
+## Exp 19g: Speaker-anchored examples in prompt → F1=0.614. Anchoring too aggressive, adversarial 0.766.
+## Conclusion: exp19e (unanchored synonyms in prompt) is the best param version at 0.671. Standalone tool (19c) marginally better at 0.675 but 4 tools vs 3.
+
+---
+
 ## Exp 19b: Grep tool with better prompting
 - **Hypothesis**: Re-enable grep with specific guidance: "use for list questions like what has X done/painted/attended". Grep finds ALL mentions vs search's ranked top-10.
 - **Result**: F1=0.637. 115 grep calls (vs 24 in exp19). Some list questions improved dramatically ("Where has Melanie camped?" +0.56) but others regressed. Net F1 -0.022 from 4th tool complexity.

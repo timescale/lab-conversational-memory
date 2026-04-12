@@ -29,11 +29,11 @@ server.tool(
   "me_memory_search",
   `Search and browse memories using text matching and/or filters.
 
-Search modes: semantic (meaning), fulltext (keywords), or both (hybrid). Combine with tree, meta, and temporal filters. Results scored 0-1.`,
+Search modes: semantic (meaning), fulltext (keywords), grep (regex), or combinations. Combine with tree, meta, and temporal filters. Results scored 0-1.`,
   {
     semantic: z.string().nullable().describe("Natural language query for semantic/meaning search"),
     fulltext: z.string().nullable().describe("Keywords/phrases for BM25 exact matching"),
-    grep: z.string().nullable().describe("Regex pattern (case-insensitive). Use | for OR with synonyms: e.g., 'painted|drew|sketch|art' to find ALL mentions. Best for list questions."),
+    grep: z.string().nullable().describe("Regex pattern (case-insensitive). Use | for OR, .* for wildcards. Returns ALL matches. Best for list questions."),
     meta: z.record(z.unknown()).nullable().describe("Filter by metadata attributes (null to omit)"),
     tree: z.string().nullable().describe("Filter by tree path. Bare path matches exactly — use path.* for descendants."),
     temporal: z.object({

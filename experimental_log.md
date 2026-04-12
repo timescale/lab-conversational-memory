@@ -459,6 +459,13 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp meta: Speaker in fact meta + meta filter prompting
+- **Hypothesis**: Add speaker to fact metadata, tell Claude to use `meta: {speaker: "X"}` for follow-up searches.
+- **Result**: F1=0.621. Meta used 37/494 searches. Adversarial 0.830 (-0.042), open-domain 0.358 (-0.130). Speaker filtering narrows too aggressively.
+- **Decision**: **Reverted.**
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

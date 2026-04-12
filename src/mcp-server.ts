@@ -33,6 +33,7 @@ Search modes: semantic (meaning), fulltext (keywords), or both (hybrid). Combine
   {
     semantic: z.string().nullable().describe("Natural language query for semantic/meaning search"),
     fulltext: z.string().nullable().describe("Keywords/phrases for BM25 exact matching"),
+    grep: z.string().nullable().describe("Regex pattern (case-insensitive). Use | for OR with synonyms: e.g., 'painted|drew|sketch|art' to find ALL mentions. Best for list questions."),
     meta: z.record(z.unknown()).nullable().describe("Filter by metadata attributes (null to omit)"),
     tree: z.string().nullable().describe("Filter by tree path. Bare path matches exactly — use path.* for descendants."),
     temporal: z.object({
@@ -98,6 +99,14 @@ Search modes: semantic (meaning), fulltext (keywords), or both (hybrid). Combine
         filterValues.push(params.temporal.within.start, params.temporal.within.end);
         paramIdx += 2;
       }
+    }
+
+    // Grep acts as an additional filter — combines with semantic/fulltext or works standalone
+    const hasGrep = params.grep && params.grep.length > 0;
+    if (hasGrep) {
+      filters.push(`content ~* $${paramIdx}`);
+      filterValues.push(params.grep);
+      paramIdx++;
     }
 
     const filterClause = filters.length > 0 ? " AND " + filters.join(" AND ") : "";
@@ -284,38 +293,6 @@ Shows how memories are organized and how many exist at each level. Use to unders
     }
     const nodes = rows.map((r) => ({ path: r.path, count: r.count }));
     return { content: [{ type: "text" as const, text: JSON.stringify({ nodes }, null, 2) }] };
-  },
-);
-
-// ---------------------------------------------------------------------------
-// me_memory_grep — exact substring matching
-// ---------------------------------------------------------------------------
-
-server.tool(
-  "me_memory_grep",
-  `Search memories by pattern match (case-insensitive regex). Returns ALL memories matching the pattern. Use for list questions (what has X done/painted/attended) where you need every mention, not just the top results. Use | for OR: "beach|sea|ocean" matches any of those words.`,
-  {
-    pattern: z.string().describe("Regex pattern (case-insensitive). Use | for OR: e.g., 'painted|drawing|art' to find all art-related mentions"),
-    limit: z.number().int().min(1).max(100).nullable().describe("Maximum results (default 20)"),
-  },
-  async ({ pattern, limit: maxResults }) => {
-    const lim = maxResults ?? 20;
-    const rows = await sql`
-      SELECT id, content, temporal::text
-      FROM memory
-      WHERE content ~* ${pattern}
-      ORDER BY created_at DESC
-      LIMIT ${lim}
-    `;
-    if (rows.length === 0) {
-      return { content: [{ type: "text" as const, text: "No matches found." }] };
-    }
-    const lines = rows.map((r, i) => {
-      const date = formatDate(r.temporal as string | null);
-      const datePrefix = date ? `[${date}] ` : "";
-      return `${i + 1}. ${datePrefix}${r.content} (id: ${r.id})`;
-    });
-    return { content: [{ type: "text" as const, text: lines.join("\n") }] };
   },
 );
 

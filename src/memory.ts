@@ -309,11 +309,14 @@ export function buildPrompt(
 ): string {
   // Tool mode: no pre-retrieved context, Claude searches via MCP tools
   if (!context) {
-    const base = `You have access to memory tools:
-- me_memory_search: semantic + keyword search (best for finding relevant memories)
-- me_memory_grep: regex pattern match with | for OR (best for finding ALL mentions — use for list questions). Example: pattern "painted|drawing|sketch" finds all art mentions
-- me_memory_get: retrieve a memory by ID for surrounding context
-Use as many tool calls as needed.
+    const base = `You have access to memory tools. Use me_memory_search to find relevant conversation memories, then answer the question. You can use me_memory_get to retrieve a specific memory by ID for more detail. Use as many tool calls as needed.
+
+me_memory_search has a grep parameter for regex pattern matching. Always expand with synonyms using |:
+- "What has X painted?" → grep: "painted|drew|drawing|sketch|art|canvas"
+- "Where has X camped?" → grep: "camp|tent|campfire|campsite|camping"
+- "What pets?" → grep: "pet|dog|cat|guinea|hamster|animal|puppy|kitten"
+- "What books?" → grep: "book|read|novel|reading|author|title"
+Use grep for list questions to find ALL mentions. Can combine with semantic/fulltext for ranked+filtered results.
 
 Memories are organized in a tree:
 - conv.s{N}.{speaker} — raw conversation turns per session and speaker

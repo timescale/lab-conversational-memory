@@ -466,6 +466,12 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp 19c: Grep standalone tool with regex OR → **F1=0.675. Adopted.**
+## Exp 19d: Grep as search param (first attempt) → F1=0.639. Claude still called standalone grep + no synonym expansion.
+## Exp 19e: Grep param with synonym examples + standalone tool removed → F1=0.671. Close to standalone (0.675). Param patterns use broader synonyms but miss speaker anchoring. Architecturally cleaner (3 tools). **Adopted over 19c.**
+
+---
+
 ## Exp 19b: Grep tool with better prompting
 - **Hypothesis**: Re-enable grep with specific guidance: "use for list questions like what has X done/painted/attended". Grep finds ALL mentions vs search's ranked top-10.
 - **Result**: F1=0.637. 115 grep calls (vs 24 in exp19). Some list questions improved dramatically ("Where has Melanie camped?" +0.56) but others regressed. Net F1 -0.022 from 4th tool complexity.

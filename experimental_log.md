@@ -466,6 +466,13 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp 19b: Grep tool with better prompting
+- **Hypothesis**: Re-enable grep with specific guidance: "use for list questions like what has X done/painted/attended". Grep finds ALL mentions vs search's ranked top-10.
+- **Result**: F1=0.637. 115 grep calls (vs 24 in exp19). Some list questions improved dramatically ("Where has Melanie camped?" +0.56) but others regressed. Net F1 -0.022 from 4th tool complexity.
+- **Decision**: **Reverted.** Grep helps specific list queries but the 4th tool cost offsets gains.
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

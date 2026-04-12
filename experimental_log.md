@@ -473,6 +473,24 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp 19c: Grep with regex OR + synonym expansion
+- **Hypothesis**: Upgrade grep from ILIKE to Postgres regex (~*), enabling OR patterns. Prompt Claude to expand search terms: "painted|drawing|sketch". This addresses the key weakness of exp19b where grep used single exact terms.
+- **Changes**: mcp-server.ts: ILIKE → ~* regex, default limit 20. Prompt: explicit example of OR patterns.
+- **Result**: **F1=0.675 EM=0.472** — new best on both.
+
+| Cat | Name | F1 | vs prev |
+|-----|------|------|---------|
+| 1 | multi-hop | **0.601** | **+0.154** |
+| 2 | temporal | 0.628 | -0.061 |
+| 3 | open-domain | 0.490 | +0.002 |
+| 4 | single-hop | 0.635 | +0.008 |
+| 5 | adversarial | 0.872 | 0.000 |
+
+- **Analysis**: Multi-hop exploded from 0.447 to 0.601. Claude now generates sophisticated regex patterns: `"Caroline.*(married|single|dating|boyfriend|girlfriend|partner)"` → F1=1.00. `"Caroline.*country|Caroline.*moved.*from"` → F1=1.00 (previously couldn't find "Sweden"). 141 grep calls with synonym expansion. Adversarial perfectly stable.
+- **Decision**: **Adopted.** F1=0.675, EM=0.472.
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

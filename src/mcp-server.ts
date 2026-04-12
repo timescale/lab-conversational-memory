@@ -293,17 +293,17 @@ Shows how memories are organized and how many exist at each level. Use to unders
 
 server.tool(
   "me_memory_grep",
-  `Search memories by exact substring match (case-insensitive). Use for finding specific names, titles, numbers, or phrases that semantic search might miss.`,
+  `Search memories by pattern match (case-insensitive regex). Returns ALL memories matching the pattern. Use for list questions (what has X done/painted/attended) where you need every mention, not just the top results. Use | for OR: "beach|sea|ocean" matches any of those words.`,
   {
-    pattern: z.string().describe("Substring to search for (case-insensitive)"),
-    limit: z.number().int().min(1).max(100).nullable().describe("Maximum results (default 10)"),
+    pattern: z.string().describe("Regex pattern (case-insensitive). Use | for OR: e.g., 'painted|drawing|art' to find all art-related mentions"),
+    limit: z.number().int().min(1).max(100).nullable().describe("Maximum results (default 20)"),
   },
   async ({ pattern, limit: maxResults }) => {
-    const lim = maxResults ?? 10;
+    const lim = maxResults ?? 20;
     const rows = await sql`
       SELECT id, content, temporal::text
       FROM memory
-      WHERE content ILIKE ${"%" + pattern + "%"}
+      WHERE content ~* ${pattern}
       ORDER BY created_at DESC
       LIMIT ${lim}
     `;

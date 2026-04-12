@@ -45,7 +45,7 @@ const MCP_CONFIG = JSON.stringify({
   },
 });
 
-const MCP_TOOLS = "mcp__recall__me_memory_search,mcp__recall__me_memory_get,mcp__recall__me_memory_tree";
+const MCP_TOOLS = "mcp__recall__me_memory_search,mcp__recall__me_memory_get,mcp__recall__me_memory_tree,mcp__recall__me_memory_grep";
 
 const TIMEOUT_MS = 240_000; // 4 minutes per question
 const MAX_RETRIES = 2;

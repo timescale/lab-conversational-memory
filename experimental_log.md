@@ -472,9 +472,16 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
-## Exp 19f: Grep guidance in MCP desc + speaker anchoring → F1=0.650. Examples in tool desc less visible than prompt.
-## Exp 19g: Speaker-anchored examples in prompt → F1=0.614. Anchoring too aggressive, adversarial 0.766.
-## Conclusion: exp19e (unanchored synonyms in prompt) is the best param version at 0.671. Standalone tool (19c) marginally better at 0.675 but 4 tools vs 3.
+## Grep prompt placement experiments (19f/19g/19h)
+
+| Exp | Examples location | Anchored? | F1 | Multi-hop | Adversarial |
+|-----|------------------|-----------|------|-----------|-------------|
+| **19e** | **Prompt** | **No** | **0.671** | 0.545 | **0.894** |
+| 19h | MCP desc | No | 0.658 | 0.520 | 0.851 |
+| 19f | MCP desc | Yes | 0.650 | 0.454 | 0.894 |
+| 19g | Prompt | Yes | 0.614 | 0.476 | 0.766 |
+
+**Findings**: Prompt examples beat MCP desc examples (+0.013-0.036). Unanchored beats anchored. Speaker anchoring hurts adversarial. **Kept 19e.**
 
 ---
 

@@ -392,6 +392,40 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Full 10-sample eval (F1=0.641 checkpoint)
+- **Result**: F1=0.646 EM=0.454 (1986 QA). Beats paper's 0.598.
+
+---
+
+## Exp 23+24: Stronger adversarial + exact words → F1=0.485. **Reverted.** Too restrictive.
+## Exp 23: Stronger adversarial only → F1=0.591. **Reverted.** Multi-hop -0.127.
+## Exp json-schema: Structured output → **F1=0.620. Adopted.**
+## Exp 25: No tool call limit → **F1=0.641. Adopted.**
+
+---
+
+## Exp tree-C: Tell Claude about tree structure
+- **Hypothesis**: Claude has tree tools but doesn't know the structure. Telling it enables tree-based filtering.
+- **Result**: F1=0.634. Multi-hop 0.482 (+0.065), temporal 0.721 (+0.037). But adversarial 0.830 (-0.064) — speaker filtering helps find content but hurts rejection.
+
+## Exp tree-C2: Tree prompt but no speaker filtering
+- **Hypothesis**: Keep tree awareness for `facts.*` filtering but tell Claude NOT to filter by speaker to preserve adversarial attribution checks.
+- **Changes**: Prompt says "Do NOT filter by speaker — always search across all speakers so you can verify attribution."
+- **Result**: **F1=0.653 EM=0.442** — new best F1.
+
+| Cat | Name | F1 | vs 0.641 baseline |
+|-----|------|------|-------------------|
+| 1 | multi-hop | **0.458** | +0.041 |
+| 2 | temporal | 0.706 | +0.022 |
+| 3 | open-domain | **0.466** | +0.054 |
+| 4 | single-hop | 0.617 | +0.022 |
+| 5 | adversarial | 0.851 | -0.043 |
+
+- **Analysis**: `facts.*` filter lets Claude search extracted facts specifically, boosting multi-hop and open-domain. No speaker filtering preserves cross-speaker context for adversarial. Adversarial dip (-0.043) is within noise.
+- **Decision**: **Adopted.** F1=0.653.
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

@@ -452,6 +452,13 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp 2b: Cross-session aggregation facts
+- **Hypothesis**: Multi-hop list questions fail because facts are scattered. Aggregate facts per speaker by category (creative activities, outdoor, books, family, pets) into single list memories.
+- **Result**: F1=0.638. Multi-hop 0.427 (vs 0.447), open-domain 0.420 (vs 0.488). Aggregated strings too broad, compete with specific results. Same pattern as entity profiles.
+- **Decision**: **Reverted.**
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

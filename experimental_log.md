@@ -426,6 +426,14 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp tree-A: Topic-based fact subtrees
+- **Hypothesis**: Organize facts by topic (art, outdoor, family, identity, career, hobbies, pets) instead of session. Claude can filter by topic for precision.
+- **Changes**: Keyword-based topic classification, tree `facts.{topic}.{speaker}`, prompt updated.
+- **Result**: F1=0.629. Open-domain 0.478 (+0.012 vs C2) but adversarial 0.809 (-0.042). Topic keywords imperfect — some facts miscategorized. More complex tree harder to navigate.
+- **Decision**: **Reverted.** Tree-C2 (session-based facts) is simpler and better.
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

@@ -312,9 +312,9 @@ export function buildPrompt(
     const base = `You have access to memory tools. Use me_memory_search to find relevant conversation memories, then answer the question. You can use me_memory_get to retrieve a specific memory by ID for more detail. Use as many tool calls as needed.
 
 Memories are organized in a tree:
-- conv.s{N}.{speaker} — raw conversation turns per session and speaker (e.g., conv.s3.caroline)
-- facts.s{N}.{speaker} — extracted facts per session and speaker (e.g., facts.s5.melanie)
-You can use the tree parameter in me_memory_search to filter: e.g., tree "facts.*" for facts only. Do NOT filter by speaker — always search across all speakers so you can verify attribution.
+- conv.s{N}.{speaker} — raw conversation turns per session and speaker
+- facts.s{N}.{speaker} — extracted facts per session and speaker
+You can use the tree parameter to filter: e.g., tree "facts.*" for facts only. Do NOT filter by speaker — always search across all speakers so you can verify attribution.
 
 Pay attention to WHO is mentioned in each memory. If the question asks about one person but the search results only mention a different person doing that thing, say "no information available". If the information is not available, say "no information available".
 

@@ -7,7 +7,17 @@
     "error_type": "ANSWERABLE",
     "cited_evidence": ["D4:5"],
     "correct_evidence": ["D4:5"],
-    "reasoning": "Caroline explicitly says she has a hand-painted bowl (session 4: 'my hand-painted bowl. A friend made it for my 18th birthday ten years ago. The pattern and colors are awesome -- it reminds me of art and self-expression'). This is Caroline's bowl, not Melanie's. The question is answerable. Correct answer: art and self-expression."
+    "reasoning": "Caroline explicitly owns a hand-painted bowl (session 4: 'my hand-painted bowl. A friend made it for my 18th birthday'). She says it reminds her of 'art and self-expression'. This is Caroline's bowl, not a swap from Melanie. Correct answer: art and self-expression."
+  },
+  {
+    "question_id": "locomo_0_qa173",
+    "question": "What inspired Caroline's sculpture for the art show?",
+    "golden_answer": "undefined",
+    "category": 5,
+    "error_type": "ANSWERABLE",
+    "cited_evidence": ["D9:16"],
+    "correct_evidence": ["D9:16"],
+    "reasoning": "Caroline says 'I painted this after I visited a LGBTQ center. I wanted to capture everyone's unity and strength.' (session 9). Question says 'sculpture' but Caroline made art for the show. The question is answerable — Caroline did create art for the show inspired by the LGBTQ center."
   },
   {
     "question_id": "locomo_0_qa184",
@@ -17,7 +27,7 @@
     "error_type": "ANSWERABLE",
     "cited_evidence": ["D15:26"],
     "correct_evidence": ["D15:24", "D15:26"],
-    "reasoning": "Caroline says 'Guitar's mostly my thing. Playing it helps me get my emotions out.' and 'I started playing acoustic guitar about five years ago' (session 15). The adversarial_answer lists 'clarinet and violin' (Melanie's instruments), but Caroline genuinely plays guitar. Correct answer: acoustic guitar."
+    "reasoning": "Caroline says 'Guitar's mostly my thing' and 'I started playing acoustic guitar about five years ago' (session 15). The adversarial_answer lists Melanie's instruments, but Caroline genuinely plays guitar. Correct answer: acoustic guitar."
   },
   {
     "question_id": "locomo_0_qa188",
@@ -25,8 +35,98 @@
     "golden_answer": "undefined",
     "category": 5,
     "error_type": "ANSWERABLE",
-    "cited_evidence": ["D3:9"],
+    "cited_evidence": ["D17:8"],
     "correct_evidence": ["D3:9"],
-    "reasoning": "Caroline mentions 'especially after that tough breakup' (session 3). The adversarial_answer attributes Melanie's pottery injury to Caroline, but Caroline has her own setback (the breakup). The question is answerable with different content. Correct answer: a tough breakup."
+    "reasoning": "Caroline mentions 'especially after that tough breakup' (session 3). The adversarial_answer attributes Melanie's pottery injury to Caroline, but Caroline has her own setback. Correct answer: a tough breakup."
+  },
+  {
+    "question_id": "locomo_1_qa61",
+    "question": "What did Gina receive from a dance contest?",
+    "golden_answer": "undefined",
+    "category": 5,
+    "error_type": "ANSWERABLE",
+    "cited_evidence": ["D9:10"],
+    "correct_evidence": ["D9:10"],
+    "reasoning": "Gina says 'Here's one of my trophies from a dance contest' (session 9). Gina received a trophy. The question is answerable. Correct answer: a trophy."
+  },
+  {
+    "question_id": "locomo_3_qa215",
+    "question": "Which activity helps Nate escape and numbs his mind?",
+    "golden_answer": "undefined",
+    "category": 5,
+    "error_type": "ANSWERABLE",
+    "cited_evidence": ["D9:10"],
+    "correct_evidence": ["D9:10"],
+    "reasoning": "Nate says 'Playing video games is a great way to express my creativity' and mentions movies as 'a great escape'. Both activities help Nate escape. Correct answer: playing video games or watching fantasy/sci-fi movies."
+  },
+  {
+    "question_id": "locomo_4_qa193",
+    "question": "Why did John's teammates sign the football they gave him?",
+    "golden_answer": "undefined",
+    "category": 5,
+    "error_type": "ANSWERABLE",
+    "cited_evidence": ["D7:9"],
+    "correct_evidence": ["D7:9"],
+    "reasoning": "John says 'They signed it to show our friendship and appreciation' (session 7). Exact match with adversarial_answer. Correct answer: to show their friendship and appreciation."
+  },
+  {
+    "question_id": "locomo_4_qa208",
+    "question": "Where did Tim capture the painting of the sunset over the mountain range?",
+    "golden_answer": "undefined",
+    "category": 5,
+    "error_type": "ANSWERABLE",
+    "cited_evidence": ["D14:16"],
+    "correct_evidence": ["D14:16"],
+    "reasoning": "Tim says 'I snapped that pic on my trip to the Smoky Mountains last year' (session 14). Exact match. Correct answer: Smoky Mountains."
+  },
+  {
+    "question_id": "locomo_4_qa218",
+    "question": "What was the setback Tim faced in his coding project on 21 November, 2023?",
+    "golden_answer": "undefined",
+    "category": 5,
+    "error_type": "ANSWERABLE",
+    "cited_evidence": ["D19:3"],
+    "correct_evidence": ["D19:3"],
+    "reasoning": "Tim says 'I tried writing a story based on my experiences in the UK, but it didn't go as planned' (session 19). The question says 'coding project' but evidence is about a writing project — minor mismatch but the setback is Tim's. Correct answer: story based on UK experiences didn't go as planned."
+  },
+  {
+    "question_id": "locomo_6_qa156",
+    "question": "What was the main goal of the money raised from the political campaign organized by John and his friends in May 2022?",
+    "golden_answer": "undefined",
+    "category": 5,
+    "error_type": "ANSWERABLE",
+    "cited_evidence": ["D10:10"],
+    "correct_evidence": ["D10:10"],
+    "reasoning": "John says 'Our main goal was to raise money for a dog shelter, which is not far from the street where I live' (session 10). Exact match. Correct answer: raise money for a dog shelter."
+  },
+  {
+    "question_id": "locomo_6_qa172",
+    "question": "What did James learn to make in the chemistry class besides omelette and meringue?",
+    "golden_answer": "undefined",
+    "category": 5,
+    "error_type": "ANSWERABLE",
+    "cited_evidence": ["D23:15"],
+    "correct_evidence": ["D23:15"],
+    "reasoning": "James says 'I made meringue there and they taught us how to make the dough' (session 23). Exact match. Correct answer: dough."
+  },
+  {
+    "question_id": "locomo_8_qa189",
+    "question": "What did Evan and his partner keep from their extended family on January 5, 2024?",
+    "golden_answer": "undefined",
+    "category": 5,
+    "error_type": "ANSWERABLE",
+    "cited_evidence": ["D23:1"],
+    "correct_evidence": ["D23:1"],
+    "reasoning": "Evan says 'My partner and I told our extended fam about our marriage yesterday' (session 23). They had been keeping their marriage secret and revealed it. Correct answer: their marriage."
+  },
+  {
+    "question_id": "locomo_8_qa194",
+    "question": "What activity hindered Evan's stress and flexibility?",
+    "golden_answer": "undefined",
+    "category": 5,
+    "error_type": "ANSWERABLE",
+    "cited_evidence": ["D24:4"],
+    "correct_evidence": ["D24:4"],
+    "reasoning": "Evan says 'Yoga's helped me with stress and staying flexible' (session 24). Question wording says 'hindered' but the evidence shows yoga HELPED. The question is misleading but Evan does yoga for stress/flexibility. Correct answer: yoga."
   }
 ]

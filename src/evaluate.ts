@@ -156,6 +156,35 @@ async function main() {
     readFileSync("data/locomo10.json", "utf-8"),
   );
   const conversations = dataset.slice(0, maxSamples);
+
+  // Load known benchmark errors for error-corrected metrics
+  const locomoIdMap: Record<string, string> = {
+    "conv-26": "locomo_0", "conv-30": "locomo_1", "conv-41": "locomo_2",
+    "conv-42": "locomo_3", "conv-43": "locomo_4", "conv-44": "locomo_5",
+    "conv-47": "locomo_6", "conv-48": "locomo_7", "conv-49": "locomo_8",
+    "conv-50": "locomo_9",
+  };
+  let errorQuestions: Set<string> | null = null;
+  try {
+    const errors: Array<{ question_id: string; question: string }> = JSON.parse(
+      readFileSync("data/locomo-errors.json", "utf-8"),
+    );
+    errorQuestions = new Set<string>();
+    for (const e of errors) {
+      const m = e.question_id.match(/locomo_(\d+)/);
+      if (m) {
+        // Map locomo index to sample_id
+        const sampleId = Object.entries(locomoIdMap).find(([, v]) => v === `locomo_${m[1]}`)?.[0];
+        if (sampleId) {
+          errorQuestions.add(`${sampleId}::${e.question}`);
+        }
+      }
+    }
+    console.log(`Loaded ${errorQuestions.size} known benchmark errors`);
+  } catch {
+    console.log("No benchmark error file found, skipping error correction");
+  }
+
   console.log(
     `=== LoCoMo Memory Evaluation ===\nSamples: ${conversations.length}/${dataset.length}\n`,
   );
@@ -285,34 +314,58 @@ async function main() {
     );
   }
 
-  // Overall aggregates
-  const overallF1 = mean(allResults.map((r) => r.f1));
-  const overallEM = mean(allResults.map((r) => r.em));
-  const byCategory = aggregateByKey(allResults, (r) => String(r.category));
-  const bySample = aggregateByKey(allResults, (r) => r.sampleId);
+  // Error-corrected aggregates (primary — excludes known benchmark errors)
+  const cleanResults = errorQuestions
+    ? allResults.filter((r) => !errorQuestions.has(`${r.sampleId}::${r.question}`))
+    : allResults;
+  const errorExcluded = allResults.length - cleanResults.length;
+  const overallF1 = mean(cleanResults.map((r) => r.f1));
+  const overallEM = mean(cleanResults.map((r) => r.em));
+  const byCategory = aggregateByKey(cleanResults, (r) => String(r.category));
+  const bySample = aggregateByKey(cleanResults, (r) => r.sampleId);
+
+  // Raw aggregates (supplementary — includes benchmark errors)
+  const rawF1 = mean(allResults.map((r) => r.f1));
+  const rawEM = mean(allResults.map((r) => r.em));
+  const rawByCategory = aggregateByKey(allResults, (r) => String(r.category));
 
   // Print summary
   console.log("By Category:");
   for (const [cat, stats] of Object.entries(byCategory)) {
     const name = CATEGORY_NAMES[Number(cat)] ?? cat;
+    const raw = rawByCategory[cat];
+    const rawSuffix = raw && errorExcluded > 0 ? ` (raw: F1=${raw.f1.toFixed(3)} n=${raw.count})` : "";
     console.log(
-      `  ${name} (${cat}): F1=${stats.f1.toFixed(3)} EM=${stats.em.toFixed(3)} (n=${stats.count})`,
+      `  ${name} (${cat}): F1=${stats.f1.toFixed(3)} EM=${stats.em.toFixed(3)} (n=${stats.count})${rawSuffix}`,
     );
   }
   console.log(
-    `\nOverall: F1=${overallF1.toFixed(3)} EM=${overallEM.toFixed(3)} (${allResults.length} QA)\n`,
+    `\nOverall: F1=${overallF1.toFixed(3)} EM=${overallEM.toFixed(3)} (${cleanResults.length} QA)`,
   );
+  if (errorExcluded > 0) {
+    console.log(
+      `Raw (incl. benchmark errors): F1=${rawF1.toFixed(3)} EM=${rawEM.toFixed(3)} (${allResults.length} QA, ${errorExcluded} errors excluded)\n`,
+    );
+  } else {
+    console.log();
+  }
 
   // Build eval run
   const timestamp = new Date().toISOString();
   const memoryTsSource = readFileSync("src/memory.ts", "utf-8");
 
-  const evalRun: EvalRun = {
+  const evalRun = {
     timestamp,
     samples: conversations.length,
-    totalQA: allResults.length,
+    totalQA: cleanResults.length,
     overallF1,
     overallEM,
+    raw: errorExcluded > 0 ? {
+      f1: rawF1,
+      em: rawEM,
+      totalQA: allResults.length,
+      errorsExcluded: errorExcluded,
+    } : undefined,
     byCategory: Object.fromEntries(
       Object.entries(byCategory).map(([k, v]) => [Number(k), v]),
     ),
@@ -336,8 +389,12 @@ async function main() {
     timestamp,
     f1: Number(overallF1.toFixed(4)),
     em: Number(overallEM.toFixed(4)),
+    raw_f1: Number(rawF1.toFixed(4)),
+    raw_em: Number(rawEM.toFixed(4)),
     samples: conversations.length,
-    qa: allResults.length,
+    qa: cleanResults.length,
+    qa_total: allResults.length,
+    errors_excluded: errorExcluded,
     description,
     memory_ts_hash: memoryHash,
   });

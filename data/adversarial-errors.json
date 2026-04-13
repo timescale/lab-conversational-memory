@@ -90,16 +90,6 @@
     "reasoning": "James says 'I made meringue there and they taught us how to make the dough' (session 23). Exact match. Correct answer: dough."
   },
   {
-    "question_id": "locomo_8_qa189",
-    "question": "What did Evan and his partner keep from their extended family on January 5, 2024?",
-    "golden_answer": "undefined",
-    "category": 5,
-    "error_type": "ANSWERABLE",
-    "cited_evidence": ["D23:1"],
-    "correct_evidence": ["D23:1"],
-    "reasoning": "Evan says 'My partner and I told our extended fam about our marriage yesterday' (session 23). They had been keeping their marriage secret and revealed it. Correct answer: their marriage."
-  },
-  {
     "question_id": "locomo_8_qa194",
     "question": "What activity hindered Evan's stress and flexibility?",
     "golden_answer": "undefined",

@@ -10,16 +10,6 @@
     "reasoning": "Caroline explicitly owns a hand-painted bowl (session 4: 'my hand-painted bowl. A friend made it for my 18th birthday'). She says it reminds her of 'art and self-expression'. This is Caroline's bowl, not a swap from Melanie. Correct answer: art and self-expression."
   },
   {
-    "question_id": "locomo_0_qa173",
-    "question": "What inspired Caroline's sculpture for the art show?",
-    "golden_answer": "undefined",
-    "category": 5,
-    "error_type": "ANSWERABLE",
-    "cited_evidence": ["D9:16"],
-    "correct_evidence": ["D9:16"],
-    "reasoning": "Caroline says 'I painted this after I visited a LGBTQ center. I wanted to capture everyone's unity and strength.' (session 9). Question says 'sculpture' but Caroline made art for the show. The question is answerable — Caroline did create art for the show inspired by the LGBTQ center."
-  },
-  {
     "question_id": "locomo_0_qa184",
     "question": "What type of instrument does Caroline play?",
     "golden_answer": "undefined",
@@ -58,15 +48,5 @@
     "cited_evidence": ["D9:10"],
     "correct_evidence": ["D9:10"],
     "reasoning": "Nate says 'Playing video games is a great way to express my creativity' and mentions movies as 'a great escape'. Both activities help Nate escape. Correct answer: playing video games or watching fantasy/sci-fi movies."
-  },
-  {
-    "question_id": "locomo_6_qa172",
-    "question": "What did James learn to make in the chemistry class besides omelette and meringue?",
-    "golden_answer": "undefined",
-    "category": 5,
-    "error_type": "ANSWERABLE",
-    "cited_evidence": ["D23:15"],
-    "correct_evidence": ["D23:15"],
-    "reasoning": "James says 'I made meringue there and they taught us how to make the dough' (session 23). Exact match. Correct answer: dough."
   },
 ]

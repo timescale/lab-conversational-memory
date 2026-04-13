@@ -515,6 +515,24 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Haiku baseline (1-sample)
+- **Model**: haiku (switched from sonnet due to credit exhaustion until Apr 17)
+- **Result**: F1=0.645 EM=0.462 (169 QA, error-corrected; raw F1=0.618, 199 QA, 30 errors excluded)
+- **Context**: Same memory.ts/mcp-server.ts as sonnet best (exp19k + exp26 adopted). Haiku used for both fact extraction and QA answering.
+
+| Cat | Name | F1 | EM | n |
+|-----|------|------|------|---|
+| 1 | multi-hop | 0.521 | 0.273 | 22 |
+| 2 | temporal | 0.665 | 0.333 | 33 |
+| 3 | open-domain | 0.278 | 0.091 | 11 |
+| 4 | single-hop | 0.550 | 0.339 | 59 |
+| 5 | adversarial | 0.909 | 0.909 | 44 |
+
+- **vs sonnet best on 1-sample (~0.664)**: -0.019 overall. Open-domain particularly weak (0.278 vs ~0.488). Multi-hop also down (0.521 vs ~0.545). Adversarial is stronger with haiku (0.909 vs ~0.872) — likely less verbose/creative refusals.
+- **Note**: Haiku is faster and cheaper; experiments will continue with haiku until sonnet credits restore.
+
+---
+
 ## Exp 3b: Per-speaker entity profiles
 - **Hypothesis**: Concatenate all extracted facts per speaker into a single "profile" memory. Should help broad questions like "What activities does Melanie do?" Only 2 extra memories (one per speaker).
 - **Changes**: memory.ts: build profile memories from extracted facts, stored under `profile.{speaker}` tree.

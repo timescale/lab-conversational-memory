@@ -57,7 +57,8 @@ interface ClaudeResult {
 
 async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeResult> {
   const JSON_SCHEMA = '{"type":"object","properties":{"answer":{"type":"string"}},"required":["answer"]}';
-  const args = ["claude", "-p", prompt, "--output-format", "json", "--verbose", "--model", "sonnet", "--json-schema", JSON_SCHEMA];
+  const model = process.env.EVAL_MODEL ?? "sonnet";
+  const args = ["claude", "-p", prompt, "--output-format", "json", "--verbose", "--model", model, "--json-schema", JSON_SCHEMA];
   if (useMcp) {
     args.push("--mcp-config", MCP_CONFIG, "--strict-mcp-config", "--tools", MCP_TOOLS, "--allowedTools", MCP_TOOLS);
   }
@@ -190,7 +191,7 @@ async function main() {
   }
 
   console.log(
-    `=== LoCoMo Memory Evaluation ===\nSamples: ${conversations.length}/${dataset.length}\n`,
+    `=== LoCoMo Memory Evaluation ===\nModel: ${process.env.EVAL_MODEL ?? "sonnet"}\nSamples: ${conversations.length}/${dataset.length}\n`,
   );
 
   // Connect (suppress NOTICE messages from BM25 index rebuilds)
@@ -391,6 +392,7 @@ async function main() {
     .slice(0, 12);
   const historyLine = JSON.stringify({
     timestamp,
+    model: process.env.EVAL_MODEL ?? "sonnet",
     f1: Number(overallF1.toFixed(4)),
     em: Number(overallEM.toFixed(4)),
     raw_f1: Number(rawF1.toFixed(4)),

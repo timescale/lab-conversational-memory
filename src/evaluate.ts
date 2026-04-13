@@ -182,7 +182,7 @@ async function main() {
             }
           }
         }
-      } catch {}
+      } catch (e: any) { console.error(`  Error loading ${file}: ${e.message}`); }
     }
     console.log(`Loaded ${errorQuestions.size} known benchmark errors`);
   } catch {

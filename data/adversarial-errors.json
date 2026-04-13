@@ -77,7 +77,7 @@
     "error_type": "ANSWERABLE",
     "cited_evidence": ["D14:16"],
     "correct_evidence": ["D14:16"],
-    "reasoning": "Tim says 'I snapped that pic on my trip to the Smoky Mountains last year' (session 14). Exact match. Correct answer: Smoky Mountains."
+    "reasoning": "Tim says 'I snapped that pic on my trip to the Smoky Mountains last year' (session 14). Evidence is about a photo not a painting (question wording imprecise), but the content is Tim's own experience at the Smoky Mountains. Correct answer: Smoky Mountains."
   },
   {
     "question_id": "locomo_4_qa218",

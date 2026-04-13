@@ -89,14 +89,4 @@
     "correct_evidence": ["D23:15"],
     "reasoning": "James says 'I made meringue there and they taught us how to make the dough' (session 23). Exact match. Correct answer: dough."
   },
-  {
-    "question_id": "locomo_8_qa194",
-    "question": "What activity hindered Evan's stress and flexibility?",
-    "golden_answer": "undefined",
-    "category": 5,
-    "error_type": "ANSWERABLE",
-    "cited_evidence": ["D24:4"],
-    "correct_evidence": ["D24:4"],
-    "reasoning": "Evan says 'Yoga's helped me with stress and staying flexible' (session 24). Question wording says 'hindered' but the evidence shows yoga HELPED. The question is misleading but Evan does yoga for stress/flexibility. Correct answer: yoga."
-  }
 ]

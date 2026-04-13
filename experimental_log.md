@@ -481,7 +481,12 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 | 19f | MCP desc | Yes | 0.650 | 0.454 | 0.894 |
 | 19g | Prompt | Yes | 0.614 | 0.476 | 0.766 |
 
-**Findings**: Prompt examples beat MCP desc examples (+0.013-0.036). Unanchored beats anchored. Speaker anchoring hurts adversarial. **Kept 19e.**
+**Findings**: Prompt examples beat MCP desc examples (+0.013-0.036). Unanchored beats anchored. Speaker anchoring hurts adversarial.
+
+## 19e variance test: 3 runs → mean F1=0.651 (range 0.630-0.671)
+19k (concise MCP desc) at 0.653 is within this range — prompt vs MCP desc gap is noise.
+
+**Adopted 19k** — grep guidance in MCP tool description. Architecturally cleaner for production (no QA-specific prompt needed).
 
 ---
 

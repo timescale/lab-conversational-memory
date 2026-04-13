@@ -70,16 +70,6 @@
     "reasoning": "John says 'They signed it to show our friendship and appreciation' (session 7). Exact match with adversarial_answer. Correct answer: to show their friendship and appreciation."
   },
   {
-    "question_id": "locomo_6_qa156",
-    "question": "What was the main goal of the money raised from the political campaign organized by John and his friends in May 2022?",
-    "golden_answer": "undefined",
-    "category": 5,
-    "error_type": "ANSWERABLE",
-    "cited_evidence": ["D10:10"],
-    "correct_evidence": ["D10:10"],
-    "reasoning": "John says 'Our main goal was to raise money for a dog shelter, which is not far from the street where I live' (session 10). Exact match. Correct answer: raise money for a dog shelter."
-  },
-  {
     "question_id": "locomo_6_qa172",
     "question": "What did James learn to make in the chemistry class besides omelette and meringue?",
     "golden_answer": "undefined",

@@ -70,16 +70,6 @@
     "reasoning": "John says 'They signed it to show our friendship and appreciation' (session 7). Exact match with adversarial_answer. Correct answer: to show their friendship and appreciation."
   },
   {
-    "question_id": "locomo_4_qa208",
-    "question": "Where did Tim capture the painting of the sunset over the mountain range?",
-    "golden_answer": "undefined",
-    "category": 5,
-    "error_type": "ANSWERABLE",
-    "cited_evidence": ["D14:16"],
-    "correct_evidence": ["D14:16"],
-    "reasoning": "Tim says 'I snapped that pic on my trip to the Smoky Mountains last year' (session 14). Evidence is about a photo not a painting (question wording imprecise), but the content is Tim's own experience at the Smoky Mountains. Correct answer: Smoky Mountains."
-  },
-  {
     "question_id": "locomo_4_qa218",
     "question": "What was the setback Tim faced in his coding project on 21 November, 2023?",
     "golden_answer": "undefined",

@@ -1,29 +1,32 @@
 [
   {
-    "sample_id": "conv-26",
+    "question_id": "locomo_0_qa161",
     "question": "What is Caroline's hand-painted bowl a reminder of?",
-    "benchmark_answer": "undefined",
-    "correct_answer": "art and self-expression",
+    "golden_answer": "undefined",
+    "category": 5,
     "error_type": "ANSWERABLE",
-    "evidence": ["D4:5"],
-    "reasoning": "Caroline explicitly says she has a hand-painted bowl (session 4: 'my hand-painted bowl. A friend made it for my 18th birthday ten years ago. The pattern and colors are awesome -- it reminds me of art and self-expression'). This is Caroline's bowl, not Melanie's. The question is answerable."
+    "cited_evidence": ["D4:5"],
+    "correct_evidence": ["D4:5"],
+    "reasoning": "Caroline explicitly says she has a hand-painted bowl (session 4: 'my hand-painted bowl. A friend made it for my 18th birthday ten years ago. The pattern and colors are awesome -- it reminds me of art and self-expression'). This is Caroline's bowl, not Melanie's. The question is answerable. Correct answer: art and self-expression."
   },
   {
-    "sample_id": "conv-26",
+    "question_id": "locomo_0_qa184",
     "question": "What type of instrument does Caroline play?",
-    "benchmark_answer": "undefined",
-    "correct_answer": "acoustic guitar",
+    "golden_answer": "undefined",
+    "category": 5,
     "error_type": "ANSWERABLE",
-    "evidence": ["D15:24", "D15:26"],
-    "reasoning": "Caroline says 'Guitar's mostly my thing. Playing it helps me get my emotions out.' and 'I started playing acoustic guitar about five years ago' (session 15). The adversarial_answer lists 'clarinet and violin' (Melanie's instruments), but Caroline genuinely plays guitar. The question is answerable."
+    "cited_evidence": ["D15:26"],
+    "correct_evidence": ["D15:24", "D15:26"],
+    "reasoning": "Caroline says 'Guitar's mostly my thing. Playing it helps me get my emotions out.' and 'I started playing acoustic guitar about five years ago' (session 15). The adversarial_answer lists 'clarinet and violin' (Melanie's instruments), but Caroline genuinely plays guitar. Correct answer: acoustic guitar."
   },
   {
-    "sample_id": "conv-26",
+    "question_id": "locomo_0_qa188",
     "question": "What setback did Caroline face recently?",
-    "benchmark_answer": "undefined",
-    "correct_answer": "a tough breakup",
+    "golden_answer": "undefined",
+    "category": 5,
     "error_type": "ANSWERABLE",
-    "evidence": ["D3:9"],
-    "reasoning": "Caroline mentions 'especially after that tough breakup' (session 3). The adversarial_answer attributes Melanie's pottery injury to Caroline, but Caroline has her own setback (the breakup). The question is answerable with different content."
+    "cited_evidence": ["D3:9"],
+    "correct_evidence": ["D3:9"],
+    "reasoning": "Caroline mentions 'especially after that tough breakup' (session 3). The adversarial_answer attributes Melanie's pottery injury to Caroline, but Caroline has her own setback (the breakup). The question is answerable with different content. Correct answer: a tough breakup."
   }
 ]

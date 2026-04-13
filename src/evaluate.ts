@@ -165,34 +165,28 @@ async function main() {
     "conv-50": "locomo_9",
   };
   let errorQuestions: Set<string> | null = null;
+  const errorFiles = ["data/locomo-errors.json", "data/adversarial-errors.json"];
   try {
-    const errors: Array<{ question_id: string; question: string }> = JSON.parse(
-      readFileSync("data/locomo-errors.json", "utf-8"),
-    );
     errorQuestions = new Set<string>();
-    for (const e of errors) {
-      const m = e.question_id.match(/locomo_(\d+)/);
-      if (m) {
-        const sampleId = Object.entries(locomoIdMap).find(([, v]) => v === `locomo_${m[1]}`)?.[0];
-        if (sampleId) {
-          errorQuestions.add(`${sampleId}::${e.question}`);
+    for (const file of errorFiles) {
+      try {
+        const errors: Array<{ question_id: string; question: string }> = JSON.parse(
+          readFileSync(file, "utf-8"),
+        );
+        for (const e of errors) {
+          const m = e.question_id.match(/locomo_(\d+)/);
+          if (m) {
+            const sampleId = Object.entries(locomoIdMap).find(([, v]) => v === `locomo_${m[1]}`)?.[0];
+            if (sampleId) {
+              errorQuestions.add(`${sampleId}::${e.question}`);
+            }
+          }
         }
-      }
+      } catch {}
     }
-    // Also load our adversarial error audit
-    try {
-      const advErrors: Array<{ sample_id: string; question: string }> = JSON.parse(
-        readFileSync("data/adversarial-errors.json", "utf-8"),
-      );
-      for (const e of advErrors) {
-        errorQuestions.add(`${e.sample_id}::${e.question}`);
-      }
-      console.log(`Loaded ${errorQuestions.size} known benchmark errors (${advErrors.length} adversarial)`);
-    } catch {
-      console.log(`Loaded ${errorQuestions.size} known benchmark errors`);
-    }
+    console.log(`Loaded ${errorQuestions.size} known benchmark errors`);
   } catch {
-    console.log("No benchmark error file found, skipping error correction");
+    console.log("No benchmark error files found, skipping error correction");
   }
 
   console.log(

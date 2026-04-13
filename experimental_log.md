@@ -515,6 +515,23 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp28: grep case-sensitive (`~`) vs case-insensitive (`~*`)
+- **Hypothesis**: Test whether case-insensitive grep (`~*`) is better than case-sensitive (`~`). Tool description updated to match operator.
+- **Result**: F1=0.570 EM=0.414 (case-sensitive) vs mean 0.632 (baseline) — **−0.062 overall**
+
+| Cat | Baseline (mean) | Case-sensitive | Delta |
+|-----|----------------|---------------|-------|
+| 1 | multi-hop | 0.485 | 0.288 | **−0.197** |
+| 2 | temporal | 0.620 | 0.417 | **−0.203** |
+| 3 | open-domain | 0.357 | 0.346 | −0.011 |
+| 4 | single-hop | 0.554 | 0.566 | +0.012 |
+| 5 | adversarial | 0.886 | 0.886 | 0.000 |
+
+- **Analysis**: Multi-hop and temporal collapsed. These categories require grep to find names and concepts with varied capitalizations (e.g. speaker names at start of turns are capitalized). Case-insensitive `~*` is clearly correct.
+- **Decision**: **Reverted.** `~*` confirmed as the right operator.
+
+---
+
 ## Haiku baseline (1-sample)
 - **Model**: haiku (switched from sonnet due to credit exhaustion until Apr 17)
 - **Result**: F1=0.645 EM=0.462 (169 QA, error-corrected; raw F1=0.618, 199 QA, 30 errors excluded)

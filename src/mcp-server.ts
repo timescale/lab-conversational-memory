@@ -49,13 +49,13 @@ server.tool(
       fulltext: z.number().min(0).max(1).nullable().describe("Weight for BM25 keyword matching (0-1)"),
       semantic: z.number().min(0).max(1).nullable().describe("Weight for semantic similarity (0-1)"),
     }).nullable().describe("Weights for hybrid search ranking (null to omit)"),
-    candidateLimit: z.number().int().min(0).max(1000).describe("Candidates per search mode before RRF fusion (0 = default 30)"),
-    limit: z.number().int().min(0).max(1000).describe("Maximum results (0 = default 10)"),
+    candidateLimit: z.number().int().min(0).max(1000).describe("Candidates per search mode before RRF fusion (0 = default 60)"),
+    limit: z.number().int().min(0).max(1000).describe("Maximum results (0 = default 15)"),
     order_by: z.enum(["asc", "desc"]).nullable().describe("Sort direction for filter-only searches. Default: desc"),
   },
   async (params) => {
-    const candidateLimit = params.candidateLimit || 30;
-    const limit = params.limit || 10;
+    const candidateLimit = params.candidateLimit || 60;
+    const limit = params.limit || 15;
     const wSemantic = params.weights?.semantic ?? 1.0;
     const wFulltext = params.weights?.fulltext ?? 1.0;
 
@@ -194,11 +194,14 @@ server.tool(
       return `${i + 1}. ${datePrefix}${r.content} (id: ${r.id})`;
     });
 
+    // Collect dia_ids for eval recall tracking
+    const diaIds = results.map((r) => r.meta?.dia_id).filter(Boolean);
+
     return {
-      content: [{
-        type: "text" as const,
-        text: lines.length > 0 ? lines.join("\n") : "No results found.",
-      }],
+      content: [
+        { type: "text" as const, text: lines.length > 0 ? lines.join("\n") : "No results found." },
+        ...(diaIds.length > 0 ? [{ type: "text" as const, text: `<!--evidence:${JSON.stringify(diaIds)}-->` }] : []),
+      ],
     };
   },
 );
@@ -229,29 +232,39 @@ Returns the memory content, date, and adjacent conversation turns (prev/next). U
     // Format as concise text with adjacent turns inline
     const lines: string[] = [];
 
+    const diaIds: string[] = [];
+
     // Fetch prev turn
     if (meta.prev_id) {
-      const [prev] = await sql`SELECT content, temporal::text FROM memory WHERE id = ${meta.prev_id as string}::uuid`;
+      const [prev] = await sql`SELECT content, meta, temporal::text FROM memory WHERE id = ${meta.prev_id as string}::uuid`;
       if (prev) {
         const date = formatDate(prev.temporal as string | null);
         lines.push(`[prev] ${date ? `[${date}] ` : ""}${prev.content}`);
+        if ((prev.meta as any)?.dia_id) diaIds.push((prev.meta as any).dia_id);
       }
     }
 
     // Current memory
     const date = formatDate(row.temporal as string | null);
     lines.push(`[this] ${date ? `[${date}] ` : ""}${row.content} (id: ${row.id})`);
+    if (meta.dia_id) diaIds.push(meta.dia_id as string);
 
     // Fetch next turn
     if (meta.next_id) {
-      const [next] = await sql`SELECT content, temporal::text FROM memory WHERE id = ${meta.next_id as string}::uuid`;
+      const [next] = await sql`SELECT content, meta, temporal::text FROM memory WHERE id = ${meta.next_id as string}::uuid`;
       if (next) {
         const date = formatDate(next.temporal as string | null);
         lines.push(`[next] ${date ? `[${date}] ` : ""}${next.content}`);
+        if ((next.meta as any)?.dia_id) diaIds.push((next.meta as any).dia_id);
       }
     }
 
-    return { content: [{ type: "text" as const, text: lines.join("\n") }] };
+    return {
+      content: [
+        { type: "text" as const, text: lines.join("\n") },
+        ...(diaIds.length > 0 ? [{ type: "text" as const, text: `<!--evidence:${JSON.stringify(diaIds)}-->` }] : []),
+      ],
+    };
   },
 );
 

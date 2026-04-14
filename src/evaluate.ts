@@ -53,6 +53,7 @@ const MAX_RETRIES = 2;
 interface ClaudeResult {
   answer: string;
   toolCalls: Array<{ tool: string; args: Record<string, unknown> }>;
+  retrievedDiaIds: Set<string>;
 }
 
 async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeResult> {
@@ -78,6 +79,7 @@ async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeRes
     const events = JSON.parse(stdout);
     // --verbose returns an array of stream events
     const toolCalls: ClaudeResult["toolCalls"] = [];
+    const retrievedDiaIds = new Set<string>();
     let answer = "";
     for (const evt of events) {
       if (evt.type === "assistant") {
@@ -87,14 +89,34 @@ async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeRes
           }
         }
       }
+      if (evt.type === "user") {
+        // Tool results come back as user messages with tool_result blocks
+        const content = evt.message?.content ?? [];
+        if (Array.isArray(content)) {
+          for (const block of content) {
+            if (block.type === "tool_result") {
+              const text = Array.isArray(block.content)
+                ? block.content.map((c: any) => c.text ?? "").join("")
+                : typeof block.content === "string" ? block.content : "";
+              // Extract dia_ids from <!--evidence:["D1:3","D1:4"]--> tags in tool output
+              for (const m of text.matchAll(/<!--evidence:(\[.*?\])-->/g)) {
+                try {
+                  const ids = JSON.parse(m[1]!) as string[];
+                  for (const id of ids) retrievedDiaIds.add(id);
+                } catch {}
+              }
+            }
+          }
+        }
+      }
       if (evt.type === "result") {
         // Prefer structured_output.answer (from --json-schema), fallback to result
         answer = (evt.structured_output?.answer ?? evt.result ?? "").trim();
       }
     }
-    return { answer, toolCalls };
+    return { answer, toolCalls, retrievedDiaIds };
   } catch {
-    return { answer: stdout.trim(), toolCalls: [] };
+    return { answer: stdout.trim(), toolCalls: [], retrievedDiaIds: new Set() };
   }
 }
 
@@ -107,11 +129,11 @@ async function askClaude(prompt: string, useMcp: boolean): Promise<ClaudeResult>
         process.stderr.write(`  retry(${attempt + 1}) `);
       } else {
         console.error(`  claude failed after ${MAX_RETRIES + 1} attempts: ${e.message?.slice(0, 100)}`);
-        return { answer: "", toolCalls: [] };
+        return { answer: "", toolCalls: [], retrievedDiaIds: new Set() };
       }
     }
   }
-  return { answer: "", toolCalls: [] };
+  return { answer: "", toolCalls: [], retrievedDiaIds: new Set() };
 }
 
 // ---------------------------------------------------------------------------
@@ -126,7 +148,7 @@ function mean(arr: number[]): number {
 function aggregateByKey(
   results: QAResult[],
   keyFn: (r: QAResult) => string,
-): Record<string, { count: number; f1: number; em: number }> {
+): Record<string, { count: number; f1: number; em: number; recall: number }> {
   const groups = new Map<string, QAResult[]>();
   for (const r of results) {
     const key = keyFn(r);
@@ -134,12 +156,13 @@ function aggregateByKey(
     arr.push(r);
     groups.set(key, arr);
   }
-  const out: Record<string, { count: number; f1: number; em: number }> = {};
+  const out: Record<string, { count: number; f1: number; em: number; recall: number }> = {};
   for (const [key, group] of groups) {
     out[key] = {
       count: group.length,
       f1: mean(group.map((r) => r.f1)),
       em: mean(group.map((r) => r.em)),
+      recall: mean(group.map((r) => r.recall).filter((r) => r >= 0)),
     };
   }
   return out;
@@ -214,7 +237,7 @@ async function main() {
     console.log(`  ${row!.count} memories stored (${((performance.now() - t0) / 1000).toFixed(1)}s)`);
 
     const CONCURRENCY = 50;
-    const predictions: Array<{ prediction: string; context: string; toolCalls: ClaudeResult["toolCalls"] }> = new Array(conv.qa.length);
+    const predictions: Array<{ prediction: string; context: string; toolCalls: ClaudeResult["toolCalls"]; retrievedDiaIds: Set<string> }> = new Array(conv.qa.length);
 
     if (EVAL_MODE === "context") {
       // Pre-retrieve contexts, then answer with context in prompt
@@ -252,7 +275,7 @@ async function main() {
           const prompt = buildPrompt(qa.question, context);
           promises.push(
             askClaude(prompt, false).then((result) => {
-              predictions[qi] = { prediction: result.answer, context, toolCalls: result.toolCalls };
+              predictions[qi] = { prediction: result.answer, context, toolCalls: result.toolCalls, retrievedDiaIds: result.retrievedDiaIds };
               completed++;
               process.stdout.write(`  Answer: ${completed}/${conv.qa.length}\n`);
             }),
@@ -274,7 +297,7 @@ async function main() {
           const prompt = buildPrompt(qa.question, "");
           promises.push(
             askClaude(prompt, true).then((result) => {
-              predictions[qi] = { prediction: result.answer, context: "(tool mode)", toolCalls: result.toolCalls };
+              predictions[qi] = { prediction: result.answer, context: "(tool mode)", toolCalls: result.toolCalls, retrievedDiaIds: result.retrievedDiaIds };
               completed++;
               process.stdout.write(`  Answer: ${completed}/${conv.qa.length}\n`);
             }),
@@ -297,6 +320,12 @@ async function main() {
 
     for (let i = 0; i < conv.qa.length; i++) {
       const qa = conv.qa[i]!;
+      const evidence = qa.evidence ?? [];
+      const retrieved = predictions[i]!.retrievedDiaIds;
+      const recall = qa.category === 5 ? -1
+        : evidence.length > 0
+          ? evidence.filter((e) => retrieved.has(e)).length / evidence.length
+          : 1;
       allResults.push({
         sampleId: conv.sample_id,
         question: qa.question,
@@ -305,6 +334,7 @@ async function main() {
         category: qa.category,
         f1: scores[i]!.f1,
         em: scores[i]!.em,
+        recall,
         context: predictions[i]!.context,
         toolCalls: predictions[i]!.toolCalls,
       } as any);
@@ -315,7 +345,7 @@ async function main() {
       (r) => r.sampleId === conv.sample_id,
     );
     console.log(
-      `  F1=${mean(sampleResults.map((r) => r.f1)).toFixed(3)} EM=${mean(sampleResults.map((r) => r.em)).toFixed(3)} (${sampleResults.length} QA)\n`,
+      `  F1=${mean(sampleResults.map((r) => r.f1)).toFixed(3)} EM=${mean(sampleResults.map((r) => r.em)).toFixed(3)} Recall=${mean(sampleResults.map((r) => r.recall).filter((r) => r >= 0)).toFixed(3)} (${sampleResults.length} QA)\n`,
     );
   }
 
@@ -340,12 +370,13 @@ async function main() {
     const name = CATEGORY_NAMES[Number(cat)] ?? cat;
     const raw = rawByCategory[cat];
     const rawSuffix = raw && errorExcluded > 0 ? ` (raw: F1=${raw.f1.toFixed(3)} n=${raw.count})` : "";
+    const recallStr = Number(cat) === 5 ? "" : ` Recall=${stats.recall.toFixed(3)}`;
     console.log(
-      `  ${name} (${cat}): F1=${stats.f1.toFixed(3)} EM=${stats.em.toFixed(3)} (n=${stats.count})${rawSuffix}`,
+      `  ${name} (${cat}): F1=${stats.f1.toFixed(3)} EM=${stats.em.toFixed(3)}${recallStr} (n=${stats.count})${rawSuffix}`,
     );
   }
   console.log(
-    `\nOverall: F1=${overallF1.toFixed(3)} EM=${overallEM.toFixed(3)} (${cleanResults.length} QA)`,
+    `\nOverall: F1=${overallF1.toFixed(3)} EM=${overallEM.toFixed(3)} Recall=${mean(cleanResults.map((r) => r.recall).filter((r) => r >= 0)).toFixed(3)} (${cleanResults.length} QA)`,
   );
   if (errorExcluded > 0) {
     console.log(

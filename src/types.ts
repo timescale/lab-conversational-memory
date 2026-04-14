@@ -89,6 +89,7 @@ export interface QAResult {
   category: number;
   f1: number;
   em: number;
+  recall: number;
   context: string;
 }
 

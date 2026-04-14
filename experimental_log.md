@@ -515,6 +515,24 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp29: Remove category from prompt (no cheating)
+- **Hypothesis**: buildPrompt was receiving the QA category and adding "Answer with a specific date or time period" for temporal questions. This leaks benchmark metadata — in production we wouldn't know the category. Remove it.
+- **Changes**: buildPrompt no longer takes category param. All questions get the same generic prompt.
+- **Result**: F1=0.615 EM=0.432 (vs baseline mean 0.632, −0.017 — within variance)
+
+| Cat | Baseline mean | No category | Delta |
+|-----|--------------|-------------|-------|
+| 1 | multi-hop | 0.485 | 0.469 | −0.016 |
+| 2 | temporal | 0.620 | 0.546 | −0.074 |
+| 3 | open-domain | 0.357 | 0.302 | −0.055 |
+| 4 | single-hop | 0.554 | 0.564 | +0.010 |
+| 5 | adversarial | 0.886 | 0.886 | 0.000 |
+
+- **Analysis**: Temporal took the biggest hit (−0.074) since it lost the date hint. Overall within variance range (0.606–0.645). The honest measurement is what matters.
+- **Decision**: **Adopted.** No category leakage in production.
+
+---
+
 ## Exp28: grep case-sensitive (`~`) vs case-insensitive (`~*`)
 - **Hypothesis**: Test whether case-insensitive grep (`~*`) is better than case-sensitive (`~`). Tool description updated to match operator.
 - **Result**: F1=0.570 EM=0.414 (case-sensitive) vs mean 0.632 (baseline) — **−0.062 overall**

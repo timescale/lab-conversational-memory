@@ -548,6 +548,30 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 - **vs sonnet best on 1-sample (~0.664)**: -0.019 overall. Open-domain particularly weak (0.278 vs ~0.488). Multi-hop also down (0.521 vs ~0.545). Adversarial is stronger with haiku (0.909 vs ~0.872) — likely less verbose/creative refusals.
 - **Note**: Haiku is faster and cheaper; experiments will continue with haiku until sonnet credits restore.
 
+### Haiku variance (1-sample, 3 runs)
+| Run | Overall F1 | multi-hop | temporal | open-domain | single-hop | adversarial |
+|-----|-----------|-----------|----------|-------------|------------|-------------|
+| 1 | 0.645 | 0.521 | 0.665 | 0.278 | 0.550 | 0.909 |
+| 2 | 0.644 | 0.502 | 0.639 | 0.393 | 0.583 | 0.864 |
+| 3 | 0.606 | 0.431 | 0.555 | 0.401 | 0.530 | 0.886 |
+| **Mean** | **0.632** | 0.485 | 0.620 | 0.357 | 0.554 | 0.886 |
+| Range | ±0.039 | ±0.090 | ±0.110 | ±0.123 | ±0.053 | ±0.045 |
+
+Variance similar to sonnet (~0.04 overall). Per-category swings large due to small n.
+
+### Haiku full 10-sample
+- **Result**: F1=0.641 EM=0.465 (1824 QA, error-corrected; raw F1=0.610, 1986 QA, 162 errors excluded)
+
+| Cat | Name | F1 | EM | n |
+|-----|------|------|------|---|
+| 1 | multi-hop | 0.414 | 0.205 | 229 |
+| 2 | temporal | 0.545 | 0.274 | 285 |
+| 3 | open-domain | 0.380 | 0.279 | 86 |
+| 4 | single-hop | 0.623 | 0.384 | 783 |
+| 5 | adversarial | 0.905 | 0.905 | 441 |
+
+- **vs sonnet full 10-sample (F1=0.688)**: −0.047 overall. Biggest gaps in multi-hop and temporal where cross-session reasoning is critical.
+
 ---
 
 ## Exp 3b: Per-speaker entity profiles

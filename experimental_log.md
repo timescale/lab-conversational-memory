@@ -515,6 +515,34 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp30: "Use exact words from memories" in tool prompt
+- **Hypothesis**: Haiku paraphrases heavily ("sunset-inspired painting" vs "sunset"), costing F1 on token matches. Adding "Use exact words from the memories — do not paraphrase" should help.
+- **Result**: **F1=0.234** — catastrophic. Adversarial went to 0.000. "Use exact words" overrides "say no information available" — haiku quotes memory text for unanswerable questions instead of rejecting.
+- **Decision**: **Reverted.** Exact-words instruction conflicts fatally with adversarial rejection.
+
+---
+
+## Exp31: Convert relative dates to absolute using timestamps
+- **Hypothesis**: Haiku answers "last year" or "seven years" instead of computing absolute dates from memory timestamps. Adding "use the memory's date to compute the actual year" should help temporal questions.
+- **Result**: F1=0.616 (vs baseline 0.632, −0.016). Temporal 0.564 (vs 0.620, −0.056) — actually worse, may confuse haiku on non-date temporal questions. Within noise overall.
+- **Decision**: **Reverted.** No signal, possibly harmful.
+
+---
+
+## Exp32: Disable built-in tools (--tools "")
+- **Hypothesis**: Haiku wastes tool calls on LSP (7 calls in baseline). Setting `--tools ""` should disable built-in tools and leave only MCP tools.
+- **Result**: F1=0.626 (vs baseline 0.632, −0.006). LSP calls still present (10) — LSP is a system integration, not blocked by `--tools`. Within noise.
+- **Decision**: **Reverted.** LSP can't be blocked this way.
+
+---
+
+## Exp33: Grep array with AND logic
+- **Hypothesis**: Change grep from single string to array where ALL patterns must match. Enables `["Melanie", "paint|art|canvas"]` to find Melanie's art specifically, instead of trying to cram it into one regex.
+- **Result**: F1=0.589 (vs baseline 0.632, **−0.043**). Temporal collapsed −0.142. AND logic over-filters — intersecting patterns returns too few results.
+- **Decision**: **Reverted.** Over-filtering hurts more than precision helps.
+
+---
+
 ## Exp29: Remove category from prompt (no cheating)
 - **Hypothesis**: buildPrompt was receiving the QA category and adding "Answer with a specific date or time period" for temporal questions. This leaks benchmark metadata — in production we wouldn't know the category. Remove it.
 - **Changes**: buildPrompt no longer takes category param. All questions get the same generic prompt.

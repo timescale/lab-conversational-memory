@@ -249,7 +249,7 @@ async function main() {
         for (let qi = batch; qi < end; qi++) {
           const qa = conv.qa[qi]!;
           const context = qaContexts[qi]!;
-          const prompt = buildPrompt(qa.question, context, qa.category);
+          const prompt = buildPrompt(qa.question, context);
           promises.push(
             askClaude(prompt, false).then((result) => {
               predictions[qi] = { prediction: result.answer, context, toolCalls: result.toolCalls };
@@ -271,7 +271,7 @@ async function main() {
         const promises = [];
         for (let qi = batch; qi < end; qi++) {
           const qa = conv.qa[qi]!;
-          const prompt = buildPrompt(qa.question, "", qa.category);
+          const prompt = buildPrompt(qa.question, "");
           promises.push(
             askClaude(prompt, true).then((result) => {
               predictions[qi] = { prediction: result.answer, context: "(tool mode)", toolCalls: result.toolCalls };

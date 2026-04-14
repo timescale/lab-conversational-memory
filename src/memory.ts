@@ -305,11 +305,10 @@ export async function retrieve(
 export function buildPrompt(
   question: string,
   context: string,
-  category: number,
 ): string {
   // Tool mode: no pre-retrieved context, Claude searches via MCP tools
   if (!context) {
-    const base = `You have access to memory tools. Use me_memory_search to find relevant conversation memories, then answer the question. You can use me_memory_get to retrieve a specific memory by ID for more detail. Use as many tool calls as needed.
+    return `You have access to memory tools. Use me_memory_search to find relevant conversation memories, then answer the question. You can use me_memory_get to retrieve a specific memory by ID for more detail. Use as many tool calls as needed.
 
 For list questions (what has X done/painted/read), use the grep parameter in me_memory_search with synonym expansion.
 
@@ -322,24 +321,16 @@ Pay attention to WHO is mentioned in each memory. If the question asks about one
 
 IMPORTANT: Your final answer must be ONLY a short phrase — no explanations, no reasoning, no markdown. Just the answer itself.
 
-`;
-    if (category === 2) {
-      return `${base}Question: ${question} Answer with a specific date or time period.\nShort answer:`;
-    }
-    return `${base}Question: ${question}\nShort answer:`;
+Question: ${question}
+Short answer:`;
   }
 
   // Context mode: pre-retrieved context in prompt
-  const base = `Based on the following retrieved memories from a conversation, write an answer in the form of a short phrase for the following question. Answer with exact words from the memories whenever possible. If the information is not available, say "no information available".
+  return `Based on the following retrieved memories from a conversation, write an answer in the form of a short phrase for the following question. Answer with exact words from the memories whenever possible. If the information is not available, say "no information available".
 
 Memories:
 ${context}
 
-`;
-
-  if (category === 2) {
-    return `${base}Question: ${question} Use dates from the memories to answer with an approximate date.\nShort answer:`;
-  }
-
-  return `${base}Question: ${question}\nShort answer:`;
+Question: ${question}
+Short answer:`;
 }

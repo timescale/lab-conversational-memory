@@ -526,8 +526,8 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 | open-domain | 0.545 | 0.636 | +0.091 |
 | single-hop | 0.576 | 0.627 | +0.051 |
 
-- **Analysis**: Temporal recall nearly doubled — temporal answers are in dialogue turns that were being outranked by facts. Adversarial stable (0.909). F1 +0.009 (within noise but directionally positive).
-- **Decision**: **Adopted.**
+- **Analysis**: Recall jumped but F1 barely moved (+0.009). The recall metric only counts dialogue turn dia_ids — facts don't have them. By reserving slots for turns, we mechanically inflate recall without improving retrieval quality. The flat F1 confirms this: the recall gain was an artifact of the measurement, not a real improvement.
+- **Decision**: **Reverted.** Recall metric is biased towards turns; interleave gamed the metric.
 
 ---
 

@@ -515,6 +515,37 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Recall metric + retrieval depth experiments
+
+Added recall metric: tracks which evidence dia_ids the model retrieves via tool calls. Uses structured `<!--evidence:-->` tags in MCP output. Excludes adversarial (cat 5).
+
+### Exp34: Increase retrieval depth (candidateLimit 30→60, limit 10→15)
+- **Hypothesis**: 70% of failures are retrieval failures (recall=0). Deeper candidate pool + more results per search should surface more evidence.
+- **Result**: F1=0.636, Recall=0.492 (vs baseline Recall=0.380, **+0.112**)
+
+| Cat | Recall (before) | Recall (exp34) |
+|-----|----------------|----------------|
+| multi-hop | 0.182 | 0.205 |
+| temporal | 0.455 | 0.515 |
+| open-domain | 0.227 | **0.545** |
+| single-hop | 0.441 | **0.576** |
+
+- **Analysis**: Recall improved significantly across all categories. Open-domain more than doubled. F1 within noise but recall is a leading indicator.
+- **Decision**: **Adopted.** candidateLimit=60, limit=15.
+
+### Exp35: Even deeper retrieval (candidateLimit 60→100, limit 15→20)
+- **Result**: Recall=0.537 (+0.045 more), but adversarial F1 dropped 0.886→0.841. More results = more noise for adversarial rejection.
+- **Decision**: **Reverted.** 60/15 is the sweet spot.
+
+### Failure analysis with recall data
+- **Retrieval failures (recall=0)**: 62% of non-adversarial failures. Model searches well but evidence ranks below top-K.
+- **Reasoning failures (recall=1, F1<0.5)**: 32% of failures. Breakdown:
+  - 7 SAID_NO_INFO: Found evidence but said "no information available"
+  - 3 WRONG: Found evidence, extracted wrong content
+  - 10 PARTIAL: Found evidence but answer too terse ("a cup" vs "a cup with a dog face on it")
+
+---
+
 ## Exp30: "Use exact words from memories" in tool prompt
 - **Hypothesis**: Haiku paraphrases heavily ("sunset-inspired painting" vs "sunset"), costing F1 on token matches. Adding "Use exact words from the memories — do not paraphrase" should help.
 - **Result**: **F1=0.234** — catastrophic. Adversarial went to 0.000. "Use exact words" overrides "say no information available" — haiku quotes memory text for unanswerable questions instead of rejecting.

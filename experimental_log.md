@@ -515,6 +515,14 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp38: Include blip_caption in memory content
+- **Hypothesis**: Shared images have descriptions in `blip_caption` metadata (e.g., "a painting of a sunset") but this is invisible to search — the content only has the speaker's text ("take a look at this"). 1226 turns have captions. Appending `[shared image: caption]` to content makes image descriptions searchable.
+- **Result**: F1=0.652 (vs 0.640, +0.012). Temporal recall 0.970 (+0.091), open-domain recall 0.682 (+0.137).
+- **Analysis**: Key multi-hop evidence (paintings, objects, locations) was hidden in image captions. Now searchable. Adversarial stable (0.932).
+- **Decision**: **Adopted.**
+
+---
+
 ## Exp37: me_memory_get with IDs on prev/next + window param
 - **Hypothesis**: Adding IDs to prev/next lines enables follow-up navigation. Larger window gives more conversation context per get call.
 - **Changes**: prev/next lines include `(id: ...)`. New `window` param (default 1) controls how many prev/next turns to return.

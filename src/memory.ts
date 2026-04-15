@@ -95,7 +95,8 @@ export async function ingest(
 
     for (let i = 0; i < session.turns.length; i++) {
       const turn = session.turns[i]!;
-      const content = `${turn.speaker}: ${turn.text}`;
+      const caption = turn.blip_caption ? ` [shared image: ${turn.blip_caption}]` : "";
+      const content = `${turn.speaker}: ${turn.text}${caption}`;
 
       const meta: Record<string, unknown> = {
         speaker: turn.speaker,

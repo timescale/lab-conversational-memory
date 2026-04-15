@@ -515,6 +515,22 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp37: me_memory_get with IDs on prev/next + window param
+- **Hypothesis**: Adding IDs to prev/next lines enables follow-up navigation. Larger window gives more conversation context per get call.
+- **Changes**: prev/next lines include `(id: ...)`. New `window` param (default 1) controls how many prev/next turns to return.
+
+| Metric | Window=1 | Window=2 | Window=3 |
+|--------|---------|---------|---------|
+| Overall F1 | 0.627 | **0.640** | 0.633 |
+| Overall EM | 0.450 | **0.479** | 0.450 |
+| Adversarial | 0.909 | **0.932** | 0.932 |
+| temporal F1 | 0.508 | **0.604** | 0.523 |
+
+- **Analysis**: Window=2 is the sweet spot — more context helps the model verify answers without noise overload. Window=3 regresses on F1/EM.
+- **Decision**: **Adopted window=2.**
+
+---
+
 ## Ablation: Remove facts entirely
 - **Hypothesis**: Facts may not contribute to F1 — they crowd out dialogue turns in search and add ingestion cost (haiku extraction calls).
 - **1-sample result**: F1=0.628 (vs 0.636 with facts, −0.008 within noise). Recall 0.761 (vs 0.492).

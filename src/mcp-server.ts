@@ -27,7 +27,7 @@ const server = new McpServer({
 
 server.tool(
   "me_memory_search",
-  `Search memories. Modes: semantic, fulltext, grep, or combinations. Use grep with | for list questions: grep "painted|drew|art|canvas" finds ALL art mentions. grep "camp|tent|hike|trail" finds ALL outdoor mentions.`,
+  `Search memories. Modes: semantic, fulltext, or combinations. grep is an optional regex filter — it MUST be combined with semantic and/or fulltext (never alone). Use grep with | for synonym expansion: grep "car|truck|vehicle|auto" + semantic "driving" finds ALL driving mentions.`,
   {
     semantic: z.string().nullable().describe("Natural language query for semantic/meaning search"),
     fulltext: z.string().nullable().describe("Keywords/phrases for BM25 exact matching"),
@@ -112,6 +112,11 @@ server.tool(
     // Determine search mode
     const hasSemantic = params.semantic && params.semantic.length > 0;
     const hasFulltext = params.fulltext && params.fulltext.length > 0;
+
+    // Grep must be combined with semantic or fulltext
+    if (hasGrep && !hasSemantic && !hasFulltext) {
+      return { content: [{ type: "text" as const, text: "Error: grep must be combined with semantic and/or fulltext search. grep is a filter, not a standalone search mode. Add a semantic or fulltext query." }] };
+    }
 
     let results: Array<{ id: string; content: string; meta: Record<string, unknown>; temporal: string | null; tree: string | null; score: number }>;
 

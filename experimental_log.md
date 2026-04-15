@@ -515,6 +515,22 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp36: Interleave facts and turns in search results
+- **Hypothesis**: Facts crowd out dialogue turns in RRF ranking. Reserving 1/3 slots for turns and 1/3 for facts ensures both types appear.
+- **Result**: F1=0.645, **Recall=0.618** (vs 0.492, **+0.126**)
+
+| Cat | Recall (exp34) | Recall (exp36) | Delta |
+|-----|---------------|----------------|-------|
+| multi-hop | 0.205 | 0.284 | +0.079 |
+| temporal | 0.515 | **0.818** | **+0.303** |
+| open-domain | 0.545 | 0.636 | +0.091 |
+| single-hop | 0.576 | 0.627 | +0.051 |
+
+- **Analysis**: Temporal recall nearly doubled — temporal answers are in dialogue turns that were being outranked by facts. Adversarial stable (0.909). F1 +0.009 (within noise but directionally positive).
+- **Decision**: **Adopted.**
+
+---
+
 ## Recall metric + retrieval depth experiments
 
 Added recall metric: tracks which evidence dia_ids the model retrieves via tool calls. Uses structured `<!--evidence:-->` tags in MCP output. Excludes adversarial (cat 5).

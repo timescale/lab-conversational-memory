@@ -154,21 +154,63 @@ server.tool(
         scores.set(r.id, (scores.get(r.id) ?? 0) + wSemantic / (RRF_K + i + 1));
       });
 
-      const topIds = Array.from(scores.entries())
+      const allRanked = Array.from(scores.entries())
         .sort((a, b) => b[1] - a[1])
-        .slice(0, limit)
         .map(([id, score]) => ({ id, score }));
 
-      if (topIds.length === 0) {
+      if (allRanked.length === 0) {
         return { content: [{ type: "text" as const, text: "No results found." }] };
       }
 
+      // Fetch metadata for top candidates to split by type
+      const fetchLimit = Math.min(allRanked.length, limit * 3);
+      const candidateIds = allRanked.slice(0, fetchLimit);
       const rows = await sql.unsafe<Array<{ id: string; content: string; meta: Record<string, unknown>; temporal: string | null; tree: string | null }>>(
         `SELECT id, content, meta, temporal::text, tree::text FROM memory WHERE id = ANY($1::uuid[])`,
-        [topIds.map((r) => r.id)],
+        [candidateIds.map((r) => r.id)],
       );
 
       const rowMap = new Map(rows.map((r) => [r.id, r]));
+
+      // Split into facts and turns, preserving RRF rank order
+      const facts: typeof allRanked = [];
+      const turns: typeof allRanked = [];
+      for (const item of candidateIds) {
+        const row = rowMap.get(item.id);
+        if (!row) continue;
+        if (row.tree?.startsWith("facts")) {
+          facts.push(item);
+        } else {
+          turns.push(item);
+        }
+      }
+
+      // Interleave: reserve 1/3 slots for each type, rest goes to best overall
+      const reserved = Math.floor(limit / 3);
+      const selected = new Set<string>();
+      const topIds: typeof allRanked = [];
+
+      // First: guarantee some turns
+      for (const t of turns) {
+        if (topIds.length >= reserved) break;
+        topIds.push(t);
+        selected.add(t.id);
+      }
+      // Then: guarantee some facts
+      for (const f of facts) {
+        if (topIds.length >= reserved * 2) break;
+        topIds.push(f);
+        selected.add(f.id);
+      }
+      // Fill remaining slots with best overall (not already selected)
+      for (const item of candidateIds) {
+        if (topIds.length >= limit) break;
+        if (!selected.has(item.id) && rowMap.has(item.id)) {
+          topIds.push(item);
+          selected.add(item.id);
+        }
+      }
+
       results = topIds.map((t) => {
         const row = rowMap.get(t.id);
         if (!row) return null;

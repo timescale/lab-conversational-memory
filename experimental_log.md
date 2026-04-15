@@ -515,6 +515,14 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp39: Error on grep-only searches
+- **Hypothesis**: 13% of searches were grep-only (no semantic/fulltext), falling into filter-only mode with random ordering by created_at. Forcing grep to combine with semantic/fulltext ensures relevance ranking.
+- **Changes**: Return error on grep-only. Updated tool desc: "grep MUST be combined with semantic and/or fulltext (never alone)".
+- **Result**: F1=0.665 (new best). Open-domain +0.091. Grep-only dropped from 13% to <1%.
+- **Decision**: **Adopted.**
+
+---
+
 ## Exp38: Include blip_caption in memory content
 - **Hypothesis**: Shared images have descriptions in `blip_caption` metadata (e.g., "a painting of a sunset") but this is invisible to search — the content only has the speaker's text ("take a look at this"). 1226 turns have captions. Appending `[shared image: caption]` to content makes image descriptions searchable.
 - **Result**: F1=0.652 (vs 0.640, +0.012). Temporal recall 0.970 (+0.091), open-domain recall 0.682 (+0.137).

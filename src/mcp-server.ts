@@ -212,13 +212,14 @@ server.tool(
 
 server.tool(
   "me_memory_get",
-  `Retrieve a single memory by its ID.
+  `Retrieve a single memory by its ID with surrounding conversation context.
 
-Returns the memory content, date, and adjacent conversation turns (prev/next). Use to get surrounding context for a search result.`,
+Returns the memory content, date, and adjacent turns. Use window to control how many prev/next turns to include (default 1). Increase window for more context.`,
   {
     id: z.string().describe("The UUID of the memory"),
+    window: z.number().int().min(0).max(10).describe("Number of prev/next turns to include (default 2)").default(2),
   },
-  async ({ id }) => {
+  async ({ id, window: windowSize }) => {
     const rows = await sql`
       SELECT id, content, meta, temporal::text, tree::text
       FROM memory WHERE id = ${id}::uuid
@@ -229,35 +230,40 @@ Returns the memory content, date, and adjacent conversation turns (prev/next). U
     const row = rows[0]!;
     const meta = row.meta as Record<string, unknown>;
 
-    // Format as concise text with adjacent turns inline
-    const lines: string[] = [];
-
     const diaIds: string[] = [];
+    const prevLines: string[] = [];
+    const nextLines: string[] = [];
 
-    // Fetch prev turn
-    if (meta.prev_id) {
-      const [prev] = await sql`SELECT content, meta, temporal::text FROM memory WHERE id = ${meta.prev_id as string}::uuid`;
-      if (prev) {
-        const date = formatDate(prev.temporal as string | null);
-        lines.push(`[prev] ${date ? `[${date}] ` : ""}${prev.content}`);
-        if ((prev.meta as any)?.dia_id) diaIds.push((prev.meta as any).dia_id);
-      }
+    // Walk backwards through prev chain
+    let currentId = meta.prev_id as string | undefined;
+    for (let i = 0; i < windowSize && currentId; i++) {
+      const [prev] = await sql`SELECT id, content, meta, temporal::text FROM memory WHERE id = ${currentId}::uuid`;
+      if (!prev) break;
+      const date = formatDate(prev.temporal as string | null);
+      const prevMeta = prev.meta as Record<string, unknown>;
+      prevLines.unshift(`[prev${windowSize > 1 ? ` -${i + 1}` : ""}] ${date ? `[${date}] ` : ""}${prev.content} (id: ${prev.id})`);
+      if (prevMeta.dia_id) diaIds.push(prevMeta.dia_id as string);
+      currentId = prevMeta.prev_id as string | undefined;
     }
 
     // Current memory
     const date = formatDate(row.temporal as string | null);
-    lines.push(`[this] ${date ? `[${date}] ` : ""}${row.content} (id: ${row.id})`);
+    const currentLine = `[this] ${date ? `[${date}] ` : ""}${row.content} (id: ${row.id})`;
     if (meta.dia_id) diaIds.push(meta.dia_id as string);
 
-    // Fetch next turn
-    if (meta.next_id) {
-      const [next] = await sql`SELECT content, meta, temporal::text FROM memory WHERE id = ${meta.next_id as string}::uuid`;
-      if (next) {
-        const date = formatDate(next.temporal as string | null);
-        lines.push(`[next] ${date ? `[${date}] ` : ""}${next.content}`);
-        if ((next.meta as any)?.dia_id) diaIds.push((next.meta as any).dia_id);
-      }
+    // Walk forwards through next chain
+    currentId = meta.next_id as string | undefined;
+    for (let i = 0; i < windowSize && currentId; i++) {
+      const [next] = await sql`SELECT id, content, meta, temporal::text FROM memory WHERE id = ${currentId}::uuid`;
+      if (!next) break;
+      const date = formatDate(next.temporal as string | null);
+      const nextMeta = next.meta as Record<string, unknown>;
+      nextLines.push(`[next${windowSize > 1 ? ` +${i + 1}` : ""}] ${date ? `[${date}] ` : ""}${next.content} (id: ${next.id})`);
+      if (nextMeta.dia_id) diaIds.push(nextMeta.dia_id as string);
+      currentId = nextMeta.next_id as string | undefined;
     }
+
+    const lines = [...prevLines, currentLine, ...nextLines];
 
     return {
       content: [

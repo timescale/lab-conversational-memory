@@ -515,6 +515,24 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Ablation: Remove facts entirely
+- **Hypothesis**: Facts may not contribute to F1 — they crowd out dialogue turns in search and add ingestion cost (haiku extraction calls).
+- **1-sample result**: F1=0.628 (vs 0.636 with facts, −0.008 within noise). Recall 0.761 (vs 0.492).
+- **Full 10-sample result**: **F1=0.642** (vs 0.641 with facts, **+0.001**)
+
+| Cat | With facts | Without facts | Delta |
+|-----|-----------|--------------|-------|
+| multi-hop | 0.414 | 0.396 | −0.018 |
+| temporal | 0.545 | 0.557 | +0.012 |
+| open-domain | 0.380 | 0.365 | −0.015 |
+| single-hop | 0.623 | 0.639 | +0.016 |
+| adversarial | 0.905 | 0.887 | −0.018 |
+
+- **Analysis**: Zero F1 impact across 1824 QA. No category moved more than ±0.018 (all noise). Facts add ~50% ingestion time (haiku calls) and dilute search results for zero benefit.
+- **Decision**: **Drop facts.** Turns only from now on.
+
+---
+
 ## Exp36: Interleave facts and turns in search results
 - **Hypothesis**: Facts crowd out dialogue turns in RRF ranking. Reserving 1/3 slots for turns and 1/3 for facts ensures both types appear.
 - **Result**: F1=0.645, **Recall=0.618** (vs 0.492, **+0.126**)

@@ -135,6 +135,7 @@ The table below compares our system against results reported in [Omni-SimpleMem]
 | Method | Multi-hop | Single-hop | Temporal | Open-domain | Adversarial | **Overall** |
 |--------|-----------|------------|----------|-------------|-------------|-------------|
 | MemVerse | 0.260 | 0.157 | 0.196 | 0.192 | 0.944 | 0.365 |
+| Claude-Mem | 0.294 | 0.153 | 0.167 | 0.243 | 0.915 | 0.383 |
 | Mem0 | 0.309 | 0.156 | 0.217 | 0.295 | 0.857 | 0.397 |
 | A-MEM | 0.295 | 0.174 | 0.200 | 0.266 | 0.898 | 0.394 |
 | MemGPT | 0.305 | 0.188 | 0.246 | 0.305 | 0.843 | 0.404 |

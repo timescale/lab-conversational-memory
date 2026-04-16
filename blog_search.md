@@ -1,4 +1,4 @@
-# Achieving SOTA Results on Conversational Memory Using Agentic Search with Postgres
+# Achieving SOTA Results on Conversational Memory Using Agentic Search with Postgres running on Ghost
 
 Long-term conversational memory — the ability to recall and reason over months of past conversations — is one of the hardest unsolved problems in AI assistants. Most approaches stuff retrieved context into a prompt and hope for the best. We took a different approach: give the AI agent direct access to search tools backed by Postgres, and let it decide how to find what it needs.
 
@@ -175,6 +175,8 @@ Our fixed retrieval baseline started at F1=0.493. Agentic search brought this to
 - **Evaluation**: LoCoMo benchmark with Python scorer (exact match to paper's evaluation.py)
 
 Everything runs through a single Postgres table. No vector database, no separate search service, no graph database. Postgres does it all — vector similarity, BM25, regex, hierarchical paths, and temporal ranges — with one query engine and one set of indexes.
+
+We run on a [Ghost](https://ghost.build) PostgreSQL instance for two reasons: a generous free tier that makes running these experiments easy and free, and the fact that it's one of the only hosted providers offering [pg_textsearch](https://github.com/timescale/pg_textsearch), which enables true BM25 scoring as a native Postgres index.
 
 ## What's Next
 

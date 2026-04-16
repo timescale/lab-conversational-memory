@@ -173,7 +173,7 @@ If you want to run autoresearch on a different problem:
 
 **7. Let the agent challenge your assumptions.** We assumed fact extraction was valuable because it improved multi-hop recall in early experiments. The agent ran an ablation and proved it contributed zero F1 on the full benchmark. We assumed speaker filtering would break adversarial. The agent tested it and proved the prompt was sufficient. The best research tool is one that can tell you when you're wrong.
 
-**8. Use Claude Code CLI as your agent runtime.** Our eval harness shells out to `claude -p` with MCP tools for each question — the same CLI you use interactively. This means your Pro/Max subscription tokens power the eval runs. No separate API key, no per-token billing surprises, and the same model you're collaborating with in the terminal is the one answering benchmark questions. We ran over 100 eval runs (20,000+ LLM calls) on a subscription plan.
+**8. Use Claude Code CLI as your agent runtime.** Claude Code has native MCP support, so connecting the agent to our Postgres-backed search tools was a one-line config — `--mcp-config` and the tools are available. No custom agent framework, no tool-calling boilerplate, no orchestration code. The CLI handles tool dispatch, retries, and structured output. Our eval harness is just a loop that shells out to `claude -p` with the MCP server pointed at our database. And as a bonus, your Pro/Max subscription tokens power the eval runs — we ran 100+ eval runs (20,000+ LLM calls) without a separate API bill.
 
 ## The Numbers
 

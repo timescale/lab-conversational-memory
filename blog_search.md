@@ -130,7 +130,7 @@ Increasing the candidate pool from 30 to 60 and result limit from 10 to 15 impro
 
 ### Comparison with Prior Work
 
-The table below compares our system against results reported in [Omni-SimpleMem](https://arxiv.org/abs/2604.01007) (Cui et al., 2025), the current state-of-the-art on LoCoMo. All scores are raw F1 (no error correction) for fair comparison. Omni-SimpleMem results use GPT-4o as the backbone; ours use Claude Haiku.
+The table below compares our system against results reported in [Omni-SimpleMem](https://arxiv.org/abs/2604.01007) (Cui et al., 2025), the current state-of-the-art on LoCoMo. All scores are raw F1 (no error correction) for fair comparison. All prior systems use GPT-4o as the backbone; ours uses Claude Haiku.
 
 | Method | Multi-hop | Single-hop | Temporal | Open-domain | Adversarial | **Overall** |
 |--------|-----------|------------|----------|-------------|-------------|-------------|

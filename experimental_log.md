@@ -515,6 +515,24 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp41: Stronger tree prompt + lowercase fix
+- **Hypothesis**: Exp40 enabled speaker tree filtering but the model barely used it (8/423). Better prompt guidance should increase usage. Also fix case mismatch — model used `conv.Melanie.*` but tree stores `conv.melanie.*`.
+- **Exp41 (no lowercase note)**: F1=0.666. Tree usage jumped to 42/373 but 30/42 used uppercase → matched nothing.
+- **Exp41b (lowercase note)**: **F1=0.698 EM=0.509** — new best.
+
+| Cat | Exp40 | Exp41b | Delta |
+|-----|-------|--------|-------|
+| multi-hop | 0.451 | **0.573** | **+0.122** |
+| temporal | 0.617 | 0.623 | +0.006 |
+| open-domain | 0.365 | 0.373 | +0.008 |
+| single-hop | 0.673 | **0.706** | **+0.033** |
+| adversarial | 0.909 | 0.886 | −0.023 |
+
+- **Analysis**: Proper tree filtering (36/352, all lowercase) dramatically improved multi-hop (+0.122) and single-hop (+0.033). Adversarial dip within noise. Prompt: "Each memory is a turn spoken by a specific person, organized as conv.{speaker}.s{N} (speaker is lowercase). Filter to a speaker's turns with tree conv.{speaker}.* when searching for what they said, did, or shared."
+- **Decision**: **Adopted.**
+
+---
+
 ## Exp40: Speaker-first tree + allow speaker filtering
 - **Hypothesis**: Tree restructured from `conv.s{N}.{speaker}` to `conv.{speaker}.s{N}` enabling `conv.melanie.*` speaker filtering. Removed "do NOT filter by speaker" instruction that was protecting adversarial. Test if the model is now smart enough to handle speaker filtering without adversarial regression.
 - **Result**: **F1=0.675 EM=0.485** (new best). Adversarial **0.909** (held perfectly).

@@ -259,9 +259,7 @@ export function buildPrompt(
   if (!context) {
     return `You have access to memory tools. Use me_memory_search to find relevant conversation memories, then answer the question. You can use me_memory_get to retrieve a specific memory by ID for more detail. Use as many tool calls as needed.
 
-For list questions (what has X done/painted/read), use the grep parameter in me_memory_search with synonym expansion.
-
-Memories are organized in a tree: conv.{speaker}.s{N} — speaker first, then session. Use tree "conv.{speaker}.*" to filter by speaker.
+Each memory is a turn spoken by a specific person, organized as conv.{speaker}.s{N} (speaker is lowercase). Filter to a speaker's turns with tree "conv.{speaker}.*" when searching for what they said, did, or shared. Combine with semantic, fulltext, or grep for best results.
 
 Pay attention to WHO is mentioned in each memory. If the question asks about one person but the search results only mention a different person doing that thing, say "no information available" — do not correct or clarify who it actually belongs to. If the information is not available, say "no information available".
 

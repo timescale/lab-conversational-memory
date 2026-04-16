@@ -111,9 +111,9 @@ export async function ingest(
         meta.blip_caption = turn.blip_caption;
       }
 
-      // ltree: conv.s{N}.{speaker} — speaker-specific paths aid filtering
+      // ltree: conv.{speaker}.s{N} — speaker-first for easy speaker filtering
       const speakerLabel = turn.speaker.toLowerCase().replace(/[^a-z0-9]/g, "_");
-      const tree = `conv.s${session.sessionNum}.${speakerLabel}`;
+      const tree = `conv.${speakerLabel}.s${session.sessionNum}`;
 
       rows.push({ id: turnIds[i]!, content, meta, tree, temporal });
     }
@@ -261,8 +261,7 @@ export function buildPrompt(
 
 For list questions (what has X done/painted/read), use the grep parameter in me_memory_search with synonym expansion.
 
-Memories are organized in a tree: conv.s{N}.{speaker} — conversation turns per session and speaker.
-You can use the tree parameter to filter. Do NOT filter by speaker — always search across all speakers so you can verify attribution.
+Memories are organized in a tree: conv.{speaker}.s{N} — speaker first, then session. Use tree "conv.{speaker}.*" to filter by speaker.
 
 Pay attention to WHO is mentioned in each memory. If the question asks about one person but the search results only mention a different person doing that thing, say "no information available" — do not correct or clarify who it actually belongs to. If the information is not available, say "no information available".
 

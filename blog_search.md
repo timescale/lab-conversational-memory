@@ -143,7 +143,11 @@ The table below compares our system against results reported in [Omni-SimpleMem]
 | Omni-SimpleMem | GPT-4o | **0.556** | 0.365 | 0.255 | **0.641** | 0.835 | 0.598 |
 | **Ours** | **Claude Haiku** | 0.516 | **0.683** | **0.597** | 0.372 | **0.872** | **0.659** |
 
-Our system achieves the highest overall F1 (0.659 vs 0.598) despite using a smaller, cheaper model. The advantage comes from single-hop (+0.318), temporal (+0.342), and adversarial (+0.037), while Omni-SimpleMem leads on multi-hop and open-domain. The temporal gap is particularly striking — our agentic search with temporal metadata in Postgres gives the model direct access to dates, while fixed retrieval pipelines lose this signal.
+Our system achieves the highest overall F1 (0.659 vs 0.598) despite using a smaller, cheaper model and a dramatically simpler architecture. The prior systems involve multi-stage pipelines: Omni-SimpleMem uses pyramid expansion, LLM summarization, BM25 hybrid retrieval, and adaptive top-k — all discovered through an automated architecture search. MemGPT requires a custom memory management OS with paging. A-MEM builds associative memory graphs.
+
+Our system is a single Postgres table with standard indexes (HNSW, BM25, ltree, tstzrange) exposed as MCP tools. There is no summarization, no fact extraction, no entity graphs, no custom memory management. The raw conversation turns go into the table; the agent decides how to search them. The complexity lives in the search tool interface, not in the pipeline.
+
+The advantage comes from single-hop (+0.318), temporal (+0.342), and adversarial (+0.037), while Omni-SimpleMem leads on multi-hop and open-domain. The temporal gap is particularly striking — our agentic search with temporal metadata in Postgres gives the model direct access to dates, while fixed retrieval pipelines lose this signal.
 
 Note: our 1-sample result. Full 10-sample validation pending.
 

@@ -2,7 +2,7 @@
 
 Long-term conversational memory — the ability to recall and reason over months of past conversations — is one of the hardest unsolved problems in AI assistants. Most approaches stuff retrieved context into a prompt and hope for the best. We took a different approach: give the AI agent direct access to search tools backed by Postgres, and let it decide how to find what it needs.
 
-The result: **F1=0.698** on the LoCoMo benchmark, up from F1=0.493 with fixed retrieval — a 42% improvement from better tools alone. The key insight isn't better embeddings or fancier retrieval — it's that an agent with the right search tools outperforms any fixed retrieval pipeline.
+The result: **F1=0.638** on the LoCoMo benchmark (raw, full 10-sample), up from the previous state-of-the-art of F1=0.598 set by Omni-SimpleMem with GPT-4o — achieved using the much smaller Claude Haiku and a single Postgres table. The key insight isn't better embeddings or fancier retrieval — it's that an agent with the right search tools outperforms any fixed retrieval pipeline.
 
 ## The Benchmark
 
@@ -141,30 +141,28 @@ The table below compares our system against results reported in [Omni-SimpleMem]
 | MemGPT | GPT-4o | 0.305 | 0.188 | 0.246 | 0.305 | 0.843 | 0.404 |
 | SimpleMem | GPT-4o | 0.318 | 0.195 | 0.235 | 0.308 | 0.802 | 0.432 |
 | Omni-SimpleMem | GPT-4o | **0.556** | 0.365 | 0.255 | **0.641** | 0.835 | 0.598 |
-| **Ours** | **Claude Haiku** | 0.516 | **0.683** | **0.597** | 0.372 | **0.872** | **0.659** |
+| **Ours** | **Claude Haiku** | 0.420 | **0.645** | **0.567** | 0.311 | **0.883** | **0.638** |
 
-Our system achieves the highest overall F1 (0.659 vs 0.598) despite using a smaller, cheaper model and a dramatically simpler architecture. The prior systems involve multi-stage pipelines: Omni-SimpleMem uses pyramid expansion, LLM summarization, BM25 hybrid retrieval, and adaptive top-k — all discovered through an automated architecture search. MemGPT requires a custom memory management OS with paging. A-MEM builds associative memory graphs.
+Our system achieves the highest overall F1 (0.638 vs 0.598) despite using a smaller, cheaper model and a dramatically simpler architecture. The prior systems involve multi-stage pipelines: Omni-SimpleMem uses pyramid expansion, LLM summarization, BM25 hybrid retrieval, and adaptive top-k — all discovered through an automated architecture search. MemGPT requires a custom memory management OS with paging. A-MEM builds associative memory graphs.
 
 Our system is a single Postgres table with standard indexes (HNSW, BM25, ltree, tstzrange) exposed as MCP tools. There is no summarization, no fact extraction, no entity graphs, no custom memory management. The raw conversation turns go into the table; the agent decides how to search them. The complexity lives in the search tool interface, not in the pipeline.
 
-The advantage comes from single-hop (+0.318), temporal (+0.342), and adversarial (+0.037), while Omni-SimpleMem leads on multi-hop and open-domain. The temporal gap is particularly striking — our agentic search with temporal metadata in Postgres gives the model direct access to dates, while fixed retrieval pipelines lose this signal.
-
-Note: our 1-sample result. Full 10-sample validation pending.
+The advantage comes from single-hop (+0.280), temporal (+0.312), and adversarial (+0.048), while Omni-SimpleMem leads on multi-hop and open-domain. The temporal gap is particularly striking — our agentic search with temporal metadata in Postgres gives the model direct access to dates, while fixed retrieval pipelines lose this signal.
 
 ### Per-Category Breakdown
 
-Our system on LoCoMo (1 sample, Claude Haiku, error-corrected metrics):
+Our system on LoCoMo (full 10 samples, 1824 QA, Claude Haiku, error-corrected metrics):
 
 | Category | F1 | Recall |
 |----------|------|--------|
-| Multi-hop | 0.573 | 0.610 |
-| Temporal | 0.623 | 0.970 |
-| Open-domain | 0.373 | 0.636 |
-| Single-hop | 0.706 | 0.831 |
-| Adversarial | 0.886 | — |
-| **Overall** | **0.698** | **0.811** |
+| Multi-hop | 0.445 | 0.594 |
+| Temporal | 0.581 | 0.880 |
+| Open-domain | 0.328 | 0.582 |
+| Single-hop | 0.670 | 0.864 |
+| Adversarial | 0.893 | — |
+| **Overall** | **0.666** | **0.805** |
 
-Our fixed retrieval baseline started at F1=0.493. Agentic search brought this to F1=0.698 — a **42% improvement** from better tools alone, with no change to the underlying model.
+Our fixed retrieval baseline started at F1=0.493. Agentic search brought this to F1=0.666 — a **35% improvement** from better tools alone, with no change to the underlying model.
 
 ## The Stack
 
@@ -180,7 +178,7 @@ We run on a [Ghost](https://ghost.build) PostgreSQL instance for two reasons: a 
 
 ## What's Next
 
-Multi-hop remains the weakest category (F1=0.573). The primary bottleneck is that the agent typically does one search per question — multi-hop questions need evidence from 2-4 turns across different sessions. Teaching the agent to systematically do follow-up searches for aggregation questions is the most promising next direction.
+Multi-hop remains the weakest category (F1=0.445). The primary bottleneck is that the agent typically does one search per question — multi-hop questions need evidence from 2-4 turns across different sessions. Teaching the agent to systematically do follow-up searches for aggregation questions is the most promising next direction.
 
 We also haven't optimized the embedding model, experimented with re-ranking, or tried query expansion at the retrieval level. The agentic approach opens up possibilities that fixed pipelines can't explore — the agent can learn to use tools in ways we haven't anticipated.
 

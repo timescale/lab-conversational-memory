@@ -130,18 +130,18 @@ Increasing the candidate pool from 30 to 60 and result limit from 10 to 15 impro
 
 ### Comparison with Prior Work
 
-The table below compares our system against results reported in [Omni-SimpleMem](https://arxiv.org/abs/2604.01007) (Cui et al., 2025), the current state-of-the-art on LoCoMo. All scores are raw F1 (no error correction) for fair comparison. All prior systems use GPT-4o as the backbone; ours uses Claude Haiku.
+The table below compares our system against results reported in [Omni-SimpleMem](https://arxiv.org/abs/2604.01007) (Cui et al., 2025), the current state-of-the-art on LoCoMo. All scores are raw F1 (no error correction) for fair comparison.
 
-| Method | Multi-hop | Single-hop | Temporal | Open-domain | Adversarial | **Overall** |
-|--------|-----------|------------|----------|-------------|-------------|-------------|
-| MemVerse | 0.260 | 0.157 | 0.196 | 0.192 | 0.944 | 0.365 |
-| Claude-Mem | 0.294 | 0.153 | 0.167 | 0.243 | 0.915 | 0.383 |
-| Mem0 | 0.309 | 0.156 | 0.217 | 0.295 | 0.857 | 0.397 |
-| A-MEM | 0.295 | 0.174 | 0.200 | 0.266 | 0.898 | 0.394 |
-| MemGPT | 0.305 | 0.188 | 0.246 | 0.305 | 0.843 | 0.404 |
-| SimpleMem | 0.318 | 0.195 | 0.235 | 0.308 | 0.802 | 0.432 |
-| Omni-SimpleMem (GPT-4o) | **0.556** | 0.365 | 0.255 | **0.641** | 0.835 | 0.598 |
-| **Ours (Claude Haiku)** | 0.516 | **0.683** | **0.597** | 0.372 | **0.872** | **0.659** |
+| Method | Model | Multi-hop | Single-hop | Temporal | Open-domain | Adversarial | **Overall** |
+|--------|-------|-----------|------------|----------|-------------|-------------|-------------|
+| MemVerse | GPT-4o | 0.260 | 0.157 | 0.196 | 0.192 | 0.944 | 0.365 |
+| Claude-Mem | GPT-4o | 0.294 | 0.153 | 0.167 | 0.243 | 0.915 | 0.383 |
+| Mem0 | GPT-4o | 0.309 | 0.156 | 0.217 | 0.295 | 0.857 | 0.397 |
+| A-MEM | GPT-4o | 0.295 | 0.174 | 0.200 | 0.266 | 0.898 | 0.394 |
+| MemGPT | GPT-4o | 0.305 | 0.188 | 0.246 | 0.305 | 0.843 | 0.404 |
+| SimpleMem | GPT-4o | 0.318 | 0.195 | 0.235 | 0.308 | 0.802 | 0.432 |
+| Omni-SimpleMem | GPT-4o | **0.556** | 0.365 | 0.255 | **0.641** | 0.835 | 0.598 |
+| **Ours** | **Claude Haiku** | 0.516 | **0.683** | **0.597** | 0.372 | **0.872** | **0.659** |
 
 Our system achieves the highest overall F1 (0.659 vs 0.598) despite using a smaller, cheaper model. The advantage comes from single-hop (+0.318), temporal (+0.342), and adversarial (+0.037), while Omni-SimpleMem leads on multi-hop and open-domain. The temporal gap is particularly striking — our agentic search with temporal metadata in Postgres gives the model direct access to dates, while fixed retrieval pipelines lose this signal.
 

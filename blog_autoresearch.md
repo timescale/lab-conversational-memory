@@ -113,6 +113,20 @@ Several key improvements came from analyzing failure cases:
 
 These bugs were invisible from the scores alone. Each one required looking at individual failing questions, examining the tool calls, and tracing the search through to the database. The agent excels at this analysis because it can process hundreds of failure cases and spot patterns.
 
+### The human steers, the agent rows
+
+Fully autonomous research sounds appealing, but human direction made a measurable difference in hypothesis quality and experiment velocity. A few examples:
+
+- **Catching benchmark leakage**: The agent happily used the question category in the prompt ("answer with a date" for temporal questions) without flagging it as cheating. A human noticed this was information the system wouldn't have in production and insisted on removing it. Without this check, we'd be reporting inflated numbers.
+
+- **Directing hypothesis priority**: After a round of experiments, the agent proposed four hypotheses ranked by expected impact. The human reordered them — and the one the human prioritized (forcing grep to combine with semantic search) ended up being the biggest win of that round. Domain intuition about what *should* matter isn't something the agent has.
+
+- **Asking the right diagnostic question**: When the recall metric showed gains from interleaving facts and turns, the human pointed out that the metric only counted dialogue turn IDs — facts don't have them. The apparent recall improvement was a measurement artifact, not a real gain. The agent would have adopted the change based on the misleading metric.
+
+- **Challenging assumptions**: The agent assumed fact extraction was valuable because it was a complex, expensive step. The human asked "but does it actually help?" — prompting the ablation that proved facts contributed zero F1.
+
+The pattern that emerged: the agent is better at executing experiments and analyzing large result sets. The human is better at asking "wait, is this actually measuring what we think it's measuring?" and "what's the simplest thing that could explain this?" Together, they're faster than either alone — not because the human writes code, but because they prevent the agent from optimizing the wrong objective.
+
 ### Prompt engineering has a ceiling
 
 Early experiments showed big gains from prompt changes: +0.10 from speaker attribution checks, +0.05 from "do not correct or clarify." But later prompt experiments consistently landed within noise (+/- 0.01). The prompt was already doing its job; further gains required changing what the model could *see*, not what it was *told*.

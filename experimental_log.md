@@ -515,6 +515,23 @@ Previous experiments (infrastructure setup, tool mode, prompt tuning) are in [ex
 
 ---
 
+## Exp40: Speaker-first tree + allow speaker filtering
+- **Hypothesis**: Tree restructured from `conv.s{N}.{speaker}` to `conv.{speaker}.s{N}` enabling `conv.melanie.*` speaker filtering. Removed "do NOT filter by speaker" instruction that was protecting adversarial. Test if the model is now smart enough to handle speaker filtering without adversarial regression.
+- **Result**: **F1=0.675 EM=0.485** (new best). Adversarial **0.909** (held perfectly).
+
+| Cat | Before (exp39) | Exp40 | Delta |
+|-----|---------------|-------|-------|
+| multi-hop | 0.465 | 0.451 | −0.014 |
+| temporal | 0.588 | **0.617** | +0.029 |
+| open-domain | 0.435 | 0.365 | −0.070 |
+| single-hop | 0.644 | **0.673** | +0.029 |
+| adversarial | 0.909 | 0.909 | 0.000 |
+
+- **Analysis**: Speaker filtering helps narrow results for single-hop and temporal. Adversarial held because "do not correct or clarify" prompt is sufficient — the model still sees cross-speaker results and rejects mismatches. Tree usage still low (8/423 searches) but the option helps when used.
+- **Decision**: **Adopted.**
+
+---
+
 ## Exp39: Error on grep-only searches
 - **Hypothesis**: 13% of searches were grep-only (no semantic/fulltext), falling into filter-only mode with random ordering by created_at. Forcing grep to combine with semantic/fulltext ensures relevance ranking.
 - **Changes**: Return error on grep-only. Updated tool desc: "grep MUST be combined with semantic and/or fulltext (never alone)".

@@ -776,15 +776,34 @@ Re-scored the blog post run (`eval-2026-04-16T10-49-32-709Z.json`, exp41b full 1
 
 | Cat | Name | F1 | EM | Acc | n |
 |-----|------|------|------|------|---|
-| 1 | multi-hop | 0.445 | 0.204 | 0.371 | 229 |
-| 2 | temporal | 0.643 | 0.512 | 0.667 | 285 |
-| 3 | open-domain | 0.393 | 0.198 | 0.337 | 86 |
-| 4 | single-hop | 0.686 | 0.549 | 0.701 | 783 |
-| 5 | adversarial | 0.898 | 0.898 | 0.898 | 441 |
+| 1 | multi-hop | 0.445 | 0.201 | 0.371 | 229 |
+| 2 | temporal | 0.581 | 0.319 | 0.667 | 285 |
+| 3 | open-domain | 0.328 | 0.209 | 0.337 | 86 |
+| 4 | single-hop | 0.670 | 0.433 | 0.701 | 783 |
+| 5 | adversarial | 0.893 | 0.893 | 0.898 | 441 |
 | **Overall** | | **0.666** | **0.487** | **0.685** | 1824 |
 
+- All numbers are error-corrected (excluding 162 known benchmark errors).
 - Accuracy (0.685) > F1 (0.666) > EM (0.487) — the judge catches correct answers that don't string-match exactly.
-- Adversarial EM and Acc are identical (0.898) as expected — those are binary match/reject.
+- Biggest Acc vs EM gap is temporal (+0.348) — date format differences ("May 7th" vs "7 May 2023") fail EM but pass the judge.
 - Saved to `results/eval-2026-04-16T10-49-32-709Z-accuracy.json`.
+
+### Prompt B comparison (Mem0/APEX-MEM generous grading prompt)
+
+Re-ran with prompt B — the generous grading prompt used by Mem0 (2025) and APEX-MEM for LoCoMo evaluation. Uses JSON structured output (`{"label": "CORRECT"|"WRONG"}`).
+
+| Cat | Name | F1 | EM | Acc (A) | Acc (B) | n |
+|-----|------|------|------|------|------|---|
+| 1 | multi-hop | 0.445 | 0.201 | 0.371 | 0.472 | 229 |
+| 2 | temporal | 0.581 | 0.319 | 0.667 | 0.737 | 285 |
+| 3 | open-domain | 0.328 | 0.209 | 0.337 | 0.442 | 86 |
+| 4 | single-hop | 0.670 | 0.433 | 0.701 | 0.810 | 783 |
+| 5 | adversarial | 0.893 | 0.893 | 0.898 | 0.900 | 441 |
+| **Overall** | | **0.666** | **0.487** | **0.685** | **0.760** | 1824 |
+
+- Prompt B is more generous than A (+0.075 overall): 0.760 vs 0.685.
+- Biggest gaps: single-hop (+0.109), temporal (+0.070), open-domain (+0.105).
+- Prompt B's domain-specific guidance (date format tolerance, "touches on the same topic") drives the leniency.
+- Saved to `results/eval-2026-04-16T10-49-32-709Z-accuracy-promptb.json`.
 
 ---

@@ -769,3 +769,22 @@ Variance similar to sonnet (~0.04 overall). Per-category swings large due to sma
 - **Decision**: **Reverted.**
 
 ---
+
+## LLM-as-Judge Accuracy (retroactive scoring of full 10-sample run)
+
+Re-scored the blog post run (`eval-2026-04-16T10-49-32-709Z.json`, exp41b full 10-sample) with LLM-as-judge accuracy. For questions where EM=1, accuracy=1 automatically. For the remaining 1,074 non-exact-match questions, Claude Haiku judged whether the prediction contained the vital facts of the ground truth.
+
+| Cat | Name | F1 | EM | Acc | n |
+|-----|------|------|------|------|---|
+| 1 | multi-hop | 0.445 | 0.204 | 0.371 | 229 |
+| 2 | temporal | 0.643 | 0.512 | 0.667 | 285 |
+| 3 | open-domain | 0.393 | 0.198 | 0.337 | 86 |
+| 4 | single-hop | 0.686 | 0.549 | 0.701 | 783 |
+| 5 | adversarial | 0.898 | 0.898 | 0.898 | 441 |
+| **Overall** | | **0.666** | **0.487** | **0.685** | 1824 |
+
+- Accuracy (0.685) > F1 (0.666) > EM (0.487) — the judge catches correct answers that don't string-match exactly.
+- Adversarial EM and Acc are identical (0.898) as expected — those are binary match/reject.
+- Saved to `results/eval-2026-04-16T10-49-32-709Z-accuracy.json`.
+
+---

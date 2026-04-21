@@ -48,3 +48,79 @@ export async function scoreQA(
   const [result] = await scoreBatch([{ prediction, answer, category }]);
   return result!;
 }
+
+// ---------------------------------------------------------------------------
+// LLM-as-judge accuracy — runs on non-exact-match results only
+// ---------------------------------------------------------------------------
+
+interface JudgeInput {
+  question: string;
+  prediction: string;
+  answer: string;
+}
+
+const JUDGE_SYSTEM = "You are a helpful research assistant.";
+
+function buildJudgePrompt(input: JudgeInput): string {
+  return `Your task is to evaluate an LLM's answer against a ground-truth answer and decide whether the ground-truth content is present in the model's response.
+
+Instructions:
+1. Carefully compare the Predicted Answer with the Ground-Truth Answer.
+2. Judge based on substance and equivalence of meaning; do not require identical wording unless wording is crucial to meaning.
+3. Make a binary decision on whether the vital facts of the ground-truth are contained in the predicted answer.
+
+Input Data:
+Question: ${input.question}
+Predicted Answer: ${input.prediction}
+Ground-Truth Answer: ${input.answer}
+
+Output Format:
+Provide your final evaluation in the following format:
+Explanation: <brief rationale for the decision>
+Decision: <yes|no>
+
+Output:`;
+}
+
+export async function judgeBatch(
+  items: JudgeInput[],
+): Promise<Array<{ correct: boolean }>> {
+  const CONCURRENCY = 20;
+  const results: Array<{ correct: boolean }> = new Array(items.length);
+
+  for (let batch = 0; batch < items.length; batch += CONCURRENCY) {
+    const end = Math.min(batch + CONCURRENCY, items.length);
+    const promises: Promise<void>[] = [];
+
+    for (let i = batch; i < end; i++) {
+      const item = items[i]!;
+      const prompt = buildJudgePrompt(item);
+
+      promises.push(
+        (async () => {
+          try {
+            const proc = Bun.spawn(
+              ["claude", "-p", prompt, "--output-format", "text", "--model", "haiku", "--system-prompt", JUDGE_SYSTEM],
+              { stdout: "pipe", stderr: "pipe" },
+            );
+            const stdout = await new Response(proc.stdout).text();
+            await proc.exited;
+
+            const decisionMatch = stdout.match(/Decision:\s*<?(\w+)>?/i);
+            const correct = decisionMatch
+              ? decisionMatch[1]!.toLowerCase() === "yes"
+              : false;
+
+            results[i] = { correct };
+          } catch {
+            results[i] = { correct: false };
+          }
+        })(),
+      );
+    }
+
+    await Promise.all(promises);
+  }
+
+  return results;
+}

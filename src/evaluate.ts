@@ -5,7 +5,7 @@ import { ingest, retrieve, buildPrompt } from "./memory.ts";
 
 // Mode: "tool" = Claude searches via MCP tools, "context" = pre-retrieved context in prompt
 const EVAL_MODE = (process.env.EVAL_MODE ?? "tool") as "tool" | "context";
-import { scoreBatch } from "./scoring.ts";
+import { scoreBatch, judgeBatch } from "./scoring.ts";
 import type { LoCoMoSample, QAResult, EvalRun } from "./types.ts";
 import { CATEGORY_NAMES } from "./types.ts";
 
@@ -148,7 +148,7 @@ function mean(arr: number[]): number {
 function aggregateByKey(
   results: QAResult[],
   keyFn: (r: QAResult) => string,
-): Record<string, { count: number; f1: number; em: number; recall: number }> {
+): Record<string, { count: number; f1: number; em: number; accuracy: number; recall: number }> {
   const groups = new Map<string, QAResult[]>();
   for (const r of results) {
     const key = keyFn(r);
@@ -156,12 +156,13 @@ function aggregateByKey(
     arr.push(r);
     groups.set(key, arr);
   }
-  const out: Record<string, { count: number; f1: number; em: number; recall: number }> = {};
+  const out: Record<string, { count: number; f1: number; em: number; accuracy: number; recall: number }> = {};
   for (const [key, group] of groups) {
     out[key] = {
       count: group.length,
       f1: mean(group.map((r) => r.f1)),
       em: mean(group.map((r) => r.em)),
+      accuracy: mean(group.map((r) => r.accuracy)),
       recall: mean(group.map((r) => r.recall).filter((r) => r >= 0)),
     };
   }
@@ -318,6 +319,27 @@ async function main() {
     const scores = await scoreBatch(scoreInputs);
     console.log(`  Score: (${((performance.now() - t0) / 1000).toFixed(1)}s)`);
 
+    // LLM-as-judge for non-exact-match results
+    const judgeIndices: number[] = [];
+    const judgeInputs: Array<{ question: string; prediction: string; answer: string }> = [];
+    for (let i = 0; i < conv.qa.length; i++) {
+      if (scores[i]!.em === 0 && (predictions[i]?.prediction ?? "").length > 0) {
+        judgeIndices.push(i);
+        judgeInputs.push({
+          question: conv.qa[i]!.question,
+          prediction: predictions[i]!.prediction,
+          answer: String(conv.qa[i]!.answer),
+        });
+      }
+    }
+
+    const judgeResults = judgeInputs.length > 0 ? await judgeBatch(judgeInputs) : [];
+    const judgeMap = new Map<number, boolean>();
+    for (let j = 0; j < judgeIndices.length; j++) {
+      judgeMap.set(judgeIndices[j]!, judgeResults[j]!.correct);
+    }
+    console.log(`  Judge: ${judgeInputs.length} non-EM questions judged (${((performance.now() - t0) / 1000).toFixed(1)}s)`);
+
     for (let i = 0; i < conv.qa.length; i++) {
       const qa = conv.qa[i]!;
       const evidence = qa.evidence ?? [];
@@ -326,6 +348,8 @@ async function main() {
         : evidence.length > 0
           ? evidence.filter((e) => retrieved.has(e)).length / evidence.length
           : 1;
+      // accuracy: EM=1 → 1, otherwise use judge verdict
+      const accuracy = scores[i]!.em === 1 ? 1 : (judgeMap.get(i) ? 1 : 0);
       allResults.push({
         sampleId: conv.sample_id,
         question: qa.question,
@@ -334,6 +358,7 @@ async function main() {
         category: qa.category,
         f1: scores[i]!.f1,
         em: scores[i]!.em,
+        accuracy,
         recall,
         context: predictions[i]!.context,
         toolCalls: predictions[i]!.toolCalls,
@@ -345,7 +370,7 @@ async function main() {
       (r) => r.sampleId === conv.sample_id,
     );
     console.log(
-      `  F1=${mean(sampleResults.map((r) => r.f1)).toFixed(3)} EM=${mean(sampleResults.map((r) => r.em)).toFixed(3)} Recall=${mean(sampleResults.map((r) => r.recall).filter((r) => r >= 0)).toFixed(3)} (${sampleResults.length} QA)\n`,
+      `  F1=${mean(sampleResults.map((r) => r.f1)).toFixed(3)} EM=${mean(sampleResults.map((r) => r.em)).toFixed(3)} Acc=${mean(sampleResults.map((r) => r.accuracy)).toFixed(3)} Recall=${mean(sampleResults.map((r) => r.recall).filter((r) => r >= 0)).toFixed(3)} (${sampleResults.length} QA)\n`,
     );
   }
 
@@ -356,6 +381,7 @@ async function main() {
   const errorExcluded = allResults.length - cleanResults.length;
   const overallF1 = mean(cleanResults.map((r) => r.f1));
   const overallEM = mean(cleanResults.map((r) => r.em));
+  const overallAcc = mean(cleanResults.map((r) => r.accuracy));
   const byCategory = aggregateByKey(cleanResults, (r) => String(r.category));
   const bySample = aggregateByKey(cleanResults, (r) => r.sampleId);
 
@@ -372,11 +398,11 @@ async function main() {
     const rawSuffix = raw && errorExcluded > 0 ? ` (raw: F1=${raw.f1.toFixed(3)} n=${raw.count})` : "";
     const recallStr = Number(cat) === 5 ? "" : ` Recall=${stats.recall.toFixed(3)}`;
     console.log(
-      `  ${name} (${cat}): F1=${stats.f1.toFixed(3)} EM=${stats.em.toFixed(3)}${recallStr} (n=${stats.count})${rawSuffix}`,
+      `  ${name} (${cat}): F1=${stats.f1.toFixed(3)} EM=${stats.em.toFixed(3)} Acc=${stats.accuracy.toFixed(3)}${recallStr} (n=${stats.count})${rawSuffix}`,
     );
   }
   console.log(
-    `\nOverall: F1=${overallF1.toFixed(3)} EM=${overallEM.toFixed(3)} Recall=${mean(cleanResults.map((r) => r.recall).filter((r) => r >= 0)).toFixed(3)} (${cleanResults.length} QA)`,
+    `\nOverall: F1=${overallF1.toFixed(3)} EM=${overallEM.toFixed(3)} Acc=${overallAcc.toFixed(3)} Recall=${mean(cleanResults.map((r) => r.recall).filter((r) => r >= 0)).toFixed(3)} (${cleanResults.length} QA)`,
   );
   if (errorExcluded > 0) {
     console.log(
@@ -426,6 +452,7 @@ async function main() {
     model: process.env.EVAL_MODEL ?? "sonnet",
     f1: Number(overallF1.toFixed(4)),
     em: Number(overallEM.toFixed(4)),
+    accuracy: Number(overallAcc.toFixed(4)),
     raw_f1: Number(rawF1.toFixed(4)),
     raw_em: Number(rawEM.toFixed(4)),
     samples: conversations.length,

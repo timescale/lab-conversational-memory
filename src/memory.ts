@@ -261,7 +261,9 @@ export function buildPrompt(
 
 Each memory is a turn spoken by a specific person, organized as conv.{speaker}.s{N} (speaker is lowercase). Filter to a speaker's turns with tree "conv.{speaker}.*" when searching for what they said, did, or shared. Combine with semantic, fulltext, or grep for best results.
 
-Pay attention to WHO is mentioned in each memory. If the question asks about one person but the search results only mention a different person doing that thing, say "no information available" — do not correct or clarify who it actually belongs to. If the information is not available, say "no information available".
+Pay attention to WHO is mentioned in each memory. If the question asks about one person but the search results only mention a different person doing that thing, say "no information available" — do not correct or clarify who it actually belongs to.
+
+For questions that ask what someone "might" do, "would likely" be, or "could" enjoy — make your best inference from the available evidence. Only say "no information available" if there is truly nothing relevant in the memories.
 
 IMPORTANT: Your final answer must be ONLY a short phrase — no explanations, no reasoning, no markdown. Just the answer itself.
 

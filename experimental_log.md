@@ -807,3 +807,27 @@ Re-ran with prompt B — the generous grading prompt used by Mem0 (2025) and APE
 - Saved to `results/eval-2026-04-16T10-49-32-709Z-accuracy-promptb.json`.
 
 ---
+
+## Exp42: Encourage inference on might/would/could questions
+
+- **Hypothesis**: Open-domain has 40 "no information" refusals (40%+ of questions). These are inferential questions ("What might John's degree be in?") where evidence exists but the model is too conservative. Adding "For questions that ask what someone 'might' do, 'would likely' be, or 'could' enjoy — make your best inference from the available evidence" should reduce false refusals.
+- **Change**: Added inference encouragement line to tool-mode prompt in memory.ts.
+- **Eval**: 1 sample (conv-26), Haiku, Acc(B) judge.
+
+Baseline is conv-26 from the 10-sample run (same sample, same model):
+
+| Cat | Name | Baseline Acc(B) | Exp42 Acc(B) | Delta | n |
+|-----|------|---------|-------|-------|---|
+| 1 | multi-hop | 0.406 | 0.318 | -0.088 | 22 |
+| 2 | temporal | 0.757 | 0.879 | +0.122 | 33 |
+| 3 | open-domain | 0.615 | 0.636 | +0.021 | 11 |
+| 4 | single-hop | 0.814 | 0.864 | +0.050 | 59 |
+| 5 | adversarial | 0.894 | 0.909 | +0.015 | 44 |
+| **Overall** | | **0.744** | **0.793** | **+0.049** | 169 |
+
+F1 held steady (0.662 vs baseline 0.666 overall).
+
+- **Analysis**: Overall +0.049 Acc(B). Temporal (+0.122) and single-hop (+0.050) improved most. Open-domain only +0.021 — smaller than expected given 40 "no info" refusals in the full run. Multi-hop dipped -0.088, possibly the model is now guessing on questions where "no info" was correct. Adversarial held (+0.015), so inference encouragement didn't cause false positives.
+- **Decision**: **Adopted.** Modest overall improvement, no adversarial regression. Needs full 10-sample to confirm.
+
+---

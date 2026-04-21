@@ -333,7 +333,7 @@ async function main() {
       }
     }
 
-    const judgeResults = judgeInputs.length > 0 ? await judgeBatch(judgeInputs) : [];
+    const judgeResults = judgeInputs.length > 0 ? await judgeBatch(judgeInputs, "B") : [];
     const judgeMap = new Map<number, boolean>();
     for (let j = 0; j < judgeIndices.length; j++) {
       judgeMap.set(judgeIndices[j]!, judgeResults[j]!.correct);

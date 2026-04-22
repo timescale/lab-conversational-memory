@@ -76,6 +76,7 @@ function formatTemporal(date: Date): string {
 export async function ingest(
   sample: LoCoMoSample,
   sql: Sql,
+  tableName: string = "memory",
 ): Promise<void> {
   const sessions = parseSessions(sample.conversation);
 
@@ -137,17 +138,12 @@ export async function ingest(
       for (let i = b; i < end; i++) {
         const row = rows[i]!;
         const vec = `[${embeddings[i]!.join(",")}]`;
-        await tx`
-          INSERT INTO memory (id, content, meta, tree, temporal, embedding)
-          VALUES (
-            ${row.id}::uuid,
-            ${row.content},
-            ${sql.json(row.meta)},
-            ${row.tree}::ltree,
-            ${row.temporal}::tstzrange,
-            ${vec}::halfvec
-          )
-        `;
+        const metaJson = JSON.stringify(row.meta).replace(/'/g, "''");
+        await tx.unsafe(
+          `INSERT INTO ${tableName} (id, content, meta, tree, temporal, embedding)
+           VALUES ($1::uuid, $2, '${metaJson}'::jsonb, $3::ltree, $4::tstzrange, $5::halfvec)`,
+          [row.id, row.content, row.tree, row.temporal, vec],
+        );
       }
     });
   }
@@ -265,6 +261,8 @@ Each memory is a turn spoken by a specific person, organized as conv.{speaker}.s
 Pay attention to WHO is mentioned in each memory. If the question asks about one person but the search results only mention a different person doing that thing, say "no information available" — do not correct or clarify who it actually belongs to.
 
 For questions that ask what someone "might" do, "would likely" be, or "could" enjoy — make your best inference from the available evidence. Only say "no information available" if there is truly nothing relevant in the memories.
+
+For questions that require combining multiple facts (e.g., "What games does X play?", "What recipes has X made?", "What sports does X like besides Y?"): do NOT stop after one search. Search for each sub-topic separately, use the results from one search to guide the next, and gather ALL relevant pieces before answering. Do at least 3 searches for questions asking about lists or multiple facts.
 
 IMPORTANT: Your final answer must be ONLY a short phrase — no explanations, no reasoning, no markdown. Just the answer itself.
 

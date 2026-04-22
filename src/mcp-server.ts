@@ -6,6 +6,7 @@ import { embed } from "./memory.ts";
 
 const RRF_K = 60;
 
+const TABLE = process.env.MEMORY_TABLE ?? "memory";
 const sql = postgres(process.env.DATABASE_URL!, { onnotice: () => {} });
 
 function formatDate(temporal: string | null): string {
@@ -127,9 +128,9 @@ server.tool(
 
       if (hasFulltext) {
         const bm25 = await sql.unsafe<Array<{ id: string }>>(
-          `SELECT id FROM memory
-           WHERE content <@> to_bm25query($1, 'memory_content_bm25_idx') < 0${filterClause}
-           ORDER BY -(content <@> to_bm25query($1, 'memory_content_bm25_idx')) DESC, created_at DESC
+          `SELECT id FROM ${TABLE}
+           WHERE content <@> to_bm25query($1, '${TABLE}_content_bm25_idx') < 0${filterClause}
+           ORDER BY -(content <@> to_bm25query($1, '${TABLE}_content_bm25_idx')) DESC, created_at DESC
            LIMIT $2`,
           [params.fulltext, candidateLimit, ...filterValues],
         );
@@ -140,7 +141,7 @@ server.tool(
         const [queryEmbedding] = await embed([params.semantic!]);
         const vec = `[${queryEmbedding!.join(",")}]`;
         const sem = await sql.unsafe<Array<{ id: string }>>(
-          `SELECT id FROM memory
+          `SELECT id FROM ${TABLE}
            WHERE embedding IS NOT NULL
              AND (embedding <=> $1::halfvec) < 1.0${filterClause}
            ORDER BY (embedding <=> $1::halfvec) ASC, created_at DESC
@@ -169,7 +170,7 @@ server.tool(
       }
 
       const rows = await sql.unsafe<Array<{ id: string; content: string; meta: Record<string, unknown>; temporal: string | null; tree: string | null }>>(
-        `SELECT id, content, meta, temporal::text, tree::text FROM memory WHERE id = ANY($1::uuid[])`,
+        `SELECT id, content, meta, temporal::text, tree::text FROM ${TABLE} WHERE id = ANY($1::uuid[])`,
         [topIds.map((r) => r.id)],
       );
 
@@ -183,7 +184,7 @@ server.tool(
       // Filter-only mode
       const orderDir = params.order_by ?? "desc";
       const rows = await sql.unsafe<Array<{ id: string; content: string; meta: Record<string, unknown>; temporal: string | null; tree: string | null }>>(
-        `SELECT id, content, meta, temporal::text, tree::text FROM memory
+        `SELECT id, content, meta, temporal::text, tree::text FROM ${TABLE}
          WHERE true${filterClause}
          ORDER BY created_at ${orderDir === "asc" ? "ASC" : "DESC"}
          LIMIT $1`,
@@ -225,10 +226,11 @@ Returns the memory content, date, and adjacent turns. Use window to control how 
     window: z.number().int().min(0).max(10).describe("Number of prev/next turns to include (default 2)").default(2),
   },
   async ({ id, window: windowSize }) => {
-    const rows = await sql`
-      SELECT id, content, meta, temporal::text, tree::text
-      FROM memory WHERE id = ${id}::uuid
-    `;
+    const rows = await sql.unsafe<Array<Record<string, unknown>>>(
+      `SELECT id, content, meta, temporal::text, tree::text
+       FROM ${TABLE} WHERE id = $1::uuid`,
+      [id],
+    );
     if (rows.length === 0) {
       return { content: [{ type: "text" as const, text: "Memory not found" }] };
     }
@@ -242,7 +244,7 @@ Returns the memory content, date, and adjacent turns. Use window to control how 
     // Walk backwards through prev chain
     let currentId = meta.prev_id as string | undefined;
     for (let i = 0; i < windowSize && currentId; i++) {
-      const [prev] = await sql`SELECT id, content, meta, temporal::text FROM memory WHERE id = ${currentId}::uuid`;
+      const [prev] = await sql.unsafe(`SELECT id, content, meta, temporal::text FROM ${TABLE} WHERE id = $1::uuid`, [currentId]);
       if (!prev) break;
       const date = formatDate(prev.temporal as string | null);
       const prevMeta = prev.meta as Record<string, unknown>;
@@ -259,7 +261,7 @@ Returns the memory content, date, and adjacent turns. Use window to control how 
     // Walk forwards through next chain
     currentId = meta.next_id as string | undefined;
     for (let i = 0; i < windowSize && currentId; i++) {
-      const [next] = await sql`SELECT id, content, meta, temporal::text FROM memory WHERE id = ${currentId}::uuid`;
+      const [next] = await sql.unsafe(`SELECT id, content, meta, temporal::text FROM ${TABLE} WHERE id = $1::uuid`, [currentId]);
       if (!next) break;
       const date = formatDate(next.temporal as string | null);
       const nextMeta = next.meta as Record<string, unknown>;
@@ -296,22 +298,24 @@ Shows how memories are organized and how many exist at each level. Use to unders
     const maxLevels = levels || 100;
     let rows;
     if (tree) {
-      rows = await sql`
-        SELECT subpath(tree, 0, nlevel(${tree}::ltree) + ${maxLevels}) as path,
-               count(*)::int as count
-        FROM memory
-        WHERE tree <@ ${tree}::ltree
-        GROUP BY path
-        ORDER BY path
-      `;
+      rows = await sql.unsafe(
+        `SELECT subpath(tree, 0, nlevel($1::ltree) + $2) as path,
+                count(*)::int as count
+         FROM ${TABLE}
+         WHERE tree <@ $1::ltree
+         GROUP BY path
+         ORDER BY path`,
+        [tree, maxLevels],
+      );
     } else {
-      rows = await sql`
-        SELECT subpath(tree, 0, ${maxLevels}) as path,
-               count(*)::int as count
-        FROM memory
-        GROUP BY path
-        ORDER BY path
-      `;
+      rows = await sql.unsafe(
+        `SELECT subpath(tree, 0, $1) as path,
+                count(*)::int as count
+         FROM ${TABLE}
+         GROUP BY path
+         ORDER BY path`,
+        [maxLevels],
+      );
     }
     const nodes = rows.map((r) => ({ path: r.path, count: r.count }));
     return { content: [{ type: "text" as const, text: JSON.stringify({ nodes }, null, 2) }] };

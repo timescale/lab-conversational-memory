@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "setup": "bun src/prepare.ts",
+    "ingest": "bun src/ingest.ts",
     "eval": "bun src/evaluate.ts",
     "eval:quick": "bun src/evaluate.ts --samples 1"
   },

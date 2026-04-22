@@ -1,7 +1,8 @@
 import { readFileSync, writeFileSync, appendFileSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import postgres from "postgres";
-import { ingest, retrieve, buildPrompt } from "./memory.ts";
+import { retrieve, buildPrompt } from "./memory.ts";
+import { tableNameForSample } from "./ingest.ts";
 
 // Mode: "tool" = Claude searches via MCP tools, "context" = pre-retrieved context in prompt
 const EVAL_MODE = (process.env.EVAL_MODE ?? "tool") as "tool" | "context";
@@ -44,14 +45,17 @@ function parseArgs() {
 // ---------------------------------------------------------------------------
 
 
-const MCP_CONFIG = JSON.stringify({
-  mcpServers: {
-    recall: {
-      command: "bun",
-      args: ["src/mcp-server.ts"],
+function mcpConfigForTable(tableName: string): string {
+  return JSON.stringify({
+    mcpServers: {
+      recall: {
+        command: "bun",
+        args: ["src/mcp-server.ts"],
+        env: { MEMORY_TABLE: tableName },
+      },
     },
-  },
-});
+  });
+}
 
 const MCP_TOOLS = "mcp__recall__me_memory_search,mcp__recall__me_memory_get,mcp__recall__me_memory_tree";
 
@@ -64,12 +68,12 @@ interface ClaudeResult {
   retrievedDiaIds: Set<string>;
 }
 
-async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeResult> {
+async function askClaudeOnce(prompt: string, mcpConfig: string | null): Promise<ClaudeResult> {
   const JSON_SCHEMA = '{"type":"object","properties":{"answer":{"type":"string"}},"required":["answer"]}';
   const model = process.env.EVAL_MODEL ?? "sonnet";
   const args = ["claude", "-p", prompt, "--output-format", "json", "--verbose", "--model", model, "--json-schema", JSON_SCHEMA];
-  if (useMcp) {
-    args.push("--mcp-config", MCP_CONFIG, "--strict-mcp-config", "--tools", MCP_TOOLS, "--allowedTools", MCP_TOOLS);
+  if (mcpConfig) {
+    args.push("--mcp-config", mcpConfig, "--strict-mcp-config", "--tools", MCP_TOOLS, "--allowedTools", MCP_TOOLS);
   }
   const proc = Bun.spawn(args, { stdout: "pipe", stderr: "pipe" });
 
@@ -128,10 +132,10 @@ async function askClaudeOnce(prompt: string, useMcp: boolean): Promise<ClaudeRes
   }
 }
 
-async function askClaude(prompt: string, useMcp: boolean): Promise<ClaudeResult> {
+async function askClaude(prompt: string, mcpConfig: string | null): Promise<ClaudeResult> {
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
     try {
-      return await askClaudeOnce(prompt, useMcp);
+      return await askClaudeOnce(prompt, mcpConfig);
     } catch (e: any) {
       if (attempt < MAX_RETRIES) {
         process.stderr.write(`  retry(${attempt + 1}) `);
@@ -244,16 +248,18 @@ async function main() {
   const allResults: QAResult[] = [];
 
   for (const conv of conversations) {
-    console.log(`--- ${conv.sample_id} ---`);
+    const tableName = tableNameForSample(conv.sample_id);
+    const mcpConfig = mcpConfigForTable(tableName);
+    console.log(`--- ${conv.sample_id} (${tableName}) ---`);
 
-    // Clean slate
+    // Verify table exists and has data
     let t0 = performance.now();
-    await sql`TRUNCATE memory`;
-
-    // Ingest
-    await ingest(conv, sql);
-    const [row] = await sql`SELECT count(*)::int as count FROM memory`;
-    console.log(`  ${row!.count} memories stored (${((performance.now() - t0) / 1000).toFixed(1)}s)`);
+    const [row] = await sql.unsafe(`SELECT count(*)::int as count FROM ${tableName}`).catch(() => [{ count: 0 }]);
+    if (row!.count === 0) {
+      console.error(`  Table ${tableName} is empty. Run: bun run ingest --sample-id ${conv.sample_id}`);
+      continue;
+    }
+    console.log(`  ${row!.count} memories (pre-ingested)`);
 
     const CONCURRENCY = 50;
     const predictions: Array<{ prediction: string; context: string; toolCalls: ClaudeResult["toolCalls"]; retrievedDiaIds: Set<string> }> = new Array(conv.qa.length);
@@ -293,7 +299,7 @@ async function main() {
           const context = qaContexts[qi]!;
           const prompt = buildPrompt(qa.question, context);
           promises.push(
-            askClaude(prompt, false).then((result) => {
+            askClaude(prompt, null).then((result) => {
               predictions[qi] = { prediction: result.answer, context, toolCalls: result.toolCalls, retrievedDiaIds: result.retrievedDiaIds };
               completed++;
               process.stdout.write(`  Answer: ${completed}/${conv.qa.length}\n`);
@@ -315,7 +321,7 @@ async function main() {
           const qa = conv.qa[qi]!;
           const prompt = buildPrompt(qa.question, "");
           promises.push(
-            askClaude(prompt, true).then((result) => {
+            askClaude(prompt, mcpConfig).then((result) => {
               predictions[qi] = { prediction: result.answer, context: "(tool mode)", toolCalls: result.toolCalls, retrievedDiaIds: result.retrievedDiaIds };
               completed++;
               process.stdout.write(`  Answer: ${completed}/${conv.qa.length}\n`);

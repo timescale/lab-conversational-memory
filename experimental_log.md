@@ -874,3 +874,25 @@ Re-scored the same runs with gpt-4o-mini instead of Claude Haiku as the judge. 2
 - Open-domain remains weakest (0.690) — many questions have subjective/image-dependent gold answers.
 
 ---
+
+## Exp43: Semantic-only search for inferential questions
+
+- **Hypothesis**: Hybrid search (BM25 + semantic) hurts inferential questions because BM25 returns noise for abstract queries like "political views" (nobody says those words in conversation). Manual testing confirmed semantic-only surfaces better passages. Adding prompt guidance to use semantic-only for inferential questions should improve open-domain and multi-hop.
+- **Change**: Added search strategy guidance to prompt: "For inferential questions (personality traits, opinions, preferences, 'might/would/could'): use semantic ONLY."
+- **Eval**: Sonnet 1-sample (conv-26) vs exp42 conv-26 from 10-sample run.
+
+| Cat | Name | exp42 F1 | exp43 F1 | Δ F1 | exp42 Recall | exp43 Recall | Δ Recall |
+|-----|------|---------|-------|------|---------|-------|------|
+| 1 | multi-hop | 0.412 | 0.453 | +0.041 | 0.508 | 0.508 | +0.000 |
+| 2 | temporal | 0.619 | 0.622 | +0.003 | 1.000 | 1.000 | +0.000 |
+| 3 | open-domain | 0.261 | 0.286 | +0.026 | 0.577 | 0.577 | +0.000 |
+| 4 | single-hop | 0.646 | 0.661 | +0.016 | 0.743 | 0.829 | +0.086 |
+| 5 | adversarial | 0.809 | 0.787 | -0.021 | — | — | — |
+| | **Overall** | **0.616** | **0.626** | **+0.009** | **0.742** | **0.781** | **+0.039** |
+
+Also tested on conv-44 open-domain (worst sample, n=7): Acc(B) 0.286 → 0.286 (flat).
+
+- **Analysis**: Recall unchanged for multi-hop, temporal, open-domain — the model was already relying on semantic search for these. Multi-hop F1 +0.041 came from better reasoning, not retrieval, but n=32 is too noisy to be conclusive. Open-domain failures are fundamentally subjective gold answers or image-dependent evidence (2 new benchmark errors added for Voyageurs National Park and Minnesota). Deep analysis of conv-44 open-domain showed 3/5 clean questions have gold answers that are creative suggestions never stated in the conversation.
+- **Decision**: **Reverted.** No reliable improvement. The bottleneck for open-domain is benchmark subjectivity, not search strategy.
+
+---

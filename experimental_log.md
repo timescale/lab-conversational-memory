@@ -896,3 +896,23 @@ Also tested on conv-44 open-domain (worst sample, n=7): Acc(B) 0.286 → 0.286 (
 - **Decision**: **Reverted.** No reliable improvement. The bottleneck for open-domain is benchmark subjectivity, not search strategy.
 
 ---
+
+## Exp45: Multi-hop iterative search prompting
+
+- **Hypothesis**: 10/26 multi-hop recall=0 failures gave up after just 1-2 searches, and 23/26 repeated the same query. Multi-hop questions need 2-4 evidence pieces. Prompting the model to do at least 3 searches and decompose into sub-queries should improve recall.
+- **Change**: Added to prompt: "For questions that require combining multiple facts: do NOT stop after one search. Search for each sub-topic separately, use the results from one search to guide the next, and gather ALL relevant pieces before answering. Do at least 3 searches for questions asking about lists or multiple facts."
+- **Eval**: Haiku 1-sample conv-26 vs baseline conv-26 from 10-sample run.
+
+| Cat | Name | Baseline Recall | Exp45 Recall | Δ Recall | Baseline F1 | Exp45 F1 | Δ F1 |
+|-----|------|---------|-------|------|---------|-------|------|
+| 1 | multi-hop | 0.466 | 0.615 | **+0.148** | 0.397 | 0.544 | **+0.147** |
+| 2 | temporal | 0.946 | 0.973 | +0.027 | — | — | — |
+| 3 | open-domain | 0.679 | 0.692 | +0.013 | — | — | — |
+| 4 | single-hop | 0.786 | 0.800 | +0.014 | — | — | — |
+
+- Avg tool calls: 3.2 → 3.8 (model doing more searches as prompted).
+- No recall drop in any category.
+- **Analysis**: Multi-hop recall +0.148 and F1 +0.147 — substantial improvement. The model is doing more and better searches. No regressions in other categories. 1-sample though, needs full 10-sample to confirm.
+- **Decision**: **Adopted.** Needs full 10-sample confirmation.
+
+---

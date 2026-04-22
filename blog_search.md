@@ -142,7 +142,13 @@ The practical limit for open-domain is the benchmark itself, not the retrieval s
 
 Our system achieves the highest F1 score on LoCoMo among all systems evaluated with rigorous, deterministic metrics — F1=0.665 raw with Sonnet, surpassing Omni-SimpleMem's F1=0.598 with GPT-4o. F1 scoring (token-level overlap with stemming) is reproducible and comparable across papers without ambiguity.
 
-Several recent systems report only LLM-as-judge accuracy, which we believe is methodologically problematic (see our analysis below showing 18pp variance from judge configuration alone, among other problems). Nonetheless, we include these numbers for completeness and find our system competitive even on this metric — despite using a single Postgres table with no graphs, no summarization, and no specialized memory management.
+Several recent systems report only LLM-as-judge accuracy, which we believe has three methodological problems:
+
+1. **Judge variance is massive and underspecified.** We found 18 percentage points of spread in overall accuracy from changing only the judge model and prompt (see our analysis below). Most papers don't disclose their exact judge prompt, and some don't even name the judge model — making cross-paper comparison meaningless.
+2. **Dropping adversarial removes the hallucination guardrail.** Most papers exclude 446 adversarial questions from scoring. These questions test whether a system correctly rejects unanswerable queries. Without them, you can boost accuracy on other categories by prompting the model to guess aggressively — inflating numbers while increasing hallucinations in production.
+3. **The benchmark has ~8% error rate, yet systems report 90%+ accuracy.** We identified 164 questions (8.3%) with wrong gold answers, unsupported citations, or answers requiring image understanding from photos with no text equivalent. Any system claiming above ~91% accuracy is partly measuring agreement with benchmark noise.
+
+Nonetheless, we include these numbers for completeness and find our system competitive even on this metric — despite using a single Postgres table with no graphs, no summarization, and no specialized memory management.
 
 ### F1 Scores
 

@@ -67,7 +67,7 @@ The agent decides which search modes to use, how to combine them, and when to do
 
 ## What We Learned (45+ Experiments)
 
-We ran 41 experiments over several days, testing one hypothesis at a time. Here are the findings that mattered:
+We ran 45+ experiments over several days, testing one hypothesis at a time. Here are the findings that mattered:
 
 ### 1. Agentic search beats fixed retrieval
 
@@ -125,6 +125,18 @@ We tried having Haiku extract atomic facts per session and storing them alongsid
 ### 7. Retrieval depth matters (with diminishing returns)
 
 Increasing the candidate pool from 30 to 60 and result limit from 10 to 15 improved evidence recall from 0.380 to 0.492. Pushing further to 100/20 improved recall more but hurt adversarial accuracy — too many results means more noise for the agent to sift through. There's a sweet spot.
+
+### 8. Multi-hop needs iterative search, not broader search
+
+Multi-hop was our weakest category. Analysis of recall=0 failures revealed the pattern: 10 of 26 failures gave up after just 1-2 searches, and 23 of 26 repeated the same query verbatim instead of reformulating. The agent wasn't decomposing multi-hop questions into sub-queries.
+
+Prompting the model to "search for each sub-topic separately, use results from one search to guide the next, and do at least 3 searches for multi-fact questions" improved multi-hop recall from 0.592 to 0.651 (+10%) with no regression in other categories. The key insight: multi-hop doesn't need more results per search — it needs more searches with different queries, each informed by what the previous search found.
+
+### 9. Open-domain has a low ceiling on this benchmark
+
+Deep analysis of open-domain failures (the weakest non-adversarial category) revealed that many gold answers are creative inferences never stated in the conversation — "What hobby could Andrew pick up?" expects "install a bird feeder," which appears nowhere in the text. Others require recognizing locations from shared photos (e.g., identifying a trail map image as a specific national park). We identified several benchmark errors in this category.
+
+The practical limit for open-domain is the benchmark itself, not the retrieval system. We improved open-domain accuracy by encouraging the model to make inferences rather than defaulting to "no information available," but diminishing returns set in quickly.
 
 ## Comparison with Prior Work
 

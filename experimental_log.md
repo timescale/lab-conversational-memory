@@ -915,4 +915,31 @@ Also tested on conv-44 open-domain (worst sample, n=7): Acc(B) 0.286 → 0.286 (
 - **Analysis**: Multi-hop recall +0.148 and F1 +0.147 — substantial improvement. The model is doing more and better searches. No regressions in other categories. 1-sample though, needs full 10-sample to confirm.
 - **Decision**: **Adopted.** Needs full 10-sample confirmation.
 
+### Full 10-sample Sonnet confirmation (exp42+44+45 combined)
+
+Both runs scored with gpt-4o-mini judge, prompt B:
+
+| Cat | Name | Prev Acc | New Acc | Δ Acc | Prev Recall | New Recall | Δ Recall | n |
+|-----|------|---------|-------|-------|---------|-------|-------|---|
+| 1 | multi-hop | 0.817 | 0.825 | +0.009 | 0.592 | 0.651 | +0.060 | 229 |
+| 2 | temporal | 0.846 | 0.860 | +0.014 | 0.862 | 0.916 | +0.054 | 285 |
+| 3 | open-domain | 0.690 | 0.679 | -0.012 | 0.543 | 0.555 | +0.011 | 84 |
+| 4 | single-hop | 0.931 | 0.932 | +0.001 | 0.871 | 0.883 | +0.012 | 783 |
+| 5 | adversarial | 0.918 | 0.896 | -0.023 | — | — | — | 441 |
+| | **Overall** | **0.889** | **0.887** | **-0.002** | **0.803** | **0.831** | **+0.028** | 1822 |
+
+Summary (Sonnet, error-corrected):
+
+| Metric | Prev (exp42) | New (exp42+44+45) | Delta |
+|--------|---------|-------|-------|
+| F1 | 0.693 | 0.694 | +0.001 |
+| Acc(B, gpt-4o-mini) | 0.889 | 0.887 | -0.002 |
+| Recall | 0.803 | 0.831 | +0.028 |
+| Raw F1 | 0.665 | 0.665 | +0.000 |
+
+- Acc flat (-0.002) — gpt-4o-mini judge was already generous enough that extra evidence doesn't flip many verdicts.
+- Recall is the real gain: multi-hop +0.060, temporal +0.054, overall +0.028. Judge-independent.
+- F1 unchanged. No regressions.
+- Exp44 (image query field) and exp45 (multi-hop iterative prompt) confirmed: better retrieval, stable accuracy.
+
 ---

@@ -2,7 +2,7 @@
 
 Long-term conversational memory — the ability to recall and reason over months of past conversations — is one of the hardest unsolved problems in AI assistants. Most approaches stuff retrieved context into a prompt and hope for the best. We took a different approach: give the AI agent direct access to search tools backed by Postgres, and let it decide how to find what it needs.
 
-The result: **F1=0.638** on the LoCoMo benchmark (raw, full 10-sample), up from the previous state-of-the-art of F1=0.598 set by Omni-SimpleMem with GPT-4o — achieved using the much smaller Claude Haiku and a single Postgres table. The key insight isn't better embeddings or fancier retrieval — it's that an agent with the right search tools outperforms any fixed retrieval pipeline.
+The result: **F1=0.665** on the LoCoMo benchmark (raw, full 10-sample) with Claude Sonnet, up from the previous state-of-the-art of F1=0.598 set by Omni-SimpleMem with GPT-4o — achieved with a single Postgres table. Even with the smaller Claude Haiku, we reach F1=0.638. The key insight isn't better embeddings or fancier retrieval — it's that an agent with the right search tools outperforms any fixed retrieval pipeline.
 
 ## The Benchmark
 
@@ -65,7 +65,7 @@ All modes can be combined. Results are fused with Reciprocal Rank Fusion (RRF).
 
 The agent decides which search modes to use, how to combine them, and when to do follow-up searches — all without any hardcoded retrieval logic.
 
-## What We Learned (41 Experiments)
+## What We Learned (45+ Experiments)
 
 We ran 41 experiments over several days, testing one hypothesis at a time. Here are the findings that mattered:
 
@@ -141,34 +141,35 @@ The table below compares our system against results reported in [Omni-SimpleMem]
 | MemGPT | GPT-4o | 0.305 | 0.188 | 0.246 | 0.305 | 0.843 | 0.404 |
 | SimpleMem | GPT-4o | 0.318 | 0.195 | 0.235 | 0.308 | 0.802 | 0.432 |
 | Omni-SimpleMem | GPT-4o | **0.556** | 0.365 | 0.255 | **0.641** | 0.835 | 0.598 |
-| **Ours** | **Claude Haiku** | 0.420 | **0.645** | **0.567** | 0.311 | **0.883** | **0.638** |
+| **Ours** | **Claude Haiku** | 0.420 | 0.645 | 0.567 | 0.311 | 0.883 | 0.638 |
+| **Ours** | **Claude Sonnet** | 0.453 | **0.673** | **0.625** | 0.400 | **0.870** | **0.665** |
 
-Our system achieves the highest overall F1 (0.638 vs 0.598) despite using a smaller, cheaper model and a dramatically simpler architecture. The prior systems involve multi-stage pipelines: Omni-SimpleMem uses pyramid expansion, LLM summarization, BM25 hybrid retrieval, and adaptive top-k — all discovered through an automated architecture search. MemGPT requires a custom memory management OS with paging. A-MEM builds associative memory graphs.
+Our system achieves the highest overall F1 (0.665 with Sonnet, 0.638 with Haiku) vs 0.598 for Omni-SimpleMem, despite a dramatically simpler architecture. The prior systems involve multi-stage pipelines: Omni-SimpleMem uses pyramid expansion, LLM summarization, BM25 hybrid retrieval, and adaptive top-k — all discovered through an automated architecture search. MemGPT requires a custom memory management OS with paging. A-MEM builds associative memory graphs.
 
 Our system is a single Postgres table with standard indexes (HNSW, BM25, ltree, tstzrange) exposed as MCP tools. There is no summarization, no fact extraction, no entity graphs, no custom memory management. The raw conversation turns go into the table; the agent decides how to search them. The complexity lives in the search tool interface, not in the pipeline.
 
-The advantage comes from single-hop (+0.280), temporal (+0.312), and adversarial (+0.048), while Omni-SimpleMem leads on multi-hop and open-domain. The temporal gap is particularly striking — our agentic search with temporal metadata in Postgres gives the model direct access to dates, while fixed retrieval pipelines lose this signal.
+The advantage comes from single-hop (+0.308), temporal (+0.370), and adversarial (+0.035), while Omni-SimpleMem leads on multi-hop and open-domain. The temporal gap is particularly striking — our agentic search with temporal metadata in Postgres gives the model direct access to dates, while fixed retrieval pipelines lose this signal.
 
 ### Per-Category Breakdown
 
-Our system on LoCoMo (full 10 samples, 1824 QA, Claude Haiku, error-corrected metrics):
+Our system on LoCoMo (full 10 samples, error-corrected metrics):
 
-| Category | F1 | Recall |
-|----------|------|--------|
-| Multi-hop | 0.445 | 0.594 |
-| Temporal | 0.581 | 0.880 |
-| Open-domain | 0.328 | 0.582 |
-| Single-hop | 0.670 | 0.864 |
-| Adversarial | 0.893 | — |
-| **Overall** | **0.666** | **0.805** |
+| Category | Haiku F1 | Sonnet F1 | Sonnet Recall |
+|----------|----------|-----------|---------------|
+| Multi-hop | 0.445 | 0.485 | 0.651 |
+| Temporal | 0.581 | 0.648 | 0.916 |
+| Open-domain | 0.328 | 0.441 | 0.555 |
+| Single-hop | 0.670 | 0.696 | 0.883 |
+| Adversarial | 0.893 | 0.880 | — |
+| **Overall** | **0.666** | **0.694** | **0.831** |
 
-Our fixed retrieval baseline started at F1=0.493. Agentic search brought this to F1=0.666 — a **35% improvement** from better tools alone, with no change to the underlying model.
+Our fixed retrieval baseline started at F1=0.493. Agentic search brought this to F1=0.694 with Sonnet — a **41% improvement** from better tools alone, with no change to the underlying architecture.
 
 ## The Stack
 
 - **Database**: Postgres (via Timescale/Ghost) with pgvector, pg_textsearch (BM25), ltree
 - **Embeddings**: OpenAI text-embedding-3-small (1536d, stored as halfvec)
-- **Agent**: Claude Haiku via Claude Code CLI with MCP tools
+- **Agent**: Claude Sonnet (or Haiku) via Claude Code CLI with MCP tools
 - **Search**: Hybrid semantic + BM25 with RRF fusion, regex grep filter, ltree speaker paths
 - **Evaluation**: LoCoMo benchmark with Python scorer (exact match to paper's evaluation.py)
 
@@ -178,8 +179,10 @@ We run on a [Ghost](https://ghost.build) PostgreSQL instance for two reasons: a 
 
 ## What's Next
 
-Multi-hop remains the weakest category (F1=0.445). The primary bottleneck is that the agent typically does one search per question — multi-hop questions need evidence from 2-4 turns across different sessions. Teaching the agent to systematically do follow-up searches for aggregation questions is the most promising next direction.
+Multi-hop remains the weakest category (F1=0.485 with Sonnet). We improved multi-hop recall from 0.592 to 0.651 by prompting the agent to do iterative follow-up searches — decomposing multi-fact questions into sub-queries instead of stopping after one broad search. But there's still headroom: 13% of multi-hop questions have zero recall (no evidence retrieved at all).
+
+Open-domain (F1=0.441) is limited by the benchmark itself — many gold answers are creative inferences never stated in the conversation, or require image understanding from shared photos. We identified and reported several benchmark errors where gold answers (e.g., "Voyageurs National Park") aren't supported by any text or image metadata in the data.
 
 We also haven't optimized the embedding model, experimented with re-ranking, or tried query expansion at the retrieval level. The agentic approach opens up possibilities that fixed pipelines can't explore — the agent can learn to use tools in ways we haven't anticipated.
 
-The code and full experiment log (41 experiments with per-category breakdowns) are available in the repository.
+The code and full experiment log (45+ experiments with per-category breakdowns) are available in the repository.

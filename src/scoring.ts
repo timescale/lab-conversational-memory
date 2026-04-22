@@ -100,16 +100,93 @@ Just return the label CORRECT or WRONG in a json format with the key as "label".
 }
 
 export type JudgePrompt = "A" | "B";
+export type JudgeModel = "haiku" | "gpt-4o-mini";
+
+async function judgeViaClaude(
+  prompt: string,
+  useJson: boolean,
+  jsonSchema: string,
+): Promise<boolean> {
+  const args = ["claude", "-p", prompt, "--model", "haiku", "--system-prompt", JUDGE_SYSTEM];
+  if (useJson) {
+    args.push("--output-format", "json", "--json-schema", jsonSchema);
+  } else {
+    args.push("--output-format", "text");
+  }
+  const proc = Bun.spawn(args, { stdout: "pipe", stderr: "pipe" });
+  const stdout = await new Response(proc.stdout).text();
+  await proc.exited;
+
+  if (useJson) {
+    try {
+      const parsed = JSON.parse(stdout);
+      return (parsed.structured_output?.label ?? parsed.label ?? parsed.result ?? "").toUpperCase() === "CORRECT";
+    } catch {
+      return stdout.toUpperCase().includes("CORRECT") && !stdout.toUpperCase().includes("WRONG");
+    }
+  } else {
+    const decisionMatch = stdout.match(/Decision:\s*<?(\w+)>?/i);
+    return decisionMatch ? decisionMatch[1]!.toLowerCase() === "yes" : false;
+  }
+}
+
+async function judgeViaOpenAI(
+  prompt: string,
+  useJson: boolean,
+): Promise<boolean> {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) throw new Error("OPENAI_API_KEY required for gpt-4o-mini judge");
+
+  const body: Record<string, unknown> = {
+    model: "gpt-4o-mini",
+    messages: [
+      { role: "system", content: JUDGE_SYSTEM },
+      { role: "user", content: prompt },
+    ],
+    max_tokens: 300,
+    temperature: 0.3,
+  };
+  if (useJson) {
+    body.response_format = { type: "json_object" };
+  }
+
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`OpenAI API error: ${res.status} ${await res.text()}`);
+
+  const data = (await res.json()) as {
+    choices: Array<{ message: { content: string } }>;
+  };
+  const content = data.choices[0]?.message?.content ?? "";
+
+  if (useJson) {
+    try {
+      const parsed = JSON.parse(content);
+      return (parsed.label ?? "").toUpperCase() === "CORRECT";
+    } catch {
+      return content.toUpperCase().includes("CORRECT") && !content.toUpperCase().includes("WRONG");
+    }
+  } else {
+    const decisionMatch = content.match(/Decision:\s*<?(\w+)>?/i);
+    return decisionMatch ? decisionMatch[1]!.toLowerCase() === "yes" : false;
+  }
+}
 
 export async function judgeBatch(
   items: JudgeInput[],
   promptVariant: JudgePrompt = "A",
+  judgeModel: JudgeModel = "haiku",
 ): Promise<Array<{ correct: boolean }>> {
-  const CONCURRENCY = 20;
+  const CONCURRENCY = judgeModel === "gpt-4o-mini" ? 50 : 20;
   const results: Array<{ correct: boolean }> = new Array(items.length);
 
   const buildPrompt = promptVariant === "B" ? buildJudgePromptB : buildJudgePrompt;
-  // Prompt B uses JSON output, Prompt A uses text
   const useJson = promptVariant === "B";
   const JSON_SCHEMA = '{"type":"object","properties":{"label":{"type":"string","enum":["CORRECT","WRONG"]}},"required":["label"]}';
 
@@ -124,31 +201,9 @@ export async function judgeBatch(
       promises.push(
         (async () => {
           try {
-            const args = ["claude", "-p", prompt, "--model", "haiku", "--system-prompt", JUDGE_SYSTEM];
-            if (useJson) {
-              args.push("--output-format", "json", "--json-schema", JSON_SCHEMA);
-            } else {
-              args.push("--output-format", "text");
-            }
-            const proc = Bun.spawn(args, { stdout: "pipe", stderr: "pipe" });
-            const stdout = await new Response(proc.stdout).text();
-            await proc.exited;
-
-            let correct = false;
-            if (useJson) {
-              try {
-                const parsed = JSON.parse(stdout);
-                correct = (parsed.structured_output?.label ?? parsed.label ?? parsed.result ?? "").toUpperCase() === "CORRECT";
-              } catch {
-                correct = stdout.toUpperCase().includes("CORRECT") && !stdout.toUpperCase().includes("WRONG");
-              }
-            } else {
-              const decisionMatch = stdout.match(/Decision:\s*<?(\w+)>?/i);
-              correct = decisionMatch
-                ? decisionMatch[1]!.toLowerCase() === "yes"
-                : false;
-            }
-
+            const correct = judgeModel === "gpt-4o-mini"
+              ? await judgeViaOpenAI(prompt, useJson)
+              : await judgeViaClaude(prompt, useJson, JSON_SCHEMA);
             results[i] = { correct };
           } catch {
             results[i] = { correct: false };

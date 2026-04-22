@@ -855,4 +855,22 @@ Summary metrics (error-corrected):
 - Sonnet exp42: Acc(B) 0.830 (+0.051 over Haiku exp42), F1 0.693 (+0.024). Sonnet retrieves slightly less (recall 0.803 vs 0.816) but reasons better over what it finds.
 - Adversarial stable across all three runs (0.878–0.907).
 
+### gpt-4o-mini as judge (prompt B)
+
+Re-scored the same runs with gpt-4o-mini instead of Claude Haiku as the judge. 25x faster (~60s vs ~23min for 1074 questions) and more generous, especially on multi-hop.
+
+| Cat | Name | Haiku Base (haiku judge) | Haiku Base (gpt-4o-mini) | Sonnet Exp42 (gpt-4o-mini) | n |
+|-----|------|---------|-------|-------|---|
+| 1 | multi-hop | 0.472 | 0.725 | 0.808 | 229 |
+| 2 | temporal | 0.737 | 0.765 | 0.849 | 285 |
+| 3 | open-domain | 0.442 | 0.464 | 0.690 | 84 |
+| 4 | single-hop | 0.810 | 0.843 | 0.932 | 783 |
+| 5 | adversarial | 0.900 | 0.907 | 0.916 | 441 |
+| | **Overall** | **0.760** | **0.814** | **0.889** | ~1822 |
+
+- gpt-4o-mini is more generous than Haiku as judge (+0.054 on same Haiku baseline run).
+- Biggest judge gap is multi-hop: 0.472 (haiku) vs 0.725 (gpt-4o-mini) on same predictions.
+- Sonnet exp42 with gpt-4o-mini judge: **Acc(B) = 0.889**, single-hop 0.932, temporal 0.849.
+- Open-domain remains weakest (0.690) — many questions have subjective/image-dependent gold answers.
+
 ---

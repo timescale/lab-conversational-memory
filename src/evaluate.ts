@@ -17,6 +17,8 @@ function parseArgs() {
   const args = process.argv.slice(2);
   let samples = Infinity;
   let description = "";
+  let category: number | null = null;
+  let sampleId: string | null = null;
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--samples" && args[i + 1]) {
@@ -25,10 +27,16 @@ function parseArgs() {
     } else if (args[i] === "--desc" && args[i + 1]) {
       description = args[i + 1]!;
       i++;
+    } else if (args[i] === "--category" && args[i + 1]) {
+      category = Number.parseInt(args[i + 1]!);
+      i++;
+    } else if (args[i] === "--sample-id" && args[i + 1]) {
+      sampleId = args[i + 1]!;
+      i++;
     }
   }
 
-  return { samples, description };
+  return { samples, description, category, sampleId };
 }
 
 // ---------------------------------------------------------------------------
@@ -174,13 +182,23 @@ function aggregateByKey(
 // ---------------------------------------------------------------------------
 
 async function main() {
-  const { samples: maxSamples, description } = parseArgs();
+  const { samples: maxSamples, description, category: categoryFilter, sampleId: sampleIdFilter } = parseArgs();
 
   // Load dataset
   const dataset: LoCoMoSample[] = JSON.parse(
     readFileSync("data/locomo10.json", "utf-8"),
   );
-  const conversations = dataset.slice(0, maxSamples);
+  let conversations = sampleIdFilter
+    ? dataset.filter((d) => d.sample_id === sampleIdFilter)
+    : dataset.slice(0, maxSamples);
+
+  // Filter QA by category if specified
+  if (categoryFilter !== null) {
+    for (const conv of conversations) {
+      conv.qa = conv.qa.filter((qa) => qa.category === categoryFilter);
+    }
+    console.log(`Filtering to category ${categoryFilter} (${CATEGORY_NAMES[categoryFilter] ?? categoryFilter})`);
+  }
 
   // Load known benchmark errors for error-corrected metrics
   const locomoIdMap: Record<string, string> = {

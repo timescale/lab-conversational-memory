@@ -4,7 +4,7 @@
 //   --prompt B: LoCoMo-style generous grading with JSON output
 
 import { readFileSync, writeFileSync } from "node:fs";
-import { judgeBatch, type JudgePrompt } from "./scoring.ts";
+import { judgeBatch, type JudgePrompt, type JudgeModel } from "./scoring.ts";
 import { CATEGORY_NAMES } from "./types.ts";
 
 function mean(arr: number[]): number {
@@ -16,10 +16,14 @@ async function main() {
   const args = process.argv.slice(2);
   let filePath: string | undefined;
   let promptVariant: JudgePrompt = "A";
+  let judgeModel: JudgeModel = "haiku";
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--prompt" && args[i + 1]) {
       promptVariant = args[i + 1]!.toUpperCase() as JudgePrompt;
+      i++;
+    } else if (args[i] === "--judge-model" && args[i + 1]) {
+      judgeModel = args[i + 1]! as JudgeModel;
       i++;
     } else if (!filePath) {
       filePath = args[i];
@@ -27,11 +31,11 @@ async function main() {
   }
 
   if (!filePath) {
-    console.error("Usage: bun src/rescore-accuracy.ts <eval-result.json> [--prompt A|B]");
+    console.error("Usage: bun src/rescore-accuracy.ts <eval-result.json> [--prompt A|B] [--judge-model haiku|gpt-4o-mini]");
     process.exit(1);
   }
 
-  console.log(`Using judge prompt: ${promptVariant}`);
+  console.log(`Using judge prompt: ${promptVariant}, model: ${judgeModel}`);
 
   const data = JSON.parse(readFileSync(filePath, "utf-8"));
   const results: Array<{
@@ -66,7 +70,7 @@ async function main() {
   console.log(`\nRunning judge on ${judgeInputs.length} questions...`);
 
   const t0 = performance.now();
-  const judgeResults = await judgeBatch(judgeInputs, promptVariant);
+  const judgeResults = await judgeBatch(judgeInputs, promptVariant, judgeModel);
   const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
   console.log(`Judge complete (${elapsed}s)\n`);
 
@@ -139,7 +143,9 @@ async function main() {
   console.log(`Raw (all): Acc=${rawAcc.toFixed(3)} (${results.length} QA)`);
 
   // Save accuracy-augmented results
-  const suffix = promptVariant === "A" ? "-accuracy" : `-accuracy-prompt${promptVariant.toLowerCase()}`;
+  const modelSuffix = judgeModel === "haiku" ? "" : `-${judgeModel}`;
+  const promptSuffix = promptVariant === "A" ? "" : `-prompt${promptVariant.toLowerCase()}`;
+  const suffix = `-accuracy${promptSuffix}${modelSuffix}`;
   const outPath = filePath.replace(".json", `${suffix}.json`);
   const augmented = results.map((r, i) => ({ ...r, accuracy: accuracy[i] }));
   data.results = augmented;

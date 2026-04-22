@@ -181,7 +181,7 @@ async function judgeViaOpenAI(
 export async function judgeBatch(
   items: JudgeInput[],
   promptVariant: JudgePrompt = "A",
-  judgeModel: JudgeModel = "haiku",
+  judgeModel: JudgeModel = "gpt-4o-mini",
 ): Promise<Array<{ correct: boolean }>> {
   const CONCURRENCY = judgeModel === "gpt-4o-mini" ? 50 : 20;
   const results: Array<{ correct: boolean }> = new Array(items.length);

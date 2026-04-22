@@ -144,7 +144,7 @@ async function judgeViaOpenAI(
       { role: "user", content: prompt },
     ],
     max_tokens: 300,
-    temperature: 0.3,
+    temperature: 0,
   };
   if (useJson) {
     body.response_format = { type: "json_object" };

@@ -2663,5 +2663,32 @@
     ],
     "reasoning": "D30:1 is Dave speaking about himself: 'Hey Calvin, long time no talk! A lot has happened. I've taken up photography and it's been great - been taking pics of the scenery around here which is really cool.' Photography is Dave's new hobby, not Calvin's. There is no evidence in the transcript that Calvin took up photography. The question incorrectly attributes Dave's hobby to Calvin.",
     "correct_answer": "Photography is Dave's new hobby, not Calvin's. Calvin has not mentioned taking up a new hobby in the recent sessions."
+  },
+  {
+    "question_id": "locomo_5_qa44",
+    "question": "Which national park could Audrey and Andrew be referring to in their conversations?",
+    "golden_answer": "Voyageurs National Park",
+    "category": 3,
+    "error_type": "UNSUPPORTED_ANSWER",
+    "cited_evidence": [
+      "D5:8",
+      "D11:9"
+    ],
+    "correct_evidence": [],
+    "reasoning": "Neither the text, blip_caption, query field, nor the actual images support \"Voyageurs National Park.\" D5:8 text says \"a beautiful national park\" with a generic stock photo of dogs in a field. D11:9 shares a trail map image that is actually of Elm Creek Park Reserve (a county park near Minneapolis), not Voyageurs National Park (300 miles north). The word \"Voyageurs\" appears nowhere in the conversation data.",
+    "correct_answer": null
+  },
+  {
+    "question_id": "locomo_5_qa43",
+    "question": "Which US state do Audrey and Andrew potentially live in?",
+    "golden_answer": "Minnesota",
+    "category": 3,
+    "error_type": "UNSUPPORTED_ANSWER",
+    "cited_evidence": [
+      "D11:9"
+    ],
+    "correct_evidence": [],
+    "reasoning": "The only evidence is D11:9 which shows a trail map image of Elm Creek Park Reserve. While Elm Creek is in Minnesota, the state name never appears in any text or metadata field. The answer requires recognizing the specific park from the map image, which contains no text identifying the state. Even with image understanding, the connection to \"Minnesota\" depends on geographic knowledge of this specific park.",
+    "correct_answer": null
   }
 ]

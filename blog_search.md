@@ -126,9 +126,13 @@ We tried having Haiku extract atomic facts per session and storing them alongsid
 
 Increasing the candidate pool from 30 to 60 and result limit from 10 to 15 improved evidence recall from 0.380 to 0.492. Pushing further to 100/20 improved recall more but hurt adversarial accuracy — too many results means more noise for the agent to sift through. There's a sweet spot.
 
-## Results
+## Comparison with Prior Work
 
-### Comparison with Prior Work
+Our system achieves the highest F1 score on LoCoMo among all systems evaluated with rigorous, deterministic metrics — F1=0.665 raw with Sonnet, surpassing Omni-SimpleMem's F1=0.598 with GPT-4o. F1 scoring (token-level overlap with stemming) is reproducible and comparable across papers without ambiguity.
+
+Several recent systems report only LLM-as-judge accuracy, which we believe is methodologically problematic (see our analysis below showing 18pp variance from judge configuration alone, among other problems). Nonetheless, we include these numbers for completeness and find our system competitive even on this metric — despite using a single Postgres table with no graphs, no summarization, and no specialized memory management.
+
+### F1 Scores
 
 The table below compares our system against results reported in [Omni-SimpleMem](https://arxiv.org/abs/2604.01007) (Cui et al., 2025), the current state-of-the-art on LoCoMo. All scores are raw F1 (no error correction) for fair comparison.
 
@@ -150,42 +154,63 @@ Our system is a single Postgres table with standard indexes (HNSW, BM25, ltree, 
 
 The advantage comes from single-hop (+0.308), temporal (+0.370), and adversarial (+0.035), while Omni-SimpleMem leads on multi-hop and open-domain. The temporal gap is particularly striking — our agentic search with temporal metadata in Postgres gives the model direct access to dates, while fixed retrieval pipelines lose this signal.
 
-### Comparison with LLM-as-Judge Accuracy
+### LLM-as-Judge Accuracy
+
+#### A Warning on Reliability
 
 Recent work has moved toward LLM-as-judge accuracy as the primary LoCoMo metric, following [Mem0](https://arxiv.org/abs/2504.19413) (Chhikara et al., 2025). A judge model (typically GPT-4o-mini) compares the generated answer against the gold answer with generous grading — "as long as it touches on the same topic, count it as CORRECT." This captures semantic equivalence that F1 misses (e.g., "May 7th" vs "7 May 2023").
 
-Most papers exclude adversarial questions (446 of 1,986) from accuracy scoring. We report both.
+However, these numbers should be compared with caution. We ran the same set of predictions (Sonnet, full 10-sample) through four different judge configurations — varying only the judge model and prompt — and found massive variance:
 
-| Method | Model | Judge | Multi-hop | Single-hop | Temporal | Open-domain | Adversarial | **Overall (w/o Adv)** | **Overall (w/ Adv)** |
-|--------|-------|-------|-----------|------------|----------|-------------|-------------|----------------------|---------------------|
-| Mem0 | GPT-4o | GPT-4o-mini | — | — | — | — | — | 68.4 | — |
-| GAAMA | GPT-4o-mini | GPT-4o-mini* | 72.2 | 87.2 | 71.9 | 49.3 | — | 78.9 | — |
-| **Ours** | **Claude Haiku** | **GPT-4o-mini** | 70.9 | 81.3 | 72.9 | 42.7 | 89.7 | **75.3** | **78.5** |
-| APEX-MEM | Claude 4.5 Haiku | — | — | — | — | — | — | 84.9 | — |
-| **Ours** | **Claude Sonnet** | **GPT-4o-mini** | **79.8** | **90.6** | **82.2** | 62.5 | **88.6** | **85.1** | **85.9** |
-| APEX-MEM | Claude 4.5 Sonnet | — | — | — | — | — | — | 88.4 | — |
-| APEX-MEM | GPT-5 | — | 86.3 | 89.9 | 90.6 | **91.7** | 86.8 | 89.5 | 88.9 |
-| MemMachine | GPT-4.1-mini | GPT-4o-mini | 88.3 | 95.1 | 91.6 | 71.9 | — | 91.7 | — |
-| HyperMem | GPT-4.1-mini | GPT-4o-mini | **93.6** | **96.1** | **89.7** | 70.8 | — | **92.7** | — |
+| Judge / Prompt | Multi-hop | Single-hop | Temporal | Open-domain | **Overall (w/o Adv)** |
+|----------------|-----------|------------|----------|-------------|----------------------|
+| Haiku / Prompt A | 45.0 | 77.2 | 65.7 | 49.0 | 67.1 |
+| Haiku / Prompt B | 55.0 | 87.3 | 77.6 | 64.6 | 77.9 |
+| GPT-4o-mini / Prompt A | 46.5 | 79.8 | 75.1 | 51.0 | 70.9 |
+| GPT-4o-mini / Prompt B | 79.8 | 90.6 | 82.2 | 62.5 | 85.1 |
 
-\* GAAMA uses a different scoring method (continuous key fact coverage rather than binary CORRECT/WRONG), so its numbers are not directly comparable.
+Same predictions, same gold answers — **18 percentage points of spread** in overall accuracy depending on judge configuration. Multi-hop swings by **35 points**. The only stable category is adversarial (1 point spread), since it's a binary match/reject that doesn't require semantic judgment.
 
-**Notes on comparability:** Judge prompts, judge models, and adversarial handling vary across papers. HyperMem and MemMachine use the Mem0 evaluation framework. APEX-MEM references the same methodology but doesn't specify its judge model. Our numbers use prompt B (the Mem0 generous grading prompt) with GPT-4o-mini at temperature 0. All numbers are raw (no error correction).
+Prompt A is a neutral evaluation prompt ("decide whether the ground-truth content is present in the model's response"). Prompt B is the Mem0/APEX-MEM generous grading prompt ("as long as it touches on the same topic, count it as CORRECT"). The prompt matters more than the judge model — Prompt B with either judge model produces 8-15 points higher accuracy than Prompt A with the same model.
 
-Our system is competitive with dedicated memory architectures while using a dramatically simpler design. With Claude Sonnet, we reach 85.1% — between APEX-MEM's Haiku (84.9%) and Sonnet (88.4%) results, despite having no graph structures, no summarization pipelines, and no specialized memory management. The gap to the top (HyperMem at 92.7% with GPT-4.1-mini) suggests that model capability is a significant factor — upgrading the generation model is likely the highest-leverage improvement.
+This means cross-paper accuracy comparisons are unreliable unless, at the very least, the exact same judge model, prompt, and temperature are used. A 5-point accuracy difference between two systems could easily be an artifact of different judge configurations rather than a real capability gap. F1, while imperfect (it penalizes valid paraphrases), is at least deterministic and reproducible.
 
-### Per-Category Breakdown
+With that caveat, here is how we compare using Prompt B with GPT-4o-mini (matching the Mem0 evaluation framework used by most recent papers):
 
-Our system on LoCoMo (full 10 samples, error-corrected metrics):
+#### Comparison Table
 
-| Category | Haiku F1 | Sonnet F1 | Sonnet Recall |
-|----------|----------|-----------|---------------|
-| Multi-hop | 0.445 | 0.485 | 0.651 |
-| Temporal | 0.581 | 0.648 | 0.916 |
-| Open-domain | 0.328 | 0.441 | 0.555 |
-| Single-hop | 0.670 | 0.696 | 0.883 |
-| Adversarial | 0.893 | 0.880 | — |
-| **Overall** | **0.666** | **0.694** | **0.831** |
+Most papers exclude adversarial questions (446 of 1,986) from accuracy scoring. We report both. This matters: adversarial questions act as a guardrail against prompt tuning that inflates other categories. It's easy to boost multi-hop or open-domain accuracy by encouraging the model to guess — but this increases hallucinations on adversarial questions where the correct answer is "no information available." Excluding adversarial from scoring removes this check.
+
+| Method | Model | Judge | Judge Prompt | Multi-hop | Single-hop | Temporal | Open-domain | Adversarial | **Overall (w/o Adv)** | **Overall (w/ Adv)** |
+|--------|-------|-------|--------------|-----------|------------|----------|-------------|-------------|----------------------|---------------------|
+| Mem0 | GPT-4o | GPT-4o-mini | Mem0 | — | — | — | — | — | 68.4 | — |
+| GAAMA | GPT-4o-mini | GPT-4o-mini | fact coverage* | 72.2 | 87.2 | 71.9 | 49.3 | — | 78.9 | — |
+| **Ours** | **Claude Haiku** | **GPT-4o-mini** | **Mem0** | 70.9 | 81.3 | 72.9 | 42.7 | 89.7 | **75.3** | **78.5** |
+| APEX-MEM | Claude 4.5 Haiku | undisclosed | undisclosed | — | — | — | — | — | 84.9 | — |
+| **Ours** | **Claude Sonnet** | **GPT-4o-mini** | **Mem0** | **79.8** | **90.6** | **82.2** | 62.5 | **88.6** | **85.1** | **85.9** |
+| APEX-MEM | Claude 4.5 Sonnet | undisclosed | undisclosed | — | — | — | — | — | 88.4 | — |
+| APEX-MEM | GPT-5 | undisclosed | undisclosed | 86.3 | 89.9 | 90.6 | **91.7** | 86.8 | 89.5 | 88.9 |
+| MemMachine | GPT-4.1-mini | GPT-4o-mini | Mem0 | 88.3 | 95.1 | 91.6 | 71.9 | — | 91.7 | — |
+| HyperMem | GPT-4.1-mini | GPT-4o-mini | Mem0 | **93.6** | **96.1** | **89.7** | 70.8 | — | **92.7** | — |
+
+\* GAAMA uses a continuous key fact coverage score rather than binary CORRECT/WRONG, so its numbers are not directly comparable.
+
+All numbers in the table above are raw (no error correction) for fair comparison against other systems. However, we identified errors in 8.3% of LoCoMo questions (164 of 1,986) — wrong gold answers, unsupported citations, or answers requiring image understanding from photos with no text equivalent. We are confident there are more. This means any system reporting above ~91% accuracy is likely being evaluated partly on benchmark noise rather than genuine capability. Results at that level should be interpreted with caution.
+
+Our system is competitive with dedicated memory architectures while using a dramatically simpler design. With Claude Sonnet, we reach 85.1% — between APEX-MEM's Haiku (84.9%) and Sonnet (88.4%) results, despite having no graph structures, no summarization pipelines, and no specialized memory management.
+
+## Our Per-Category Breakdown
+
+Our system on LoCoMo (full 10 samples, error-corrected metrics). We exclude 164 questions with benchmark errors — wrong gold answers, unsupported evidence citations, or gold answers that require image understanding from photos not available as text (e.g., "Voyageurs National Park" as the answer when no text or metadata contains the park name). The initial error list comes from the [LoCoMo Audit](https://github.com/dial481/locomo-audit); we added our own corrections, primarily on adversarial questions. These are excluded below to measure system performance rather than benchmark noise:
+
+| Category | Haiku F1 | Sonnet F1 | Sonnet Acc | Sonnet Recall |
+|----------|----------|-----------|------------|---------------|
+| Multi-hop | 0.445 | 0.485 | 0.825 | 0.651 |
+| Temporal | 0.581 | 0.648 | 0.860 | 0.916 |
+| Open-domain | 0.328 | 0.441 | 0.679 | 0.555 |
+| Single-hop | 0.670 | 0.696 | 0.932 | 0.883 |
+| Adversarial | 0.893 | 0.880 | 0.896 | — |
+| **Overall** | **0.666** | **0.694** | **0.887** | **0.831** |
 
 Our fixed retrieval baseline started at F1=0.493. Agentic search brought this to F1=0.694 with Sonnet — a **41% improvement** from better tools alone, with no change to the underlying architecture.
 

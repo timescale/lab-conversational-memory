@@ -150,6 +150,30 @@ Our system is a single Postgres table with standard indexes (HNSW, BM25, ltree, 
 
 The advantage comes from single-hop (+0.308), temporal (+0.370), and adversarial (+0.035), while Omni-SimpleMem leads on multi-hop and open-domain. The temporal gap is particularly striking — our agentic search with temporal metadata in Postgres gives the model direct access to dates, while fixed retrieval pipelines lose this signal.
 
+### Comparison with LLM-as-Judge Accuracy
+
+Recent work has moved toward LLM-as-judge accuracy as the primary LoCoMo metric, following [Mem0](https://arxiv.org/abs/2504.19413) (Chhikara et al., 2025). A judge model (typically GPT-4o-mini) compares the generated answer against the gold answer with generous grading — "as long as it touches on the same topic, count it as CORRECT." This captures semantic equivalence that F1 misses (e.g., "May 7th" vs "7 May 2023").
+
+Most papers exclude adversarial questions (446 of 1,986) from accuracy scoring. We report both.
+
+| Method | Model | Judge | Multi-hop | Single-hop | Temporal | Open-domain | Adversarial | **Overall (w/o Adv)** | **Overall (w/ Adv)** |
+|--------|-------|-------|-----------|------------|----------|-------------|-------------|----------------------|---------------------|
+| Mem0 | GPT-4o | GPT-4o-mini | — | — | — | — | — | 68.4 | — |
+| GAAMA | GPT-4o-mini | GPT-4o-mini* | 72.2 | 87.2 | 71.9 | 49.3 | — | 78.9 | — |
+| **Ours** | **Claude Haiku** | **GPT-4o-mini** | 70.9 | 81.3 | 72.9 | 42.7 | 89.7 | **75.3** | **78.5** |
+| APEX-MEM | Claude 4.5 Haiku | — | — | — | — | — | — | 84.9 | — |
+| **Ours** | **Claude Sonnet** | **GPT-4o-mini** | **79.8** | **90.6** | **82.2** | 62.5 | **88.6** | **85.1** | **85.9** |
+| APEX-MEM | Claude 4.5 Sonnet | — | — | — | — | — | — | 88.4 | — |
+| APEX-MEM | GPT-5 | — | 86.3 | 89.9 | 90.6 | **91.7** | 86.8 | 89.5 | 88.9 |
+| MemMachine | GPT-4.1-mini | GPT-4o-mini | 88.3 | 95.1 | 91.6 | 71.9 | — | 91.7 | — |
+| HyperMem | GPT-4.1-mini | GPT-4o-mini | **93.6** | **96.1** | **89.7** | 70.8 | — | **92.7** | — |
+
+\* GAAMA uses a different scoring method (continuous key fact coverage rather than binary CORRECT/WRONG), so its numbers are not directly comparable.
+
+**Notes on comparability:** Judge prompts, judge models, and adversarial handling vary across papers. HyperMem and MemMachine use the Mem0 evaluation framework. APEX-MEM references the same methodology but doesn't specify its judge model. Our numbers use prompt B (the Mem0 generous grading prompt) with GPT-4o-mini at temperature 0. All numbers are raw (no error correction).
+
+Our system is competitive with dedicated memory architectures while using a dramatically simpler design. With Claude Sonnet, we reach 85.1% — between APEX-MEM's Haiku (84.9%) and Sonnet (88.4%) results, despite having no graph structures, no summarization pipelines, and no specialized memory management. The gap to the top (HyperMem at 92.7% with GPT-4.1-mini) suggests that model capability is a significant factor — upgrading the generation model is likely the highest-leverage improvement.
+
 ### Per-Category Breakdown
 
 Our system on LoCoMo (full 10 samples, error-corrected metrics):

@@ -2,7 +2,7 @@
 
 Long-term conversational memory — the ability to recall and reason over months of past conversations — is one of the hardest unsolved problems in AI assistants. Most approaches stuff retrieved context into a prompt and hope for the best. We took a different approach: give the AI agent direct access to search tools backed by Postgres, and let it decide how to find what it needs.
 
-The result: **F1=0.665** on the LoCoMo benchmark (raw, full 10-sample) with Claude Sonnet, up from the previous state-of-the-art of F1=0.598 set by Omni-SimpleMem with GPT-4o — achieved with a single Postgres table. Even with the smaller Claude Haiku, we reach F1=0.638. The key insight isn't better embeddings or fancier retrieval — it's that an agent with the right search tools outperforms any fixed retrieval pipeline.
+The result: **F1=0.665** and **85.1% accuracy** on the LoCoMo benchmark (raw, full 10-sample) with Claude Sonnet, up from the previous F1 state-of-the-art of 0.598 set by Omni-SimpleMem with GPT-4o — achieved with a single Postgres table. Even with the smaller Claude Haiku, we reach F1=0.638 and 75.3% accuracy. The key insight isn't better embeddings or fancier retrieval — it's that an agent with the right search tools outperforms any fixed retrieval pipeline.
 
 ## The Benchmark
 

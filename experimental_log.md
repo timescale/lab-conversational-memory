@@ -830,4 +830,29 @@ F1 held steady (0.662 vs baseline 0.666 overall).
 - **Analysis**: Overall +0.049 Acc(B). Temporal (+0.122) and single-hop (+0.050) improved most. Open-domain only +0.021 — smaller than expected given 40 "no info" refusals in the full run. Multi-hop dipped -0.088, possibly the model is now guessing on questions where "no info" was correct. Adversarial held (+0.015), so inference encouragement didn't cause false positives.
 - **Decision**: **Adopted.** Modest overall improvement, no adversarial regression. Needs full 10-sample to confirm.
 
+### Full 10-sample results (Haiku and Sonnet)
+
+| Cat | Name | Haiku Base Acc(B) | Haiku Exp42 Acc(B) | Sonnet Exp42 Acc(B) | Haiku Base Recall | Haiku Exp42 Recall | Sonnet Exp42 Recall | n |
+|-----|------|---------|-------|-------|---------|-------|-------|---|
+| 1 | multi-hop | 0.472 | 0.472 | 0.537 | 0.594 | 0.601 | 0.592 | 229 |
+| 2 | temporal | 0.737 | 0.740 | 0.811 | 0.880 | 0.910 | 0.862 | 285 |
+| 3 | open-domain | 0.442 | 0.581 | 0.640 | 0.582 | 0.585 | 0.554 | 86 |
+| 4 | single-hop | 0.810 | 0.849 | 0.900 | 0.864 | 0.870 | 0.871 | 783 |
+| 5 | adversarial | 0.900 | 0.878 | 0.907 | — | — | — | 441 |
+| | **Overall** | **0.760** | **0.779** | **0.830** | **0.805** | **0.816** | **0.803** | 1824 |
+
+Summary metrics (error-corrected):
+
+| Metric | Haiku Baseline | Haiku Exp42 | Sonnet Exp42 |
+|--------|---------|-------|-------|
+| F1 | 0.666 | 0.669 | 0.693 |
+| EM | 0.487 | 0.490 | 0.484 |
+| Acc(B) | 0.760 | 0.779 | 0.830 |
+| Recall | 0.805 | 0.816 | 0.803 |
+| Raw F1 | 0.638 | 0.641 | 0.665 |
+
+- Haiku exp42 confirms 1-sample finding: overall Acc(B) +0.019, open-domain +0.139, F1 +0.003.
+- Sonnet exp42: Acc(B) 0.830 (+0.051 over Haiku exp42), F1 0.693 (+0.024). Sonnet retrieves slightly less (recall 0.803 vs 0.816) but reasons better over what it finds.
+- Adversarial stable across all three runs (0.878–0.907).
+
 ---

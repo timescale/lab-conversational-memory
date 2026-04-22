@@ -201,7 +201,7 @@ Our system is competitive with dedicated memory architectures while using a dram
 
 ## Our Per-Category Breakdown
 
-Our system on LoCoMo (full 10 samples, error-corrected metrics). We exclude 164 questions with benchmark errors — wrong gold answers, unsupported evidence citations, or gold answers that require image understanding from photos not available as text (e.g., "Voyageurs National Park" as the answer when no text or metadata contains the park name). The initial error list comes from the [LoCoMo Audit](https://github.com/dial481/locomo-audit); we added our own corrections, primarily on adversarial questions. These are excluded below to measure system performance rather than benchmark noise:
+Our system on LoCoMo (full 10 samples, error-corrected metrics). We exclude 164 questions with benchmark errors — wrong gold answers, unsupported evidence citations, or gold answers that require image understanding from photos not available as text (e.g., "Voyageurs National Park" as the answer when no text or metadata contains the park name). The initial error list comes from the [LoCoMo Audit](https://github.com/dial481/locomo-audit); we [added our own corrections](https://github.com/timescale/autoresearch_convo/blob/main/harness/data/adversarial-errors.json), primarily on adversarial questions. These are excluded below to measure system performance rather than benchmark noise:
 
 | Category | Haiku F1 | Sonnet F1 | Sonnet Acc | Sonnet Recall |
 |----------|----------|-----------|------------|---------------|

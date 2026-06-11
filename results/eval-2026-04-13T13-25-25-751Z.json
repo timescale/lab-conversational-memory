@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-04-13T13:25:25.751Z",
+  "samples": 0,
+  "totalQA": 0,
+  "overallF1": 0,
+  "overallEM": 0,
+  "byCategory": {},
+  "bySample": {},
+  "description": "test error loading",
+  "results": []
+}

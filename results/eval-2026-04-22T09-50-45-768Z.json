@@ -1,0 +1,668 @@
+{
+  "timestamp": "2026-04-22T09:50:45.768Z",
+  "samples": 1,
+  "totalQA": 11,
+  "overallF1": 0.24924727272727273,
+  "overallEM": 0.09090909090909091,
+  "raw": {
+    "f1": 0.23287953846153847,
+    "em": 0.07692307692307693,
+    "totalQA": 13,
+    "errorsExcluded": 2
+  },
+  "byCategory": {
+    "3": {
+      "count": 11,
+      "f1": 0.24924727272727273,
+      "em": 0.09090909090909091,
+      "accuracy": 0.9090909090909091,
+      "recall": 0.5454545454545454
+    }
+  },
+  "bySample": {
+    "conv-26": {
+      "count": 11,
+      "f1": 0.24924727272727273,
+      "em": 0.09090909090909091,
+      "accuracy": 0.9090909090909091,
+      "recall": 0.5454545454545454
+    }
+  },
+  "description": "exp43: semantic-only for inferential, open-domain only",
+  "results": [
+    {
+      "sampleId": "conv-26",
+      "question": "What fields would Caroline be likely to pursue in her educaton?",
+      "answer": "Psychology, counseling certification",
+      "prediction": "counseling or mental health",
+      "category": 3,
+      "f1": 0.285714,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's interests, hobbies, passions, activities, and skills",
+            "fulltext": null,
+            "grep": "Caroline",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's interests hobbies passions activities skills education",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline career goals mental health counseling social work helping people",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "counseling or mental health"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Caroline still want to pursue counseling as a career if she hadn't received support growing up?",
+      "answer": "Likely no",
+      "prediction": "Probably not — her motivation was directly rooted in the support she received growing up",
+      "category": 3,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.5,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline counseling career motivation support growing up",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Probably not — her motivation was directly rooted in the support she received growing up"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Caroline likely have Dr. Seuss books on her bookshelf?",
+      "answer": "Yes, since she collects classic children's books",
+      "prediction": "Yes",
+      "category": 3,
+      "f1": 0.25,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline books reading preferences children literature",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Yes"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Caroline pursue writing as a career option?",
+      "answer": "LIkely no; though she likes reading, she wants to be a counselor",
+      "prediction": "Unlikely — Caroline's career focus is counseling and mental health, not writing",
+      "category": 3,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline writing career interest passion",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Unlikely — Caroline's career focus is counseling and mental health, not writing"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Melanie be considered a member of the LGBTQ community?",
+      "answer": "Likely no, she does not refer to herself as part of it",
+      "prediction": "No, likely an ally/supporter",
+      "category": 3,
+      "f1": 0.266667,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie LGBTQ identity sexuality gender",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie personal identity relationship partner romantic",
+            "fulltext": null,
+            "grep": "Melanie",
+            "meta": null,
+            "tree": "conv.melanie.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie personal identity relationship partner romantic",
+            "fulltext": null,
+            "grep": "Melanie",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie activist ally supporter community member",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "No, likely an ally/supporter"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Melanie be more interested in going to a national park or a theme park?",
+      "answer": "National park; she likes the outdoors",
+      "prediction": "national park",
+      "category": 3,
+      "f1": 1,
+      "em": 1,
+      "accuracy": 1,
+      "recall": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie outdoor activities nature parks interests hobbies",
+            "fulltext": null,
+            "grep": "Melanie",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie outdoor activities nature parks interests hobbies",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "national park"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Melanie be considered an ally to the transgender community?",
+      "answer": "Yes, she is supportive",
+      "prediction": "Yes",
+      "category": 3,
+      "f1": 0.4,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie transgender community support ally",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Yes"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What would Caroline's political leaning likely be?",
+      "answer": "Liberal",
+      "prediction": "Liberal/progressive",
+      "category": 3,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline political views beliefs values social issues",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline activism community involvement social causes",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Liberal/progressive"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Caroline be considered religious?",
+      "answer": "Somewhat, but not extremely religious",
+      "prediction": "Possibly yes — she made a stained glass window for a church and wears a cross necklace representing faith, though she had negative encounters with religious conservatives",
+      "category": 3,
+      "f1": 0.071429,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline religious beliefs faith church spirituality",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "52472161-e709-4756-936a-19bbed9f2fa9",
+            "window": 2
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Possibly yes — she made a stained glass window for a church and wears a cross necklace representing faith, though she had negative encounters with religious conservatives"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Melanie likely enjoy the song \"The Four Seasons\" by Vivaldi?",
+      "answer": "Yes; it's classical music",
+      "prediction": "Yes, likely",
+      "category": 3,
+      "f1": 0.666667,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie music preferences classical interests hobbies",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Yes, likely"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What personality traits might Melanie say Caroline has?",
+      "answer": "Thoughtful, authentic, driven",
+      "prediction": "strong, inspiring, caring, courageous",
+      "category": 3,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie describing Caroline's personality traits characteristics",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "strong, inspiring, caring, courageous"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Melanie go on another roadtrip soon?",
+      "answer": "Likely no; since this one went badly",
+      "prediction": "Unlikely, due to the scary accident on her recent roadtrip",
+      "category": 3,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie roadtrip travel plans",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "e949f7ee-4655-498e-909c-1c294b636106",
+            "window": 3
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Unlikely, due to the scary accident on her recent roadtrip"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Caroline want to move back to her home country soon?",
+      "answer": "No; she's in the process of adopting children.",
+      "prediction": "Unlikely — Caroline is focused on adoption and building a life where she currently lives, with no indication of plans to return to Sweden",
+      "category": 3,
+      "f1": 0.086957,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.5,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline moving back to home country relocation plans",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline home country origin nationality where she is from abroad living overseas",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline Sweden plans future settle stay abroad",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": "conv.caroline.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline Sweden future plans stay move return",
+            "fulltext": null,
+            "grep": "Sweden|return|back home|move back",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline adoption family career education future where she lives settling down",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Unlikely — Caroline is focused on adoption and building a life where she currently lives, with no indication of plans to return to Sweden"
+          }
+        }
+      ]
+    }
+  ]
+}

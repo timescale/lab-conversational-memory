@@ -1,0 +1,2928 @@
+{
+  "timestamp": "2026-04-22T12:39:33.915Z",
+  "samples": 1,
+  "totalQA": 26,
+  "overallF1": 0.33019338461538467,
+  "overallEM": 0.07692307692307693,
+  "raw": {
+    "f1": 0.3097726486486487,
+    "em": 0.08108108108108109,
+    "totalQA": 37,
+    "errorsExcluded": 11
+  },
+  "byCategory": {
+    "1": {
+      "count": 26,
+      "f1": 0.33019338461538467,
+      "em": 0.07692307692307693,
+      "accuracy": 0.6923076923076923,
+      "recall": 0.6388278388278389
+    }
+  },
+  "bySample": {
+    "conv-42": {
+      "count": 26,
+      "f1": 0.33019338461538467,
+      "em": 0.07692307692307693,
+      "accuracy": 0.6923076923076923,
+      "recall": 0.6388278388278389
+    }
+  },
+  "description": "exp45: multi-hop iterative search prompting",
+  "results": [
+    {
+      "sampleId": "conv-42",
+      "question": "What kind of interests do Joanna and Nate share?",
+      "answer": "Watching movies, making desserts",
+      "prediction": "watching movies",
+      "category": 1,
+      "f1": 0.5,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.42857142857142855,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna interests hobbies",
+            "fulltext": "Joanna",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate interests hobbies",
+            "fulltext": "Nate",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna and Nate shared activities common interests",
+            "fulltext": "Joanna Nate",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "DIY crafts games board games outdoor activities",
+            "fulltext": "DIY games",
+            "grep": "Joanna|Nate",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "27bb1453-33e0-4b0d-b7e6-f401d16d07ff",
+            "window": 3
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "watching movies"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What are Joanna's hobbies?",
+      "answer": "Writing, watchingmovies, exploringnature, hanging withfriends.",
+      "prediction": "Writing, hanging with friends, reading, watching movies, and exploring nature",
+      "category": 1,
+      "f1": 0.35,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna hobbies interests activities",
+            "fulltext": "Joanna hobbies",
+            "grep": "Joanna",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna hobbies interests activities",
+            "fulltext": "Joanna",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna activities sports cooking reading",
+            "fulltext": "Joanna hobby activity",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.joanna.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna activities sports cooking reading",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": "conv.joanna.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna what she likes to do fun activities",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Writing, hanging with friends, reading, watching movies, and exploring nature"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What emotions is Joanna feeling about  the screenplay she submitted?",
+      "answer": "Relief, excitement,worry, hope,anxiety.",
+      "prediction": "Relief, excitement, and worry",
+      "category": 1,
+      "f1": 0.6,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.5,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna screenplay submitted emotions feelings",
+            "fulltext": "Joanna screenplay",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Relief, excitement, and worry"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What is Joanna allergic to?",
+      "answer": "Most reptiles,animals with fur,cockroaches, dairy",
+      "prediction": "most reptiles, animals with fur, and cockroaches",
+      "category": 1,
+      "f1": 0.75,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.6666666666666666,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna allergic allergy",
+            "fulltext": "Joanna allerg",
+            "grep": "allerg",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna allergic allergy",
+            "fulltext": "Joanna allerg",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "most reptiles, animals with fur, and cockroaches"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "How many times has Joanna found new hiking trails?",
+      "answer": "twice",
+      "prediction": "2",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna found new hiking trails",
+            "fulltext": "Joanna hiking trails",
+            "grep": "hiking trail",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna hiking trails discovered",
+            "fulltext": "Joanna hiking",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "2"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "Which of Joanna's screenplay were rejected from production companies?",
+      "answer": "first screenplay on drama and romance, third screenplay on loss identity and connection",
+      "prediction": "No information available",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0.8,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna screenplay rejected production company",
+            "fulltext": "Joanna screenplay rejected",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "946c553e-e7cb-47db-89bd-6183705cc6e7",
+            "window": 3
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna screenplay title name",
+            "fulltext": "Joanna screenplay title",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.joanna.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna screenplay title name",
+            "fulltext": "Joanna screenplay title",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "No information available"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What places has Joanna submitted her work to?",
+      "answer": "film contest, film festival.",
+      "prediction": "Film festivals and a film contest",
+      "category": 1,
+      "f1": 0.666667,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna submitted work places",
+            "fulltext": "Joanna submitted",
+            "grep": "Joanna",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna submitted work places publications",
+            "fulltext": "Joanna submitted",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna screenplay film festival contest submission",
+            "fulltext": "Joanna film festival contest",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Film festivals and a film contest"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What kind of writings does Joanna do?",
+      "answer": "Screenplays,books, online blog posts, journal",
+      "prediction": "Stories",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna writings",
+            "fulltext": "Joanna writing",
+            "grep": "Joanna",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna writings creative work",
+            "fulltext": "Joanna",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Stories"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What book recommendations has Joanna given to Nate?",
+      "answer": "\"Little Women\",'A Court of Thorns andRoses'.",
+      "prediction": "No information available",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna book recommendations to Nate",
+            "fulltext": "book recommendation Joanna Nate",
+            "grep": "book|recommend|read",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna book recommendations to Nate",
+            "fulltext": "book recommendation Joanna Nate",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.joanna.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna book recommendations to Nate",
+            "fulltext": "book recommendation Joanna",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna recommends book to Nate suggests reading",
+            "fulltext": "Joanna recommend book suggest read",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.joanna.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna tells Nate about a book she read suggests he read it",
+            "fulltext": "Joanna recommend book suggest",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "No information available"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What movies have both Joanna and Nate seen?",
+      "answer": "\"Little Women\", \"Lord of the Rings\"",
+      "prediction": "The Lord of the Rings Trilogy",
+      "category": 1,
+      "f1": 0.428571,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.6666666666666666,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "movies Joanna watched seen",
+            "fulltext": "movie film",
+            "grep": "movie|film|watch|saw|seen",
+            "tree": "conv.joanna.*",
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "movies Joanna watched seen",
+            "fulltext": "movie film",
+            "grep": "movie|film|watch|saw|seen",
+            "tree": "conv.joanna.*",
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 0,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "movies Joanna watched seen",
+            "fulltext": "movie film",
+            "grep": "movie|film|watch|saw|seen",
+            "tree": "conv.joanna.*",
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": "desc"
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna movies films watched",
+            "fulltext": "Joanna movie",
+            "grep": null,
+            "tree": "conv.joanna.*",
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna movies films watched",
+            "fulltext": "Joanna movie",
+            "grep": "\"movie\"",
+            "tree": "conv.joanna.*",
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna movies films watched",
+            "fulltext": "Joanna movie",
+            "grep": "movie",
+            "tree": "conv.joanna.*",
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna movies films watched seen",
+            "fulltext": null,
+            "grep": null,
+            "tree": "conv.joanna.*",
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna movies films watched seen",
+            "fulltext": null,
+            "grep": null,
+            "tree": null,
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate movies films watched seen",
+            "fulltext": null,
+            "grep": null,
+            "tree": null,
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate watched specific movie title",
+            "fulltext": "Nate watched",
+            "grep": null,
+            "tree": "conv.nate.*",
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate watched specific movie title",
+            "fulltext": "Nate watched movie film",
+            "grep": "Nate",
+            "tree": null,
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate specific movie title seen",
+            "fulltext": null,
+            "grep": null,
+            "tree": null,
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Lord of the Rings Nate recommendation",
+            "fulltext": "Lord of the Rings",
+            "grep": null,
+            "tree": null,
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Eternal Sunshine Spotless Mind Nate watched",
+            "fulltext": "Eternal Sunshine",
+            "grep": null,
+            "tree": null,
+            "meta": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "The Lord of the Rings Trilogy"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What board games has Nate played?",
+      "answer": "Chess, Catan.",
+      "prediction": "Catan",
+      "category": 1,
+      "f1": 0.5,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.5,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "board games Nate played",
+            "fulltext": "Nate board games",
+            "grep": "board game|chess|monopoly|catan|scrabble|poker|nate",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate board games played",
+            "fulltext": "Nate board games",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Catan"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What places has Nate met new people?",
+      "answer": "A tournament and agaming convention.",
+      "prediction": "Video game tournaments and a game convention",
+      "category": 1,
+      "f1": 0.5,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate meeting new people places",
+            "fulltext": "Nate met new people",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate social events classes gym bar where he meets people",
+            "fulltext": "Nate meet people",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate tournament convention socializing",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate met people outside gaming work school",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Video game tournaments and a game convention"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "How many times has Joanna's scripts been rejected?",
+      "answer": "Twice",
+      "prediction": "2",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna scripts rejected",
+            "fulltext": "Joanna script rejected",
+            "grep": "script|rejected|rejection",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna scripts rejected",
+            "fulltext": "Joanna script rejected",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "2"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What is something Nate gave to Joanna that brings her a lot of joy?",
+      "answer": "stuffed toy pup",
+      "prediction": "a stuffed animal (to remind her of good vibes)",
+      "category": 1,
+      "f1": 0.181818,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.5,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate gave Joanna a gift",
+            "fulltext": "Nate Joanna gift",
+            "grep": "Nate|Joanna",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate gave Joanna something joy",
+            "fulltext": "Nate Joanna",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "ce541424-dbde-43f4-af5e-f974b6b850f9",
+            "window": 3
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "07aa6d10-bfd0-429e-99e8-dec558d35834",
+            "window": 3
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "a stuffed animal (to remind her of good vibes)"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "When did Nate get Tilly for Joanna?",
+      "answer": "25 May, 2022",
+      "prediction": "May 25, 2022",
+      "category": 1,
+      "f1": 1,
+      "em": 1,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate got Tilly for Joanna",
+            "fulltext": "Tilly Joanna Nate",
+            "grep": "Tilly|Joanna|Nate",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate got Tilly for Joanna",
+            "fulltext": "Tilly Joanna Nate",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "862a9ad3-3450-41af-9b3e-636c146f5b22",
+            "window": 5
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate gave stuffed animal dog to Joanna",
+            "fulltext": "stuffed animal dog gave",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "May 25, 2022"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "How many of Joanna's writing have made it to the big screen?",
+      "answer": "two",
+      "prediction": "2",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna writing adapted film movie big screen",
+            "fulltext": "Joanna writing movie film screen",
+            "grep": "Joanna",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna writing adapted film movie big screen",
+            "fulltext": "Joanna writing movie film",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna screenplay produced screened film festival success",
+            "fulltext": "Joanna movie did well road trip script",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna film festival screenplay on screen debut",
+            "fulltext": "Joanna big screen first time",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna script appeared on screen June 2022",
+            "fulltext": "Joanna screenplay big screen shown",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.joanna.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna script appeared on screen shown premiere",
+            "fulltext": "Joanna screenplay shown screen",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "2"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "How many times has Nate taken his turtles on a walk?",
+      "answer": "Twice.",
+      "prediction": "1",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate turtles walk",
+            "fulltext": "turtles walk",
+            "grep": "turtle|walk",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate turtles walk",
+            "fulltext": "turtles walk",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate took turtles for a walk outside",
+            "fulltext": "took turtles walk",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate took turtles for a walk outside",
+            "fulltext": "took turtles walk",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "1"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What is Joanna inspired by?",
+      "answer": "Personal experiences,her own journey ofself discovery, Nate,nature, validation,stories about findingcourage and takingrisks, people she knows, stuff she sees, imagination",
+      "prediction": "personal experiences, self-discovery, and nature",
+      "category": 1,
+      "f1": 0.222222,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.16666666666666666,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna inspired by",
+            "fulltext": "Joanna inspired",
+            "grep": "Joanna",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna inspired by",
+            "fulltext": "Joanna inspired",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "personal experiences, self-discovery, and nature"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What animal do both Nate and Joanna like?",
+      "answer": "Turtles.",
+      "prediction": "turtles",
+      "category": 1,
+      "f1": 1,
+      "em": 1,
+      "accuracy": 1,
+      "recall": 0.5,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "animal pet like",
+            "fulltext": "animal",
+            "grep": "nate|joanna",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate animal pet",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna animal pet",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": "conv.joanna.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate likes animals dogs cats",
+            "fulltext": "Nate animal",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna likes animals dogs cats",
+            "fulltext": "Joanna animal",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate turtles pets owns",
+            "fulltext": "turtles",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "turtles"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What things has Nate reccomended to Joanna?",
+      "answer": "A pet,\"The Lord of the Rings\" movies,a dragon book series,coconut flavoring,\"Project Hail Mary\" book,Xenoblade Chronicles, dairy-free margarine, coconut oil",
+      "prediction": "A fantasy novel series (dragon cover series) and his dairy-free ice cream recipe (coconut milk, vanilla extract, sugar, salt)",
+      "category": 1,
+      "f1": 0.08125,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0.2857142857142857,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate recommended to Joanna",
+            "fulltext": "Nate recommend Joanna",
+            "grep": "nate|recommend|joanna",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate recommended to Joanna",
+            "fulltext": "Nate recommend Joanna",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "60c713df-69eb-4d5f-8a07-d628db00e883",
+            "window": 5
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate suggestion tip advice Joanna",
+            "fulltext": "suggest recommend try check out",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate suggestion advice to Joanna try this",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate suggests recommends something to Joanna",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "5c2937d3-391e-410a-9857-95b0a667485b",
+            "window": 5
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "A fantasy novel series (dragon cover series) and his dairy-free ice cream recipe (coconut milk, vanilla extract, sugar, salt)"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What does Joanna do to remember happy memories?",
+      "answer": "Hangs them on a corkboard, writes themin a notebook.",
+      "prediction": "Writes her favorite memories down in a notebook",
+      "category": 1,
+      "f1": 0.2,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.5,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna remember happy memories",
+            "fulltext": "Joanna happy memories",
+            "grep": "Joanna",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna remember happy memories",
+            "fulltext": "Joanna happy memories",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Writes her favorite memories down in a notebook"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What mediums does Nate use to play games?",
+      "answer": "Gamecube, PC,Playstation.",
+      "prediction": "PC and board games",
+      "category": 1,
+      "f1": 0.166667,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0.3333333333333333,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate plays games mediums",
+            "fulltext": "Nate games",
+            "grep": "Nate",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate games mediums console PC mobile",
+            "fulltext": "Nate games",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "gaming setup PC console platform",
+            "fulltext": "Nate PC console phone tablet",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate gaming setup room equipment",
+            "fulltext": "gaming room setup",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "d942102e-3c22-4516-9d2d-69bdf4d85ff7",
+            "window": 2
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate phone mobile handheld gaming",
+            "fulltext": "Nate mobile phone handheld",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "PC and board games"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "How many letters has Joanna recieved?",
+      "answer": "Two",
+      "prediction": "2",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0.5,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna received letters",
+            "fulltext": "Joanna letters",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "how many letters Joanna received count",
+            "fulltext": "letters received Joanna",
+            "grep": "letter",
+            "meta": null,
+            "tree": "conv.joanna.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "how many letters Joanna received",
+            "fulltext": "letters received Joanna",
+            "grep": "letter",
+            "meta": null,
+            "tree": "conv.joanna.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna letters received count",
+            "fulltext": "Joanna letter",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "2"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What video games does Nate play?",
+      "answer": "Valorant, Counter Strike:Global Offensive,Xenoblade Chronicles, StreetFighter, Cyberpunk 2077",
+      "prediction": "CS:GO, Street Fighter, and Valorant",
+      "category": 1,
+      "f1": 0.2,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.4,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate video games gaming",
+            "fulltext": "Nate games",
+            "grep": "nate",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate video games gaming",
+            "fulltext": "Nate games",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate specific game title playing",
+            "fulltext": "Nate game tournament",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate specific game title Fortnite Call of Duty",
+            "fulltext": "game tournament won",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "CS:GO, Street Fighter, and Valorant"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What pets does Nate have?",
+      "answer": "A dog and threeturtles.",
+      "prediction": "A dog named Max and turtles",
+      "category": 1,
+      "f1": 0.333333,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.3333333333333333,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate pets animals",
+            "fulltext": "Nate pet",
+            "grep": "nate",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate pets animals dog cat",
+            "fulltext": "Nate pet",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate specific pet dog cat fish bird",
+            "fulltext": "Nate dog cat",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate adopted dog energy pets playing",
+            "fulltext": "adopted dog pets active",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate other pets besides dog",
+            "fulltext": "Nate other pets cat fish bird",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "A dog named Max and turtles"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "How many turtles does Nate have?",
+      "answer": "Three",
+      "prediction": "3",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate turtles pets",
+            "fulltext": "Nate turtle",
+            "grep": "turtle",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate turtles pets",
+            "fulltext": "Nate turtle",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "3"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What activities does Nate do with his turtles?",
+      "answer": "takes them onwalks, holds them,feeds themstrawberries, givesthem baths.",
+      "prediction": "Takes them for walks, holds them, feeds them fruit (like strawberries), gives them baths, and takes them to the beach",
+      "category": 1,
+      "f1": 0.564286,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate turtles activities",
+            "fulltext": "Nate turtles",
+            "grep": "turtle",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate turtles activities",
+            "fulltext": "Nate turtles",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Takes them for walks, holds them, feeds them fruit (like strawberries), gives them baths, and takes them to the beach"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What do both Joanna and Nate appreciate the beauty of?",
+      "answer": "Nature",
+      "prediction": "nature",
+      "category": 1,
+      "f1": 1,
+      "em": 1,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "appreciate beauty",
+            "fulltext": "beauty",
+            "grep": "beauty|appreciate|beautiful",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "appreciate beauty",
+            "fulltext": "beauty",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "nature"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What recommendations has Nate received from Joanna?",
+      "answer": "\"Eternal Sunshine of the Spotless Mind\" movie, \"A Court of Thorns and Roses\" book, pointers for making living room comfy, starting a cork board for memories, \"Little Women\" movie",
+      "prediction": "Eternal Sunshine of the Spotless Mind (movie)",
+      "category": 1,
+      "f1": 0.280808,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.14285714285714285,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna recommendations to Nate",
+            "fulltext": "Joanna recommend",
+            "grep": "recommend|suggest|advice",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna recommendations to Nate",
+            "fulltext": "Joanna recommend",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna suggests recommends Nate book movie music restaurant",
+            "fulltext": "Joanna suggest",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.joanna.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna suggests recommends Nate book movie music restaurant",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": "conv.joanna.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna recommends something to Nate",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "b400382c-c159-4707-9fda-3a9511534a19",
+            "window": 3
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "faaedb2e-ceba-4502-ad5a-5eb09d4b1a3d",
+            "window": 5
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna tells Nate about book podcast place to visit activity",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Eternal Sunshine of the Spotless Mind (movie)"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What are Nate's favorite desserts?",
+      "answer": "coconut milk icecream, dairy-free chocolate cake with berries, chocolate and mixed-berry icecream, dairy-free chocolate mousse",
+      "prediction": "Coconut milk ice cream and dairy-free chocolate mousse",
+      "category": 1,
+      "f1": 0.383333,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.5,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate favorite desserts",
+            "fulltext": "Nate dessert",
+            "grep": "dessert|sweet|cake|ice cream|cookie|pie|chocolate",
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate favorite desserts sweets",
+            "fulltext": "Nate dessert",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate baking favorite foods sweets",
+            "fulltext": "Nate favorite cake cookie pie",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate favorite desserts dairy-free coconut ice cream",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate favorite desserts dairy-free coconut ice cream",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Coconut milk ice cream and dairy-free chocolate mousse"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "How has Nate tried to disburse his vegan ice-cream recipes?",
+      "answer": "teaching others, cooking show",
+      "prediction": "By sharing with his vegan diet group, teaching people on his own cooking show, and offering samples to friends in person.",
+      "category": 1,
+      "f1": 0.333333,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate vegan ice cream recipes sharing",
+            "fulltext": "vegan ice cream recipes",
+            "grep": "nate|vegan|ice.cream",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate vegan ice cream recipes sharing distributing",
+            "fulltext": "vegan ice cream",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "By sharing with his vegan diet group, teaching people on his own cooking show, and offering samples to friends in person."
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "How many video game tournaments has Nate participated in?",
+      "answer": "nine",
+      "prediction": "5",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0.6666666666666666,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate video game tournaments",
+            "fulltext": "Nate tournament video game",
+            "grep": "nate|tournament",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate video game tournaments",
+            "fulltext": "Nate tournament",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate gaming competition esports",
+            "fulltext": "Nate fifth sixth tournament",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "5"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "How many screenplays has Joanna written?",
+      "answer": "three",
+      "prediction": "2",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0.6,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna screenplays writing",
+            "fulltext": "Joanna screenplay",
+            "grep": "screenplay|screenplays",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna screenplays writing",
+            "fulltext": "Joanna screenplay",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna second screenplay another screenplay",
+            "fulltext": "Joanna second another screenplay",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.joanna.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna second screenplay finished completed",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "2"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "How many tournaments has Nate won?",
+      "answer": "seven",
+      "prediction": "4",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0.5714285714285714,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate tournament win",
+            "fulltext": "Nate tournament",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate total tournament wins count",
+            "fulltext": "Nate won tournaments",
+            "grep": "tournament",
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate tournament wins",
+            "fulltext": "Nate won tournament",
+            "grep": "tournament",
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate tournament wins",
+            "fulltext": "Nate won tournament",
+            "grep": "tournament",
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 0,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "4"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What recipes has Joanna made?",
+      "answer": "dairy free vanilla cake with strawberry filling and coconut cream frosting, parfait, strawberry chocolate cake, chocolate coconut cupcakes, chocolate raspberry tart, chocolate cake with raspberries, blueberry cheesecake bars",
+      "prediction": "Dairy-free chocolate cake (with raspberries), dairy-free cake with white frosting, dairy-free chocolate raspberry tarts, dairy-free blueberry cheesecake bars, cookies, pies",
+      "category": 1,
+      "f1": 0.54127,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0.4444444444444444,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "recipes Joanna made cooked",
+            "fulltext": "Joanna recipe",
+            "grep": "Joanna",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna recipes cooking food made",
+            "fulltext": "Joanna recipe",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Joanna baked cooked dish meal food preparation",
+            "fulltext": "Joanna made cookies cake pie",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Dairy-free chocolate cake (with raspberries), dairy-free cake with white frosting, dairy-free chocolate raspberry tarts, dairy-free blueberry cheesecake bars, cookies, pies"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What recipes has Nate made?",
+      "answer": "coconut milk icecream, chocolate and vanilla swirl",
+      "prediction": "Vegan coconut milk ice cream, dairy-free chocolate cake with berries",
+      "category": 1,
+      "f1": 0.375,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "recipes Nate made cooking",
+            "fulltext": "Nate recipe",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate cooking food made dish",
+            "fulltext": "Nate made cooked",
+            "grep": "nate",
+            "meta": null,
+            "tree": "conv.nate.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate cooking food dish vegan dairy-free",
+            "fulltext": "Nate made cooked",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate specific recipe dish name food",
+            "fulltext": "Nate made baked cooked recipe creamy",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Vegan coconut milk ice cream, dairy-free chocolate cake with berries"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-42",
+      "question": "What are the skills that Nate has helped others learn?",
+      "answer": "coconut milk ice cream recipe, reset high scores, tips to improve gaming skills",
+      "prediction": "Vegan ice cream recipes and gaming tips",
+      "category": 1,
+      "f1": 0.30303,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0.6666666666666666,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate helping others learn skills",
+            "fulltext": "Nate taught helped learn",
+            "grep": "Nate",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate helping others learn skills teach",
+            "fulltext": "Nate taught helped",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate teaching skills training coaching",
+            "fulltext": "Nate teach skill train coach",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Nate tips game improve friends learn",
+            "fulltext": "Nate tips improve game learn",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "2f54fb7e-5b1a-40e5-8089-bca28aec9bdb",
+            "window": 3
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "d8753267-cba2-4e2d-9759-c3c03f439909",
+            "window": 2
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Vegan ice cream recipes and gaming tips"
+          }
+        }
+      ]
+    }
+  ]
+}

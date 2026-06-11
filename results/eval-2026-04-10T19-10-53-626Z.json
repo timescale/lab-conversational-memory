@@ -1,0 +1,6265 @@
+{
+  "timestamp": "2026-04-10T19:10:53.626Z",
+  "samples": 1,
+  "totalQA": 199,
+  "overallF1": 0.522058743718593,
+  "overallEM": 0.32663316582914576,
+  "byCategory": {
+    "1": {
+      "count": 32,
+      "f1": 0.30623643750000007,
+      "em": 0.125
+    },
+    "2": {
+      "count": 37,
+      "f1": 0.6568437837837839,
+      "em": 0.32432432432432434
+    },
+    "3": {
+      "count": 13,
+      "f1": 0.21654169230769235,
+      "em": 0.07692307692307693
+    },
+    "4": {
+      "count": 70,
+      "f1": 0.6424551714285713,
+      "em": 0.37142857142857144
+    },
+    "5": {
+      "count": 47,
+      "f1": 0.46808510638297873,
+      "em": 0.46808510638297873
+    }
+  },
+  "bySample": {
+    "conv-26": {
+      "count": 199,
+      "f1": 0.522058743718593,
+      "em": 0.32663316582914576
+    }
+  },
+  "description": "exp2: 3-turn sliding window chunks",
+  "results": [
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline go to the LGBTQ support group?",
+      "answer": "7 May 2023",
+      "prediction": "May 7, 2023",
+      "category": 2,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline LGBTQ support group",
+            "fulltext": "Caroline LGBTQ support group",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie paint a sunrise?",
+      "answer": 2022,
+      "prediction": "2022 (the year before May 2023)",
+      "category": 2,
+      "f1": 0.333333,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie painted a sunrise",
+            "fulltext": "Melanie sunrise painting",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What fields would Caroline be likely to pursue in her educaton?",
+      "answer": "Psychology, counseling certification",
+      "prediction": "counseling or mental health",
+      "category": 3,
+      "f1": 0.285714,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline education fields interests",
+            "fulltext": "Caroline education",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Caroline research?",
+      "answer": "Adoption agencies",
+      "prediction": "adoption agencies",
+      "category": 1,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline research",
+            "fulltext": "Caroline researched",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What is Caroline's identity?",
+      "answer": "Transgender woman",
+      "prediction": "A transgender woman and artist who expresses her trans experience through painting.",
+      "category": 1,
+      "f1": 0.333333,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's identity",
+            "fulltext": "Caroline identity",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie run a charity race?",
+      "answer": "The sunday before 25 May 2023",
+      "prediction": "the Saturday before May 25, 2023 (May 20, 2023)",
+      "category": 2,
+      "f1": 0.615385,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie charity race",
+            "fulltext": "Melanie charity race",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When is Melanie planning on going camping?",
+      "answer": "June 2023",
+      "prediction": "next month (June 2023)",
+      "category": 2,
+      "f1": 0.666667,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie camping plans date",
+            "fulltext": "Melanie camping",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What is Caroline's relationship status?",
+      "answer": "Single",
+      "prediction": "Single (after a tough breakup)",
+      "category": 1,
+      "f1": 0.4,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline relationship status",
+            "fulltext": "Caroline relationship",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline dating partner married single",
+            "fulltext": "Caroline boyfriend girlfriend partner married",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline give a speech at a school?",
+      "answer": "The week before 9 June 2023",
+      "prediction": "early June 2023 (the week before June 9, 2023)",
+      "category": 2,
+      "f1": 0.769231,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline gave a speech at a school",
+            "fulltext": "Caroline speech school",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline meet up with her friends, family, and mentors?",
+      "answer": "The week before 9 June 2023",
+      "prediction": "the week before June 9, 2023",
+      "category": 2,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline meeting friends family mentors",
+            "fulltext": "Caroline met friends family mentors",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How long has Caroline had her current group of friends for?",
+      "answer": "4 years",
+      "prediction": "4 years",
+      "category": 2,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline friend group duration how long",
+            "fulltext": "Caroline friends group",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline current friends how long known years",
+            "fulltext": "Caroline friends since years",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Where did Caroline move from 4 years ago?",
+      "answer": "Sweden",
+      "prediction": "no information available",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline moved from location",
+            "fulltext": "Caroline moved",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline moved from city country 4 years ago relocation",
+            "fulltext": "Caroline moved from",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How long ago was Caroline's 18th birthday?",
+      "answer": "10 years ago",
+      "prediction": "About 13 years ago (circa 2013)",
+      "category": 2,
+      "f1": 0.444444,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's 18th birthday",
+            "fulltext": "Caroline 18th birthday",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What career path has Caroline decided to persue?",
+      "answer": "counseling or mental health for Transgender people",
+      "prediction": "counseling or mental health",
+      "category": 1,
+      "f1": 0.727273,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline career path decision",
+            "fulltext": "Caroline career",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Caroline still want to pursue counseling as a career if she hadn't received support growing up?",
+      "answer": "Likely no",
+      "prediction": "No, she likely would not, as her career motivation is directly tied to the support she received.",
+      "category": 3,
+      "f1": 0.222222,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline counseling career motivation support growing up",
+            "fulltext": "Caroline counseling career",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What activities does Melanie partake in?",
+      "answer": "pottery, camping, painting, swimming",
+      "prediction": "pottery, camping, hiking",
+      "category": 1,
+      "f1": 0.5,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie activities hobbies",
+            "fulltext": "Melanie activities",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie sign up for a pottery class?",
+      "answer": "2 July 2023",
+      "prediction": "Early July 2023 (around July 2, 2023)",
+      "category": 2,
+      "f1": 0.6,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie pottery class sign up",
+            "fulltext": "Melanie pottery class",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When is Caroline going to the transgender conference?",
+      "answer": "July 2023",
+      "prediction": "July 2023",
+      "category": 2,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline transgender conference",
+            "fulltext": "Caroline transgender conference",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Where has Melanie camped?",
+      "answer": "beach, mountains, forest",
+      "prediction": "no information available",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie camping locations",
+            "fulltext": "Melanie camped",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What do Melanie's kids like?",
+      "answer": "dinosaurs, nature",
+      "prediction": "pottery, getting their hands dirty with clay, camping, exploring nature, and the beach",
+      "category": 1,
+      "f1": 0.333333,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's kids interests hobbies",
+            "fulltext": "Melanie kids like",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie go to the museum?",
+      "answer": "5 July 2023",
+      "prediction": "July 5, 2023",
+      "category": 2,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie went to the museum",
+            "fulltext": "Melanie museum",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline have a picnic?",
+      "answer": "The week before 6 July 2023",
+      "prediction": "The conversation dated July 6, 2023 mentions the picnic was \"last week,\" placing it around late June 2023.\n\nlate June 2023",
+      "category": 2,
+      "f1": 0.333333,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline picnic",
+            "fulltext": "Caroline picnic",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Caroline likely have Dr. Seuss books on her bookshelf?",
+      "answer": "Yes, since she collects classic children's books",
+      "prediction": "Yes, likely",
+      "category": 3,
+      "f1": 0.222222,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline bookshelf books reading preferences",
+            "fulltext": "Caroline Dr. Seuss books",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What books has Melanie read?",
+      "answer": "\"Nothing is Impossible\", \"Charlotte's Web\"",
+      "prediction": "Charlotte's Web (childhood), a book recommended by Caroline (title unknown)",
+      "category": 1,
+      "f1": 0.4,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "books Melanie has read",
+            "fulltext": "Melanie books read",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What does Melanie do to destress?",
+      "answer": "Running, pottery",
+      "prediction": "running",
+      "category": 1,
+      "f1": 0.5,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie destress relaxation",
+            "fulltext": "Melanie destress",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline go to the LGBTQ conference?",
+      "answer": "10 July 2023",
+      "prediction": "July 10, 2023",
+      "category": 2,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline LGBTQ conference",
+            "fulltext": "Caroline LGBTQ conference",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie read the book \"nothing is impossible\"?",
+      "answer": 2022,
+      "prediction": "no information available",
+      "category": 2,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie read book \"nothing is impossible\"",
+            "fulltext": "Melanie \"nothing is impossible\"",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "nothing is impossible book reading",
+            "fulltext": "\"nothing is impossible\"",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie book title last year pursue dreams",
+            "fulltext": "Melanie book impossible",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Caroline pursue writing as a career option?",
+      "answer": "LIkely no; though she likes reading, she wants to be a counselor",
+      "prediction": "No, she is interested in counseling or mental health, not writing.",
+      "category": 3,
+      "f1": 0.153846,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline writing career",
+            "fulltext": "Caroline writing career",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline go to the adoption meeting?",
+      "answer": "The friday before 15 July 2023",
+      "prediction": "Last Friday before July 15, 2023 (July 7, 2023)",
+      "category": 2,
+      "f1": 0.714286,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline adoption meeting",
+            "fulltext": "Caroline adoption meeting",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie go to the pottery workshop?",
+      "answer": "The Friday before 15 July 2023",
+      "prediction": "Friday, July 7, 2023",
+      "category": 2,
+      "f1": 0.666667,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie pottery workshop",
+            "fulltext": "Melanie pottery workshop",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Melanie be considered a member of the LGBTQ community?",
+      "answer": "Likely no, she does not refer to herself as part of it",
+      "prediction": "No information available",
+      "category": 3,
+      "f1": 0.133333,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie LGBTQ sexual orientation gender identity",
+            "fulltext": "Melanie LGBTQ gay lesbian bisexual transgender queer",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie sexuality identity coming out",
+            "fulltext": "Melanie bisexual pansexual queer gay",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie go camping in June?",
+      "answer": "The week before 27 June 2023",
+      "prediction": "June 2023",
+      "category": 2,
+      "f1": 0.571429,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie camping June",
+            "fulltext": "Melanie camping June",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What LGBTQ+ events has Caroline participated in?",
+      "answer": "Pride parade, school speech, support group",
+      "prediction": "LGBT pride parade and LGBT pride event (attended with a transgender teen she mentors)",
+      "category": 1,
+      "f1": 0.095238,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline LGBTQ+ events participation",
+            "fulltext": "Caroline LGBTQ pride events",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline go to a pride parade during the summer?",
+      "answer": "The week before 3 July 2023",
+      "prediction": "Late June 2023 (a few weeks before July 3, 2023)",
+      "category": 2,
+      "f1": 0.714286,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline pride parade summer",
+            "fulltext": "Caroline pride parade",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What events has Caroline participated in to help children?",
+      "answer": "Mentoring program, school speech",
+      "prediction": "advocacy event, council meeting for adoption, volunteering at the youth center, organizing a talent show for kids",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline events helping children",
+            "fulltext": "Caroline children events",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie go camping in July?",
+      "answer": "two weekends before 17 July 2023",
+      "prediction": "July 20, 2023",
+      "category": 2,
+      "f1": 0.444444,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie camping July",
+            "fulltext": "Melanie camping July",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline join a mentorship program?",
+      "answer": "The weekend before 17 July 2023",
+      "prediction": "The weekend before July 17, 2023",
+      "category": 2,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline joined mentorship program",
+            "fulltext": "Caroline mentorship program",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Melanie paint recently?",
+      "answer": "sunset",
+      "prediction": "a landscape and still life painting",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie painting",
+            "fulltext": "Melanie paint",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What activities has Melanie done with her family?",
+      "answer": "Pottery, painting, camping, museum, swimming, hiking",
+      "prediction": "explored nature, roasted marshmallows, went hiking, and went on camping trips in the forest",
+      "category": 1,
+      "f1": 0.15873,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie family activities",
+            "fulltext": "Melanie family",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "In what ways is Caroline participating in the LGBTQ community?",
+      "answer": "Joining activist group, going to pride parades, participating in an art show, mentoring program",
+      "prediction": "attending a support group, organizing an LGBTQ art show featuring her paintings, mentoring LGBTQ youth, and participating in an activist group called 'Connected LGBTQ Activists'",
+      "category": 1,
+      "f1": 0.281818,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline LGBTQ community participation",
+            "fulltext": "Caroline LGBTQ",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How many times has Melanie gone to the beach in 2023?",
+      "answer": 2,
+      "prediction": "once",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie beach visits 2023",
+            "fulltext": "Melanie beach 2023",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline join a new activist group?",
+      "answer": "The Tuesday before 20 July 2023",
+      "prediction": "The Tuesday before July 20, 2023 (July 18, 2023)",
+      "category": 2,
+      "f1": 0.769231,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline joined activist group",
+            "fulltext": "Caroline activist group",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Melanie be more interested in going to a national park or a theme park?",
+      "answer": "National park; she likes the outdoors",
+      "prediction": "national park",
+      "category": 3,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie interests preferences parks outdoor activities",
+            "fulltext": "Melanie park",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie nature hiking outdoors hobbies interests",
+            "fulltext": "Melanie nature hiking",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 3,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What kind of art does Caroline make?",
+      "answer": "abstract art",
+      "prediction": "Paintings expressing her trans experience and advocating for LGBTQ+ inclusivity and acceptance.",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline art",
+            "fulltext": "Caroline art",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When is Melanie's daughter's birthday?",
+      "answer": "13 August",
+      "prediction": "August 13, 2023",
+      "category": 2,
+      "f1": 0.8,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's daughter birthday",
+            "fulltext": "Melanie daughter birthday",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline attend a pride parade in August?",
+      "answer": "The Friday before 14 August 2023",
+      "prediction": "August 11, 2023 (last Friday before August 14)",
+      "category": 2,
+      "f1": 0.769231,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline pride parade August",
+            "fulltext": "Caroline pride parade August",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Melanie be considered an ally to the transgender community?",
+      "answer": "Yes, she is supportive",
+      "prediction": "Yes, Melanie would be considered an ally to the transgender community.",
+      "category": 3,
+      "f1": 0.153846,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie transgender community ally",
+            "fulltext": "Melanie transgender",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Who supports Caroline when she has a negative experience?",
+      "answer": "Her mentors, family, and friends",
+      "prediction": "Melanie",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline negative experience support",
+            "fulltext": "Caroline support",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline negative experience bad day upset",
+            "fulltext": "Caroline negative",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "7eefb111-c555-4244-b6f8-48973b3ade29"
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline hiking bad spot people Melanie support comfort",
+            "fulltext": "Caroline hiking bad experience",
+            "meta": {
+              "sample_id": "conv-26"
+            },
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline hiking bad spot people support Melanie comfort",
+            "fulltext": "Caroline hiking bad spot people",
+            "meta": null,
+            "tree": "conv.s14",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What types of pottery have Melanie and her kids made?",
+      "answer": "bowls, cup",
+      "prediction": "pots and a cup",
+      "category": 1,
+      "f1": 0.333333,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie kids pottery types",
+            "fulltext": "Melanie pottery",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie children kids pottery making types bowls",
+            "fulltext": "Melanie kids pottery bowls mugs vases",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie pottery with her children family activity",
+            "fulltext": "Melanie kids children pottery together",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline and Melanie go to a pride fesetival together?",
+      "answer": 2022,
+      "prediction": "July 2023",
+      "category": 2,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline and Melanie pride festival",
+            "fulltext": "pride festival Caroline Melanie",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What would Caroline's political leaning likely be?",
+      "answer": "Liberal",
+      "prediction": "Liberal/progressive",
+      "category": 3,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline political leaning views",
+            "fulltext": "Caroline political",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What has Melanie painted?",
+      "answer": "Horse, sunset, sunrise",
+      "prediction": "landscapes, still life, a lake sunrise, and an abstract painting",
+      "category": 1,
+      "f1": 0.222222,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie painted artwork",
+            "fulltext": "Melanie painted",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What are Melanie's pets' names?",
+      "answer": "Oliver, Luna, Bailey",
+      "prediction": "Luna, Oliver, and Bailey",
+      "category": 1,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's pets names",
+            "fulltext": "Melanie pets",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie dog cat pet names",
+            "fulltext": "Melanie dog cat name",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline apply to adoption agencies?",
+      "answer": "The week of 23 August 2023",
+      "prediction": "The week of August 23, 2023",
+      "category": 2,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline apply adoption agencies",
+            "fulltext": "Caroline adoption",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline draw a self-portrait?",
+      "answer": "The week before 23 August 2023",
+      "prediction": "the week before August 23, 2023",
+      "category": 2,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline drew a self-portrait",
+            "fulltext": "Caroline self-portrait",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What subject have Caroline and Melanie both painted?",
+      "answer": "Sunsets",
+      "prediction": "horses",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline and Melanie painting subject",
+            "fulltext": "Caroline Melanie painted",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline Melanie both painted same subject",
+            "fulltext": "Caroline painted horses",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline painting horses animals",
+            "fulltext": "Caroline horse painting",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline painted horse artwork",
+            "fulltext": "Caroline horse art painted",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What symbols are important to Caroline?",
+      "answer": "Rainbow flag, transgender symbol",
+      "prediction": "the rainbow flag mural and the eagle",
+      "category": 1,
+      "f1": 0.333333,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "symbols important to Caroline",
+            "fulltext": "Caroline symbols",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline encounter people on a hike and have a negative experience?",
+      "answer": "The week before 25 August 2023",
+      "prediction": "around mid-August 2023",
+      "category": 2,
+      "f1": 0.25,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline hike negative experience people",
+            "fulltext": "Caroline hike",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie make a plate in pottery class?",
+      "answer": "24 August 2023",
+      "prediction": "August 24, 2023 (the day before August 25, 2023)",
+      "category": 2,
+      "f1": 0.545455,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie pottery class plate",
+            "fulltext": "Melanie pottery plate",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Caroline be considered religious?",
+      "answer": "Somewhat, but not extremely religious",
+      "prediction": "No, Caroline would not be considered religious.",
+      "category": 3,
+      "f1": 0.333333,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline religious beliefs faith",
+            "fulltext": "Caroline religious",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What instruments does Melanie play?",
+      "answer": "clarinet and violin",
+      "prediction": "clarinet",
+      "category": 1,
+      "f1": 0.666667,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie plays instruments music",
+            "fulltext": "Melanie instruments",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What musical artists/bands has Melanie seen?",
+      "answer": "Summer Sounds, Matt Patterson",
+      "prediction": "Matt Patterson and Summer Sounds",
+      "category": 1,
+      "f1": 0.666667,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie concerts musical artists bands seen",
+            "fulltext": "Melanie artist band concert",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie go to the park?",
+      "answer": "27 August 2023",
+      "prediction": "August 27, 2023 (the day before August 28, when she mentioned \"yesterday\")",
+      "category": 2,
+      "f1": 0.428571,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie went to the park",
+            "fulltext": "Melanie park",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When is Caroline's youth center putting on a talent show?",
+      "answer": "September 2023",
+      "prediction": "September 2023",
+      "category": 2,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline youth center talent show",
+            "fulltext": "Caroline talent show youth center",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Melanie likely enjoy the song \"The Four Seasons\" by Vivaldi?",
+      "answer": "Yes; it's classical music",
+      "prediction": "Yes, Melanie is a fan of classical music like Bach and Mozart, so she would likely enjoy Vivaldi's \"The Four Seasons\".",
+      "category": 3,
+      "f1": 0.105263,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie music preferences classical",
+            "fulltext": "Melanie music preferences",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What are some changes Caroline has faced during her transition journey?",
+      "answer": "Changes to her body, losing unsupportive friends",
+      "prediction": "transitioning wasn't easy, acceptance was difficult, but she found support from friends and family that helped her through tough times and discover her true self",
+      "category": 1,
+      "f1": 0.097619,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline transition journey changes",
+            "fulltext": "Caroline transition",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What does Melanie do with her family on hikes?",
+      "answer": "Roast marshmallows, tell stories",
+      "prediction": "Hikes in the mountains and explores forests with her family.",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie family hikes",
+            "fulltext": "Melanie hike family",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline go biking with friends?",
+      "answer": "The weekend before 13 September 2023",
+      "prediction": "the weekend before September 12, 2023",
+      "category": 2,
+      "f1": 0.8,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline biking with friends",
+            "fulltext": "Caroline biking friends",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How long has Melanie been practicing art?",
+      "answer": "Since 2016",
+      "prediction": "Seven years",
+      "category": 2,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie practicing art duration",
+            "fulltext": "Melanie art",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What personality traits might Melanie say Caroline has?",
+      "answer": "Thoughtful, authentic, driven",
+      "prediction": "passionate, hardworking, supportive, courageous",
+      "category": 3,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie opinion about Caroline personality traits",
+            "fulltext": "Melanie Caroline personality",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What transgender-specific events has Caroline attended?",
+      "answer": "Poetry reading, conference",
+      "prediction": "A transgender poetry reading and an LGBT pride event.",
+      "category": 1,
+      "f1": 0.25,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline transgender events attended",
+            "fulltext": "Caroline transgender events",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What book did Melanie read from Caroline's suggestion?",
+      "answer": "\"Becoming Nicole\"",
+      "prediction": "Becoming Nicole",
+      "category": 1,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie read book Caroline suggestion",
+            "fulltext": "Melanie Caroline book",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie reading book Caroline recommended",
+            "fulltext": "Melanie book recommended Caroline title",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie's friend adopt a child?",
+      "answer": 2022,
+      "prediction": "last year (before October 2023)",
+      "category": 2,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's friend adopt a child",
+            "fulltext": "Melanie friend adopt child",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie get hurt?",
+      "answer": "September 2023",
+      "prediction": "September 2023",
+      "category": 2,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie got hurt injured",
+            "fulltext": "Melanie hurt",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie's family go on a roadtrip?",
+      "answer": "The weekend before 20 October 2023",
+      "prediction": "the weekend before October 20, 2023",
+      "category": 2,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's family roadtrip",
+            "fulltext": "Melanie roadtrip",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How many children does Melanie have?",
+      "answer": 3,
+      "prediction": "no information available",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie children",
+            "fulltext": "Melanie children",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie number of kids family",
+            "fulltext": "Melanie kids how many",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie two three children daughter son",
+            "fulltext": "Melanie two children three children",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie go on a hike after the roadtrip?",
+      "answer": "19 October 2023",
+      "prediction": "no information available",
+      "category": 1,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie hike after roadtrip",
+            "fulltext": "Melanie hike roadtrip",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie hike after roadtrip weekend",
+            "fulltext": "Melanie hike October roadtrip",
+            "meta": null,
+            "tree": null,
+            "temporal": {
+              "contains": null,
+              "overlaps": {
+                "start": "2023-10-20",
+                "end": "2023-12-31"
+              },
+              "within": null
+            },
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie hike after roadtrip October November",
+            "fulltext": "Melanie hike after roadtrip",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "27a3f467-b1fe-4185-b291-072116d5ac41"
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie hike mountains after October roadtrip accident",
+            "fulltext": "hike roadtrip son accident",
+            "meta": {
+              "sample_id": "conv-26"
+            },
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie went on hike after roadtrip son accident",
+            "fulltext": "hike November December after roadtrip",
+            "meta": null,
+            "tree": "conv.s18.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie hike after roadtrip son accident November",
+            "fulltext": "hike after roadtrip",
+            "meta": null,
+            "tree": "conv.s18",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Melanie go on another roadtrip soon?",
+      "answer": "Likely no; since this one went badly",
+      "prediction": "No, the scary accident made her reflect on family being precious, with no mention of another roadtrip planned soon.",
+      "category": 3,
+      "f1": 0.1,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie roadtrip travel plans",
+            "fulltext": "Melanie roadtrip",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie future travel plans next trip",
+            "fulltext": "Melanie another trip travel",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie scared accident never again roadtrip",
+            "fulltext": "Melanie roadtrip again scared",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What items has Melanie bought?",
+      "answer": "Figurines, shoes",
+      "prediction": "figurines",
+      "category": 1,
+      "f1": 0.5,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie bought items purchases",
+            "fulltext": "Melanie bought",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie shopping purchase bought items",
+            "fulltext": "Melanie purchased",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Caroline pass the adoption interview?",
+      "answer": "The Friday before 22 October 2023",
+      "prediction": "last Friday before October 22, 2023 (October 20, 2023)",
+      "category": 2,
+      "f1": 0.714286,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline adoption interview",
+            "fulltext": "Caroline adoption interview",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "When did Melanie buy the figurines?",
+      "answer": "21 October 2023",
+      "prediction": "The day before October 22, 2023 (she said \"yesterday\" on Oct 22).\n\nOctober 21, 2023",
+      "category": 2,
+      "f1": 0.352941,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie bought figurines",
+            "fulltext": "Melanie figurines",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Would Caroline want to move back to her home country soon?",
+      "answer": "No; she's in the process of adopting children.",
+      "prediction": "No, she is focused on her career and adoption goals, with no indication of plans to return to Sweden.",
+      "category": 3,
+      "f1": 0.105263,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline moving back to home country",
+            "fulltext": "Caroline home country move",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline Sweden plans future living",
+            "fulltext": "Caroline Sweden return",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did the charity race raise awareness for?",
+      "answer": "mental health",
+      "prediction": "mental health",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "charity race awareness",
+            "fulltext": "charity race",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Melanie realize after the charity race?",
+      "answer": "self-care is important",
+      "prediction": "self-care is really important, and that looking after herself helps her better look after her family",
+      "category": 4,
+      "f1": 0.333333,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie charity race realization",
+            "fulltext": "Melanie charity race",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How does Melanie prioritize self-care?",
+      "answer": "by carving out some me-time each day for activities like running, reading, or playing the violin",
+      "prediction": "By carving out daily me-time for running, reading, or playing violin to stay refreshed and present for her family.",
+      "category": 4,
+      "f1": 0.606061,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie self-care practices",
+            "fulltext": "Melanie self-care",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What are Caroline's plans for the summer?",
+      "answer": "researching adoption agencies",
+      "prediction": "Researching adoption agencies",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's plans for the summer",
+            "fulltext": "Caroline summer plans",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline summer vacation trip internship",
+            "fulltext": "Caroline summer",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "4906af77-1bca-4031-b977-9dab364248a4"
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline response summer plans answer",
+            "fulltext": "Caroline plans summer break vacation",
+            "meta": {
+              "speaker": "Caroline"
+            },
+            "tree": null,
+            "temporal": {
+              "contains": "2023-05-25",
+              "overlaps": null,
+              "within": null
+            },
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline summer plans response answer",
+            "fulltext": "Caroline hiking camping road trip summer",
+            "meta": {
+              "speaker": "Caroline",
+              "session_num": 2
+            },
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline answering summer plans hiking road trip beach",
+            "fulltext": "Caroline fun plans summer",
+            "meta": null,
+            "tree": "conv.s2",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline answering about her summer plans activities",
+            "fulltext": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What type of individuals does the adoption agency Caroline is considering support?",
+      "answer": "LGBTQ+ individuals",
+      "prediction": "LGBTQ+ individuals",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline adoption agency",
+            "fulltext": "Caroline adoption agency",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Why did Caroline choose the adoption agency?",
+      "answer": "because of their inclusivity and support for LGBTQ+ individuals",
+      "prediction": "Their inclusivity and support for LGBTQ+ folks with adoption.",
+      "category": 4,
+      "f1": 0.625,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline adoption agency choice reason",
+            "fulltext": "Caroline adoption agency",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What is Caroline excited about in the adoption process?",
+      "answer": "creating a family for kids who need one",
+      "prediction": "making a family for kids who need one",
+      "category": 4,
+      "f1": 0.857143,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline excited adoption process",
+            "fulltext": "Caroline adoption excited",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What does Melanie think about Caroline's decision to adopt?",
+      "answer": "she thinks Caroline is doing something amazing and will be an awesome mom",
+      "prediction": "Melanie is supportive and happy for Caroline, even saying it makes her want to adopt too.",
+      "category": 4,
+      "f1": 0.153846,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie opinion Caroline adoption decision",
+            "fulltext": "Melanie Caroline adopt",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How long have Mel and her husband been married?",
+      "answer": "Mel and her husband have been married for 5 years.",
+      "prediction": "5 years",
+      "category": 4,
+      "f1": 0.363636,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Mel husband married marriage duration",
+            "fulltext": "Mel married husband",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What does Caroline's necklace symbolize?",
+      "answer": "love, faith, and strength",
+      "prediction": "love, faith and strength",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's necklace symbolism meaning",
+            "fulltext": "Caroline necklace",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What country is Caroline's grandma from?",
+      "answer": "Sweden",
+      "prediction": "Sweden",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's grandma country origin",
+            "fulltext": "Caroline grandma country",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What was grandma's gift to Caroline?",
+      "answer": "necklace",
+      "prediction": "a necklace",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "grandma gift Caroline",
+            "fulltext": "grandma gift Caroline",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What is Melanie's hand-painted bowl a reminder of?",
+      "answer": "art and self-expression",
+      "prediction": "art and self-expression",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie hand-painted bowl reminder",
+            "fulltext": "Melanie hand-painted bowl",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Melanie and her family do while camping?",
+      "answer": "explored nature, roasted marshmallows, and went on a hike",
+      "prediction": "Roasted marshmallows, told stories around the campfire, and enjoyed each other's company.",
+      "category": 4,
+      "f1": 0.235294,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie family camping activities",
+            "fulltext": "Melanie camping",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What kind of counseling and mental health services is Caroline interested in pursuing?",
+      "answer": "working with trans people, helping them accept themselves and supporting their mental health",
+      "prediction": "Working with trans people, helping them accept themselves and supporting their mental health.",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline counseling mental health services",
+            "fulltext": "Caroline counseling mental health",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What workshop did Caroline attend recently?",
+      "answer": "LGBTQ+ counseling workshop",
+      "prediction": "An LGBTQ+ counseling workshop",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline workshop",
+            "fulltext": "Caroline workshop",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What was discussed in the LGBTQ+ counseling workshop?",
+      "answer": "therapeutic methods and how to best work with trans people",
+      "prediction": "therapeutic methods and how to best work with trans people",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "LGBTQ+ counseling workshop",
+            "fulltext": "LGBTQ counseling workshop",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What motivated Caroline to pursue counseling?",
+      "answer": "her own journey and the support she received, and how counseling improved her life",
+      "prediction": "wanting to help people who have gone through the same things as her",
+      "category": 4,
+      "f1": 0.086957,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline motivation counseling",
+            "fulltext": "Caroline counseling",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What kind of place does Caroline want to create for people?",
+      "answer": "a safe and inviting place for people to grow",
+      "prediction": "a safe, inviting place for people to grow",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline wants to create a place for people",
+            "fulltext": "Caroline place create",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Did Melanie make the black and white bowl in the photo?",
+      "answer": "Yes",
+      "prediction": "Yes",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie black and white bowl photo",
+            "fulltext": "Melanie black white bowl",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What kind of books does Caroline have in her library?",
+      "answer": "kids' books - classics, stories from different cultures, educational books",
+      "prediction": "Kids' books — classics, stories from different cultures, and educational books",
+      "category": 4,
+      "f1": 0.947368,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline library books",
+            "fulltext": "Caroline library books",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What was Melanie's favorite book from her childhood?",
+      "answer": "\"Charlotte's Web\"",
+      "prediction": "Charlotte's Web",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's favorite book childhood",
+            "fulltext": "Melanie favorite book childhood",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What book did Caroline recommend to Melanie?",
+      "answer": "\"Becoming Nicole\"",
+      "prediction": "\"Becoming Nicole\" by Amy Ellis Nutt",
+      "category": 4,
+      "f1": 0.5,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline recommended a book to Melanie",
+            "fulltext": "Caroline recommend book Melanie",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Caroline take away from the book \"Becoming Nicole\"?",
+      "answer": "Lessons on self-acceptance and finding support",
+      "prediction": "self-acceptance, finding support, and that tough times don't last",
+      "category": 4,
+      "f1": 0.461538,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline book Becoming Nicole takeaway",
+            "fulltext": "Becoming Nicole Caroline",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What are the new shoes that Melanie got used for?",
+      "answer": "Running",
+      "prediction": "Running",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie new shoes",
+            "fulltext": "Melanie shoes",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What is Melanie's reason for getting into running?",
+      "answer": "To de-stress and clear her mind",
+      "prediction": "To de-stress and clear her mind",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie reason for getting into running",
+            "fulltext": "Melanie running",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What does Melanie say running has been great for?",
+      "answer": "Her mental health",
+      "prediction": "her headspace",
+      "category": 4,
+      "f1": 0.4,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie running benefits",
+            "fulltext": "Melanie running",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Mel and her kids make during the pottery workshop?",
+      "answer": "pots",
+      "prediction": "their own pots",
+      "category": 4,
+      "f1": 0.5,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Mel pottery workshop kids",
+            "fulltext": "pottery workshop",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What kind of pot did Mel and her kids make with clay?",
+      "answer": "a cup with a dog face on it",
+      "prediction": "a cup",
+      "category": 4,
+      "f1": 0.285714,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Mel kids clay pot making",
+            "fulltext": "Mel clay pot",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What creative project do Mel and her kids do together besides pottery?",
+      "answer": "painting",
+      "prediction": "Painting (nature-inspired)",
+      "category": 4,
+      "f1": 0.666667,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Mel creative projects kids",
+            "fulltext": "Mel kids creative project",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Mel and her kids paint in their latest project in July 2023?",
+      "answer": "a sunset with a palm tree",
+      "prediction": "nature-inspired paintings",
+      "category": 4,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Mel kids painting project July 2023",
+            "fulltext": "Mel painting kids project",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Caroline see at the council meeting for adoption?",
+      "answer": "many people wanting to create loving homes for children in need",
+      "prediction": "many people wanting to create loving homes for children in need",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline council meeting adoption",
+            "fulltext": "Caroline council meeting adoption",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What do sunflowers represent according to Caroline?",
+      "answer": "warmth and happiness",
+      "prediction": "warmth and happiness",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "sunflowers Caroline meaning represent",
+            "fulltext": "sunflowers Caroline",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Why are flowers important to Melanie?",
+      "answer": "They remind her to appreciate the small moments and were a part of her wedding decor",
+      "prediction": "They remind her of her wedding day and represent growth, beauty, and appreciating small moments.",
+      "category": 4,
+      "f1": 0.692308,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie flowers importance",
+            "fulltext": "Melanie flowers",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What inspired Caroline's painting for the art show?",
+      "answer": "visiting an LGBTQ center and wanting to capture unity and strength",
+      "prediction": "A visit to an LGBTQ center, wanting to capture everyone's unity and strength.",
+      "category": 4,
+      "f1": 0.888889,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline painting art show inspiration",
+            "fulltext": "Caroline painting art show",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How often does Melanie go to the beach with her kids?",
+      "answer": "once or twice a year",
+      "prediction": "Once or twice a year",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie beach kids",
+            "fulltext": "Melanie beach kids",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Melanie and her family see during their camping trip last year?",
+      "answer": "Perseid meteor shower",
+      "prediction": "the Perseid meteor shower",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie camping trip family",
+            "fulltext": "Melanie camping trip",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How did Melanie feel while watching the meteor shower?",
+      "answer": "in awe of the universe",
+      "prediction": "awe-inspired, tiny, and at one with the universe",
+      "category": 4,
+      "f1": 0.2,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie watching meteor shower feelings emotions",
+            "fulltext": "Melanie meteor shower",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Whose birthday did Melanie celebrate recently?",
+      "answer": "Melanie's daughter",
+      "prediction": "her daughter's",
+      "category": 4,
+      "f1": 0.5,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie birthday celebration",
+            "fulltext": "Melanie birthday",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Who performed at the concert at Melanie's daughter's birthday?",
+      "answer": "Matt Patterson",
+      "prediction": "Matt Patterson",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "concert at Melanie's daughter's birthday",
+            "fulltext": "Melanie daughter birthday concert",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Why did Melanie choose to use colors and patterns in her pottery project?",
+      "answer": "She wanted to catch the eye and make people smile.",
+      "prediction": "She was obsessed with colors and patterns, wanted to catch the eye and make people smile, and painting helps her express feelings and be creative.",
+      "category": 4,
+      "f1": 0.571429,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie pottery project colors patterns",
+            "fulltext": "Melanie pottery colors patterns",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What pet does Caroline have?",
+      "answer": "guinea pig",
+      "prediction": "no information available",
+      "category": 4,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's pet",
+            "fulltext": "Caroline pet",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline owns has a dog cat animal",
+            "fulltext": "Caroline has a",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline pet dog cat rabbit bird",
+            "fulltext": "Caroline pet animal",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "b9e46c2b-34da-45df-9c59-c4c60100cd6d"
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline responds about her own pet ownership",
+            "fulltext": "I have a dog I have a cat I have a pet",
+            "meta": {
+              "speaker": "Caroline"
+            },
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What pets does Melanie have?",
+      "answer": "Two cats and a dog",
+      "prediction": "a dog, a cat (and later another cat named Bailey)",
+      "category": 4,
+      "f1": 0.4,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie pets",
+            "fulltext": "Melanie pets",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Where did Oliver hide his bone once?",
+      "answer": "In Melanie's slipper",
+      "prediction": "in Melanie's slipper",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Oliver hid his bone",
+            "fulltext": "Oliver bone hidden",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What activity did Caroline used to do with her dad?",
+      "answer": "Horseback riding",
+      "prediction": "horseback riding",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline activity with her dad",
+            "fulltext": "Caroline dad",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Caroline make for a local church?",
+      "answer": "a stained glass window",
+      "prediction": "a stained glass window",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline made something for a local church",
+            "fulltext": "Caroline church",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Caroline find in her neighborhood during her walk?",
+      "answer": "a rainbow sidewalk",
+      "prediction": "a rainbow sidewalk for Pride Month",
+      "category": 4,
+      "f1": 0.571429,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline found something during her walk in the neighborhood",
+            "fulltext": "Caroline neighborhood walk found",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Which song motivates Caroline to be courageous?",
+      "answer": "Brave by Sara Bareilles",
+      "prediction": "\"Brave\" by Sara Bareilles",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline song courageous motivation",
+            "fulltext": "Caroline courageous song",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Which  classical musicians does Melanie enjoy listening to?",
+      "answer": "Bach and Mozart",
+      "prediction": "Bach and Mozart",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie classical musicians enjoys listening to",
+            "fulltext": "Melanie classical musicians",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Who is Melanie a fan of in terms of modern music?",
+      "answer": "Ed Sheeran",
+      "prediction": "Ed Sheeran",
+      "category": 4,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie fan modern music",
+            "fulltext": "Melanie music fan",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How long has Melanie been creating art?",
+      "answer": "7 years",
+      "prediction": "Seven years",
+      "category": 4,
+      "f1": 0.5,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie creating art duration",
+            "fulltext": "Melanie art",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What precautionary sign did Melanie see at the café?",
+      "answer": "A sign stating that someone is not being able to leave",
+      "prediction": "no information available",
+      "category": 4,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie café precautionary sign",
+            "fulltext": "Melanie cafe sign",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "65dade97-a338-430e-bd58-a1044eb72a59"
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "café warning sign precaution text content",
+            "fulltext": "café sign precaution warning",
+            "meta": {
+              "sample_id": "conv-26"
+            },
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "sign text warning notice café wet floor caution",
+            "fulltext": "sign caution warning notice",
+            "meta": null,
+            "tree": "conv.s16.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "sign text warning notice café wet floor caution",
+            "fulltext": "sign caution warning notice",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What advice does Caroline give for getting started with adoption?",
+      "answer": "Do research, find an adoption agency or lawyer, gather necessary documents, and prepare emotionally.",
+      "prediction": "Attend an adoption advice/assistance group and apply to adoption agencies.",
+      "category": 4,
+      "f1": 0.2,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline advice getting started with adoption",
+            "fulltext": "Caroline adoption advice",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What setback did Melanie face in October 2023?",
+      "answer": "She got hurt and had to take a break from pottery.",
+      "prediction": "got hurt and had to take a break from pottery",
+      "category": 4,
+      "f1": 0.941176,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie setback October 2023",
+            "fulltext": "Melanie October 2023",
+            "meta": null,
+            "tree": null,
+            "temporal": {
+              "contains": "2023-10-15",
+              "overlaps": null,
+              "within": null
+            },
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie setback October 2023",
+            "fulltext": "Melanie October 2023",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie problem difficulty struggle October November 2023",
+            "fulltext": "Melanie setback problem",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What does Melanie do to keep herself busy during her pottery break?",
+      "answer": "Read a book and paint.",
+      "prediction": "Reading and painting",
+      "category": 4,
+      "f1": 0.8,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie pottery break busy",
+            "fulltext": "Melanie pottery break",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What painting did Melanie show to Caroline on October 13, 2023?",
+      "answer": "A painting inspired by sunsets with a pink sky.",
+      "prediction": "an abstract painting",
+      "category": 4,
+      "f1": 0.222222,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie showed painting to Caroline",
+            "fulltext": "Melanie painting Caroline October 2023",
+            "meta": null,
+            "tree": null,
+            "temporal": {
+              "contains": "2023-10-13",
+              "overlaps": null,
+              "within": null
+            },
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie showed painting to Caroline",
+            "fulltext": "Melanie painting Caroline",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "39909695-683c-4736-914b-975653d98430"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What kind of painting did Caroline share with Melanie on October 13, 2023?",
+      "answer": "An abstract painting with blue streaks on a wall.",
+      "prediction": "abstract painting",
+      "category": 4,
+      "f1": 0.444444,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline shared painting with Melanie October 2023",
+            "fulltext": "Caroline Melanie painting October 2023",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline painting shared October 13 2023",
+            "fulltext": "Caroline painting October 13",
+            "meta": null,
+            "tree": null,
+            "temporal": {
+              "contains": "2023-10-13",
+              "overlaps": null,
+              "within": null
+            },
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline painting Melanie October 13",
+            "fulltext": "painting October 13 2023",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline shared art with Melanie autumn fall October",
+            "fulltext": "Caroline Melanie art share October",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 50,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "painting shared October 13",
+            "fulltext": "Oct 13 2023 painting",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 50,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "39909695-683c-4736-914b-975653d98430"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What was the poetry reading that Caroline attended about?",
+      "answer": "It was a transgender poetry reading where transgender people shared their stories.",
+      "prediction": "Transgender people sharing their stories and celebrating their identities through poetry.",
+      "category": 4,
+      "f1": 0.571429,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline poetry reading",
+            "fulltext": "Caroline poetry reading",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did the posters at the poetry reading say?",
+      "answer": "\"Trans Lives Matter\"",
+      "prediction": "pride and strength",
+      "category": 4,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "posters at poetry reading",
+            "fulltext": "poetry reading posters",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What does Caroline's drawing symbolize for her?",
+      "answer": "Freedom and being true to herself.",
+      "prediction": "freedom and being real",
+      "category": 4,
+      "f1": 0.5,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's drawing symbolize",
+            "fulltext": "Caroline drawing",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How do Melanie and Caroline describe their journey through life together?",
+      "answer": "An ongoing adventure of learning and growing.",
+      "prediction": "motivating and helping each other, tackling life's challenges together, an ongoing adventure of learning and growing",
+      "category": 4,
+      "f1": 0.555556,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie and Caroline journey through life together",
+            "fulltext": "Melanie Caroline journey life together",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What happened to Melanie's son on their road trip?",
+      "answer": "He got into an accident",
+      "prediction": "He got into an accident but was okay.",
+      "category": 4,
+      "f1": 0.727273,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's son road trip",
+            "fulltext": "Melanie son road trip",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How did Melanie's son handle the accident?",
+      "answer": "He was scared but reassured by his family",
+      "prediction": "They were scared but were reassured and told their brother would be OK; they're tough kids.",
+      "category": 4,
+      "f1": 0.26087,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's son accident",
+            "fulltext": "Melanie son accident",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "how did Melanie's son handle the accident kids reaction",
+            "fulltext": "son handle accident brave scared",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How did Melanie feel about her family after the accident?",
+      "answer": "They are important and mean the world to her",
+      "prediction": "She felt they meant the world to her and was more thankful than ever for them",
+      "category": 4,
+      "f1": 0.380952,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie feelings family after accident",
+            "fulltext": "Melanie family accident",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How did Melanie's children handle the accident?",
+      "answer": "They were scared but resilient",
+      "prediction": "They were scared but were reassured and told their brother would be OK; they're tough kids.",
+      "category": 4,
+      "f1": 0.4,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's children accident",
+            "fulltext": "Melanie children accident",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How did Melanie feel after the accident?",
+      "answer": "Grateful and thankful for her family",
+      "prediction": "scared and grateful her son was okay",
+      "category": 4,
+      "f1": 0.363636,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie feelings after accident",
+            "fulltext": "Melanie accident",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What was Melanie's reaction to her children enjoying the Grand Canyon?",
+      "answer": "She was happy and thankful",
+      "prediction": "She was thankful and relieved",
+      "category": 4,
+      "f1": 0.75,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie Grand Canyon children reaction",
+            "fulltext": "Melanie Grand Canyon children",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What do Melanie's family give her?",
+      "answer": "Strength and motivation",
+      "prediction": "no information available",
+      "category": 4,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's family give her something",
+            "fulltext": "Melanie family give",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie received gift from family",
+            "fulltext": "Melanie gift present family gave",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie birthday surprise celebration family gave her",
+            "fulltext": "Melanie birthday gave her",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie family gave her surprise present",
+            "fulltext": "Melanie family gave her",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie received item object from her family members",
+            "fulltext": "Melanie parents siblings gave her bought her",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How did Melanie feel about her family supporting her?",
+      "answer": "She appreciated them a lot",
+      "prediction": "Grateful and appreciative — she felt her family's love and support was awesome and helped her through tough times.",
+      "category": 4,
+      "f1": 0.2,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie family support feelings",
+            "fulltext": "Melanie family supporting",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Melanie do after the road trip to relax?",
+      "answer": "Went on a nature walk or hike",
+      "prediction": "went on a camping trip with her family",
+      "category": 4,
+      "f1": 0.307692,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie road trip relax",
+            "fulltext": "Melanie road trip relax",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Caroline realize after her charity race?",
+      "prediction": "self-care is really important",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline charity race realization",
+            "fulltext": "Caroline charity race",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What are Melanie's plans for the summer with respect to adoption?",
+      "prediction": "Melanie has no adoption plans for the summer — it's Caroline who is researching adoption agencies. Melanie's summer plans are going camping with her kids.",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's plans for summer adoption",
+            "fulltext": "Melanie adoption summer",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What type of individuals does the adoption agency Melanie is considering support?",
+      "prediction": "LGBTQ+ individuals",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie adoption agency",
+            "fulltext": "Melanie adoption agency",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Why did Melanie choose the adoption agency?",
+      "prediction": "It was Caroline, not Melanie, who chose the adoption agency — because they help LGBTQ+ folks with adoption, and their inclusivity and support resonated with her.\n\nno information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie adoption agency reason why",
+            "fulltext": "Melanie adoption agency",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What is Melanie excited about in her adoption process?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie excited adoption process",
+            "fulltext": "Melanie adoption",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie own adoption excited about",
+            "fulltext": "Melanie excited adoption herself",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What does Melanie's necklace symbolize?",
+      "prediction": "The necklace belongs to Caroline, not Melanie. It symbolizes love, faith and strength.",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's necklace symbolize",
+            "fulltext": "Melanie necklace",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What country is Melanie's grandma from?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie's grandma country origin",
+            "fulltext": "Melanie grandma country",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie grandmother family heritage",
+            "fulltext": "Melanie grandma grandmother",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What was grandma's gift to Melanie?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "grandma's gift to Melanie",
+            "fulltext": "grandma gift Melanie",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What was grandpa's gift to Caroline?",
+      "prediction": "The memories mention a gift from grandma (a necklace), not grandpa. No information available about grandpa's gift to Caroline.\n\nno information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "grandpa gift Caroline",
+            "fulltext": "grandpa gift Caroline",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What is Caroline's hand-painted bowl a reminder of?",
+      "prediction": "art and self-expression",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline hand-painted bowl reminder",
+            "fulltext": "Caroline hand-painted bowl",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Caroline and her family do while camping?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline family camping activities",
+            "fulltext": "Caroline camping",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline camping activities what they did",
+            "fulltext": "Caroline camping hiking fishing swimming",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline family camping trip what activities",
+            "fulltext": "Caroline family went camping roast hike",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline went camping with her family what did they do",
+            "fulltext": "Caroline we went camping our family",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "cce94829-d490-47c3-9957-4783548f752f"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What kind of counseling and mental health services is Melanie interested in pursuing?",
+      "prediction": "It's Caroline (not Melanie) who is pursuing counseling. Caroline is interested in working with trans people, helping them accept themselves and supporting their mental health, with a focus on LGBTQ+ counseling.",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie counseling mental health services",
+            "fulltext": "Melanie counseling mental health",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What kind of counseling workshop did Melanie attend recently?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie counseling workshop",
+            "fulltext": "Melanie counseling workshop",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What motivated Melanie to pursue counseling?",
+      "prediction": "It was Caroline, not Melanie, who pursued counseling. Caroline was motivated by her own personal journey and the support she received, which improved her life and made her passionate about helping others through similar experiences.\n\nno information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie motivation counseling",
+            "fulltext": "Melanie counseling",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What kind of place does Melanie want to create for people?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie wants to create a place for people",
+            "fulltext": "Melanie place create",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie dream aspiration goal create space community",
+            "fulltext": "Melanie wants create",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie personal goal vision passionate about creating",
+            "fulltext": "Melanie passionate create place",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Did Caroline make the black and white bowl in the photo?",
+      "answer": "No",
+      "prediction": "No, Melanie made it.",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline black and white bowl photo",
+            "fulltext": "Caroline black white bowl",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What are the new shoes that Caroline got used for?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline new shoes",
+            "fulltext": "Caroline shoes",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What is Caroline's reason for getting into running?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline reason for getting into running",
+            "fulltext": "Caroline running",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline started running motivation reason",
+            "fulltext": "Caroline got into running",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What does Caroline say running has been great for?",
+      "prediction": "her headspace",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline running great for",
+            "fulltext": "Caroline running",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Melanie see at the council meeting for adoption?",
+      "prediction": "It was Caroline, not Melanie, who attended the council meeting. Based on the memories, Melanie learned about it from Caroline's message. The question may have the roles reversed — Caroline saw that many people wanted to create loving homes for children in need.\n\nmany people wanting to create loving homes for children in need",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie council meeting adoption",
+            "fulltext": "Melanie council meeting adoption",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What inspired Melanie's painting for the art show?",
+      "prediction": "autumn",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie painting art show inspiration",
+            "fulltext": "Melanie painting art show",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What inspired Caroline's sculpture for the art show?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline sculpture art show inspiration",
+            "fulltext": "Caroline sculpture art show",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline sculpture inspired by",
+            "fulltext": "sculpture inspired",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "1202b07e-b9e2-4a35-bac8-d94f0887c83f"
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline art show sculpture trans experience inspired creation",
+            "fulltext": "Caroline sculpture inspired trans",
+            "meta": {
+              "sample_id": "conv-26"
+            },
+            "tree": "conv.s14",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline art show sculpture trans experience inspired creation August 2023",
+            "fulltext": "Caroline sculpture inspired trans experience",
+            "meta": null,
+            "tree": "conv.s14",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How often does Caroline go to the beach with her kids?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline beach kids frequency",
+            "fulltext": "Caroline beach kids",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Caroline and her family see during their camping trip last year?",
+      "prediction": "the Perseid meteor shower",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline camping trip family",
+            "fulltext": "Caroline camping",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline camping trip saw witnessed nature wildlife",
+            "fulltext": "Caroline camping saw",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How did Caroline feel while watching the meteor shower?",
+      "prediction": "breathtaking and in awe",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline watching meteor shower feelings emotions",
+            "fulltext": "Caroline meteor shower",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Why did Caroline choose to use colors and patterns in her pottery project?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline pottery project colors patterns",
+            "fulltext": "Caroline pottery colors patterns",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Is Oscar Melanie's pet?",
+      "answer": "No",
+      "prediction": "No, Oscar is Caroline's pet guinea pig.",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Oscar pet Melanie",
+            "fulltext": "Oscar Melanie pet",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Where did Oscar hide his bone once?",
+      "prediction": "in a slipper",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Oscar hid his bone",
+            "fulltext": "Oscar bone hidden",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What activity did Melanie used to do with her dad?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie activity with dad",
+            "fulltext": "Melanie dad",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie childhood activity father",
+            "fulltext": "Melanie used to dad father",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Melanie make for a local church?",
+      "prediction": "It was Caroline, not Melanie, who made the stained glass window for a local church.\n\nno information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie made something for a local church",
+            "fulltext": "Melanie church",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Melanie find in her neighborhood during her walk?",
+      "prediction": "a rainbow Pride Month sidewalk",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie neighborhood walk found",
+            "fulltext": "Melanie walk neighborhood",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Which song motivates Melanie to be courageous?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie song courage motivation",
+            "fulltext": "Melanie courageous song",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Melanie favorite song inspires motivates brave",
+            "fulltext": "Melanie song motivates courageous brave",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What type of instrument does Caroline play?",
+      "prediction": "Guitar",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline instrument music plays",
+            "fulltext": "Caroline instrument",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline plays instrument guitar piano violin",
+            "fulltext": "Caroline plays",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Which classical musicians does Caroline enjoy listening to?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline classical musicians music preferences",
+            "fulltext": "Caroline classical musicians",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline listens to music favorites enjoys",
+            "fulltext": "Caroline listening enjoys classical",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "Who is Caroline a fan of in terms of modern music?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline modern music fan",
+            "fulltext": "Caroline music fan",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline favorite artist singer modern music",
+            "fulltext": "Caroline fan of",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline likes listens to music artist",
+            "fulltext": "Caroline Taylor Swift Beyonce pop modern",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What precautionary sign did Caroline see at the café?",
+      "prediction": "a sign on a door stating that someone is not being able to leave",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline precautionary sign café",
+            "fulltext": "Caroline sign café",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "6f810a2a-3615-4b9e-8529-842f8bf81652"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What setback did Caroline face recently?",
+      "prediction": "got into a bad spot with some people while hiking",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline setback problem difficulty",
+            "fulltext": "Caroline setback",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What does Caroline do to keep herself busy during her pottery break?",
+      "prediction": "reading and painting",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline pottery break activity",
+            "fulltext": "Caroline pottery break busy",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What was the poetry reading that Melanie attended about?",
+      "prediction": "It was Caroline, not Melanie, who attended the poetry reading. Melanie had never been to one.\n\nno information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "poetry reading Melanie attended",
+            "fulltext": "poetry reading Melanie",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What happened to Caroline's son on their road trip?",
+      "prediction": "The road trip described belongs to Melanie, not Caroline. Melanie's son got into an accident.\n\nMelanie's son got into an accident, but was okay.",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's son road trip incident",
+            "fulltext": "Caroline son road trip",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How did Caroline's son handle the accident?",
+      "prediction": "He was okay/unharmed.",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's son accident",
+            "fulltext": "Caroline son accident",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How did Caroline feel about her family after the accident?",
+      "prediction": "Family's everything",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline feelings about family after accident",
+            "fulltext": "Caroline family accident",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How did Caroline's children handle the accident?",
+      "prediction": "They were scared but were reassured and explained their brother would be OK; they're tough kids.",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's children accident",
+            "fulltext": "Caroline children accident",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "How did Caroline feel after the accident?",
+      "prediction": "sympathetic and concerned, calling it traumatizing",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline feelings after accident",
+            "fulltext": "Caroline accident",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What was Caroline's reaction to her children enjoying the Grand Canyon?",
+      "prediction": "She said the kids look cute and bet they bring lots of joy.",
+      "category": 5,
+      "f1": 0,
+      "em": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline's reaction to children enjoying Grand Canyon",
+            "fulltext": "Caroline Grand Canyon children",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What did Caroline do after the road trip to relax?",
+      "prediction": "Based on the memories, it was Melanie (not Caroline) who went camping to relax after the road trip. The question may have the subject reversed.\n\nno information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline road trip relax",
+            "fulltext": "Caroline road trip relax",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline relaxing activity after trip",
+            "fulltext": "Caroline relax after road trip",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-26",
+      "question": "What does Caroline love most about camping with her family?",
+      "prediction": "no information available",
+      "category": 5,
+      "f1": 1,
+      "em": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline camping family",
+            "fulltext": "Caroline camping",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Caroline loves camping activities favorite",
+            "fulltext": "Caroline love camping family favorite",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        }
+      ]
+    }
+  ]
+}

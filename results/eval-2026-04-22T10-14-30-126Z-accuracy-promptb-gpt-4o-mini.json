@@ -1,0 +1,788 @@
+{
+  "timestamp": "2026-04-22T10:14:30.126Z",
+  "samples": 1,
+  "totalQA": 7,
+  "overallF1": 0.27359514285714287,
+  "overallEM": 0.14285714285714285,
+  "byCategory": {
+    "3": {
+      "count": 7,
+      "f1": 0.27359514285714287,
+      "em": 0.14285714285714285,
+      "accuracy": 0.14285714285714285,
+      "recall": 0.34523809523809523
+    }
+  },
+  "bySample": {
+    "conv-44": {
+      "count": 7,
+      "f1": 0.27359514285714287,
+      "em": 0.14285714285714285,
+      "accuracy": 0.14285714285714285,
+      "recall": 0.34523809523809523
+    }
+  },
+  "description": "exp43: semantic-only inferential, conv-44 open-domain",
+  "results": [
+    {
+      "sampleId": "conv-44",
+      "question": "What is an indoor activity that Andrew would enjoy doing while make his dog happy?",
+      "answer": "cook dog treats",
+      "prediction": "Playing hide-and-seek with his dogs",
+      "category": 3,
+      "f1": 0.25,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew indoor activities with dog",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew indoor hobbies interests activities",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": "conv.andrew.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "599ef699-d016-41e2-abe5-3fbaa577cc60",
+            "window": 3
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Playing hide-and-seek with his dogs"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-44",
+      "question": "Which meat does Audrey prefer eating more than others?",
+      "answer": "chicken",
+      "prediction": "chicken",
+      "category": 3,
+      "f1": 1,
+      "em": 1,
+      "accuracy": 1,
+      "recall": 0.5,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Audrey meat food preferences eating",
+            "fulltext": "Audrey meat",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.audrey.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Audrey meat food preferences eating",
+            "fulltext": "Audrey meat",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.audrey.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Audrey meat food preferences eating",
+            "fulltext": "meat preference",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "chicken"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-44",
+      "question": "What can Andrew potentially do to improve his stress and accomodate his living situation with his dogs?",
+      "answer": "Change to a hybrid or remote job so he can move away from the city to the suburbs to have a larger living space and be closer to nature.",
+      "prediction": "Take walks with his dogs (including lunch walks), pursue outdoor hikes and nature activities with them, and find a dog-friendly apartment near a park or green space",
+      "category": 3,
+      "f1": 0.12766,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0.6666666666666666,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew stress living situation dogs",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew stress relief coping apartment dog challenges solutions",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew work stress anxiety mental health wellbeing",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew outdoor walks nature activity dog exercise city",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Take walks with his dogs (including lunch walks), pursue outdoor hikes and nature activities with them, and find a dog-friendly apartment near a park or green space"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-44",
+      "question": "Which US state do Audrey and Andrew potentially live in?",
+      "answer": "Minnesota",
+      "prediction": "California",
+      "category": 3,
+      "f1": 0,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Audrey Andrew US state location live",
+            "fulltext": "Audrey Andrew state",
+            "grep": "Audrey|Andrew",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Audrey Andrew US state location live",
+            "fulltext": "Audrey Andrew state",
+            "grep": "Audrey|Andrew",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Audrey Andrew location state where they live",
+            "fulltext": null,
+            "grep": "Audrey|Andrew",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Audrey Andrew location state where they live",
+            "fulltext": "Audrey Andrew state location",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "California Oregon Florida New York Texas state city beach ocean",
+            "fulltext": "California Oregon Florida state city",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "where Audrey Andrew live address neighborhood town",
+            "fulltext": "moved to state neighborhood area",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Audrey moved new house backyard beach ocean region",
+            "fulltext": "Washington Oregon California state Pacific",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "state province region country US location mentioned explicitly",
+            "fulltext": "Alaska Hawaii Texas Florida New York Washington Colorado",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Audrey job work location office company",
+            "fulltext": "work job company location",
+            "grep": null,
+            "meta": null,
+            "tree": "conv.audrey.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Audrey job work location office company",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": "conv.audrey.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "beach ocean dogs hiking trails nature city Audrey Andrew state region",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew new job company tech software",
+            "fulltext": "new job company hired work",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew looking for apartment dog-friendly pet area neighborhood city name",
+            "fulltext": "apartment pet friendly city area searching",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Audrey workshop dog training location city trip travel",
+            "fulltext": "workshop trip travel location destination city state",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "specific city town US state mention California New York Texas",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Audrey new house backyard moved location neighborhood city",
+            "fulltext": "new house moved neighborhood",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "weather climate seasons snow warm humid cold",
+            "fulltext": "weather climate season",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "state name city explicit geographical location mention",
+            "fulltext": "California Oregon Washington Florida Texas Colorado",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "California"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-44",
+      "question": "Which national park could Audrey and Andrew be referring to in their conversations?",
+      "answer": "Voyageurs National Park",
+      "prediction": "No specific national park name is mentioned in their conversations",
+      "category": 3,
+      "f1": 0.307692,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 1,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "national park conversation",
+            "fulltext": "national park",
+            "grep": "national park|Audrey|Andrew",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "national park Audrey Andrew",
+            "fulltext": "national park",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 15,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "hiking mountain peak trail specific location",
+            "fulltext": "Yosemite Yellowstone Grand Canyon Rocky Mountain Zion",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "road trip destination travel national park name",
+            "fulltext": "park road trip dogs hiking",
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "34e5cc17-99e1-4217-a6d0-f8cf3f176e36",
+            "window": 3
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "9b322420-d906-4944-a3fd-8b1570d07b60",
+            "window": 5
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "c4e343ea-77d7-463b-9cf4-0d449e581ad0",
+            "window": 5
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "989ef195-ae4b-4c88-a45f-e3b3fcd316bb",
+            "window": 5
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "034eb7df-ff8c-41ce-9058-d40d4057c5ab",
+            "window": 5
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "347dd99e-8483-46f0-bb70-4057dcca998b",
+            "window": 5
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "No specific national park name is mentioned in their conversations"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-44",
+      "question": "What is something that Andrew could do to make birdwatching hobby to fit in his city schedule?",
+      "answer": "Install a bird feeder outside where he can see the birds without going outdoors.",
+      "prediction": "Spot birds during weekend hikes at local trails like Fox Hollow",
+      "category": 3,
+      "f1": 0.086957,
+      "em": 0,
+      "accuracy": 0,
+      "recall": 0.25,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew birdwatching city schedule hobby",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew city lifestyle busy schedule urban activities",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": "conv.andrew.*",
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew city urban parks nature outdoors schedule time",
+            "fulltext": null,
+            "grep": "andrew",
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "birdwatching urban city parks fit schedule local birds",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "4d8c0302-0658-46bd-a092-8d83bd041df8",
+            "window": 3
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew spotting birds while hiking walking commute daily routine",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 5,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "mcp__recall__me_memory_get",
+          "args": {
+            "id": "59de9201-9295-41ee-8f00-ce524ab43f28",
+            "window": 3
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Spot birds during weekend hikes at local trails like Fox Hollow"
+          }
+        }
+      ]
+    },
+    {
+      "sampleId": "conv-44",
+      "question": "What is a career that Andrew could potentially pursue with his love for animals and nature?",
+      "answer": "Park ranger or a similar position working for the National Park Services.",
+      "prediction": "Wildlife biologist or ecologist",
+      "category": 3,
+      "f1": 0.142857,
+      "em": 0,
+      "accuracy": 1,
+      "recall": 0,
+      "context": "(tool mode)",
+      "toolCalls": [
+        {
+          "tool": "mcp__recall__me_memory_search",
+          "args": {
+            "semantic": "Andrew love for animals nature interests hobbies",
+            "fulltext": null,
+            "grep": null,
+            "meta": null,
+            "tree": null,
+            "temporal": null,
+            "weights": null,
+            "candidateLimit": 0,
+            "limit": 10,
+            "order_by": null
+          }
+        },
+        {
+          "tool": "StructuredOutput",
+          "args": {
+            "answer": "Wildlife biologist or ecologist"
+          }
+        }
+      ]
+    }
+  ],
+  "overallAccuracy": 0.4,
+  "rawAccuracy": 0.2857142857142857
+}

@@ -67,76 +67,71 @@ The agent decides which search modes to use, how to combine them, and when to do
 
 ## What We Learned (45+ Experiments)
 
-We ran 45+ experiments over several days, testing one hypothesis at a time. Here are the findings that mattered:
+We ran 45+ experiments over two weeks, one change at a time. A note on how to read the numbers: every experiment was selected on a single conversation (conv-26, ~200 questions), where identical reruns vary by about ±0.04 F1. Adopted changes were then validated on all 10 conversations (1,986 questions) at checkpoints. Unless labeled otherwise, the numbers below come from those full runs, and deltas are paired on the same questions with 95% bootstrap intervals. One identical-config repeat of the full benchmark, run three hours apart, differed by 0.0002 F1, while its individual conversations swung by up to 0.06. That is the whole argument for validating on all ten conversations. The exception is finding 1, where the fixed pipeline was only ever measured on the tuning conversation; those numbers are labeled as such.
 
 ### 1. Agentic search beats fixed retrieval
 
-Our first version used a fixed retrieval pipeline: embed the question, run hybrid search, stuff top-10 results into the prompt. F1=0.493. Switching to agentic tool use — where Claude decides how to search — immediately jumped to F1=0.523, and continued improving as we refined the tools.
+Our first version was a fixed pipeline: embed the question, run hybrid search, stuff the top 10 results into the prompt. On the tuning conversation it peaked at F1 0.481 after adding session dates to the results. The same day, on the same conversation and model, giving the agent a single search tool and letting it decide what to query scored 0.584. That gap of 0.10 is well outside the rerun noise and is the cleanest fixed-versus-agentic comparison we have. The final system scores 0.627 on that conversation.
 
-The agent adapts its search strategy per question. For "What has Melanie painted?", it might do:
+The agent adapts its strategy per question. For "What has Melanie painted?" it might run:
 ```
 search(semantic="Melanie painted", fulltext="Melanie paint", tree="conv.melanie.*")
 ```
-For "When did Caroline go to the pride parade?", it combines:
+For "When did Caroline go to the pride parade?" it combines:
 ```
 search(semantic="Caroline pride parade", grep="pride|parade|march")
 ```
 
-No fixed pipeline can match this flexibility.
+One lesson we learned the hard way: when we swapped the simple tool for the production-matching nine-parameter search schema, F1 on that conversation dropped by 0.09. The agent spent its limited tool budget fetching schemas instead of searching. Tool schema complexity is a first-order variable, and a good part of the program was recovering ground the richer interface had cost.
 
-### 2. Grep as a filter (not a search mode) is critical
+### 2. Let the agent search as much as it wants
 
-We added regex grep (`~*`) as a search parameter. The key design decision: grep must be combined with semantic or fulltext search — it's a filter, not a standalone mode. When we allowed grep-only searches, results were sorted by `created_at` (effectively random) instead of relevance. Forcing combination with a ranked search mode improved open-domain F1 by +0.091.
+The largest single validated gain came from deleting a constraint. Removing the tool-call cap (previously six) moved full-benchmark F1 from 0.615 to 0.646 with Sonnet, a paired gain of +0.031 (95% CI +0.018 to +0.044). All ten conversations moved in the same direction, from +0.010 to +0.067. Multi-hop rose +0.048 and single-hop +0.042. Adversarial did not move. The agent self-regulates: mean tool calls per question went from 2.7 to 3.2, and the final system averages 3.9 with a median of 3.
 
-The agent uses grep for synonym expansion on list questions:
+### 3. Grep as a filter: a multi-hop gain with an adversarial cost
+
+We added Postgres regex (`~*`) as a search parameter that filters the ranked semantic and full-text results. The agent uses it for synonym expansion on list questions:
 ```
 grep: "painted|drew|art|canvas|sketch"
 ```
-This catches mentions that semantic search might miss due to embedding distance, while the semantic/fulltext component ensures relevance ranking.
 
-### 3. Speaker-organized tree paths enable precise filtering
+On the full benchmark, the window in which grep shipped shows a trade rather than a free win: multi-hop +0.046 (CI +0.015 to +0.079) and single-hop +0.022, against adversarial −0.036 (CI −0.058 to −0.014). Overall F1 moved +0.012, not distinguishable from zero. Grep appears in about half of all searches. Two prompt changes shipped in the same window, one telling the agent it could filter on the facts subtree and one tightening adversarial rejection, so the adversarial cost belongs to the window as a whole. Grep is the largest change in it and the one that most increases what the agent retrieves.
 
-Organizing memories as `conv.{speaker}.s{N}` and teaching the agent to filter with `tree: "conv.melanie.*"` was one of our biggest wins (+0.023 F1). When the question asks what a specific person said or did, the agent narrows to that speaker's turns, dramatically reducing noise.
+We also found a bug worth knowing about: 13% of searches used grep alone, which fell into a filter-only path ordered by insertion time, effectively random. Grep-only searches now return an error and must combine with a ranked mode. That share dropped below 1%.
 
-We initially prohibited speaker filtering to protect adversarial accuracy — the concern was that filtering to one speaker would prevent the agent from seeing that a fact belonged to someone else. But with the right prompt ("if search results only mention a different person doing that thing, say no information available"), the agent handles attribution correctly even with speaker filtering enabled. Adversarial F1 held at 0.909.
+### 4. Tree paths, image captions, and context windows: real together, not separable
 
-One gotcha: ltree paths are lowercase, but the agent initially used capitalized names (`conv.Melanie.*`). Adding "(speaker is lowercase)" to the prompt fixed silent tree filter failures and unlocked a +0.023 F1 gain.
+Four changes shipped between two full-benchmark checkpoints, along with the grep-only fix above: speaker-first tree paths, a case fix to them, image captions, and a wider context window.
 
-### 4. Context windows on get-by-id improve answer quality
+- **Speaker-first tree paths.** Memories are organized as `conv.{speaker}.s{N}`, and the agent may filter with `tree: "conv.melanie.*"`. We had prohibited speaker filtering to protect adversarial accuracy; with the attribution prompt in place the prohibition was no longer needed. A silent bug mattered more than the design: the agent wrote `conv.Melanie.*` while paths are lowercase, so 30 of 42 filters matched nothing until the prompt said "speaker is lowercase". On the full benchmark the filter is used in 10% of searches.
+- **Image captions.** LoCoMo turns include shared images with `blip_caption` descriptions, stored in metadata and invisible to search. Appending them to the content made 1,226 turns searchable for the first time.
+- **Context windows on `me_memory_get`.** The tool returns surrounding turns. We tested windows of 1, 2, and 3 on the tuning conversation; the differences were inside the noise floor, and we settled on 2 as a design choice.
 
-The `me_memory_get` tool returns surrounding turns (configurable window). We tested windows of 1, 2, and 3:
+Together these moved full-benchmark F1 by +0.024 with Haiku (CI +0.010 to +0.039), and adversarial held at 0.887 to 0.893 on 441 questions. Which of the five carried the gain is not knowable from our data. On the tuning conversation the same bundle looked like +0.061, roughly the 3x inflation you should expect from selecting changes on one conversation.
 
-| Window | F1 | EM |
-|--------|------|------|
-| 1 | 0.627 | 0.450 |
-| **2** | **0.640** | **0.479** |
-| 3 | 0.633 | 0.450 |
+### 5. Facts are useless (for this task)
 
-Window=2 (5 turns total: 2 prev + current + 2 next) is the sweet spot. More context helps the agent verify answers and catch attribution errors without adding noise.
+We had Haiku extract atomic facts per session and stored them alongside raw turns. A clean ablation on the tuning conversation showed no difference. On the full benchmark, the run without facts scored 0.642 against 0.641 for the last run with them, with a paired interval spanning zero. That comparison also absorbed two other changes, including removing a category hint from the prompt that we expected to cost F1, so the safe statement is that dropping facts did not lower F1. Facts added about 50% to ingestion time and diluted search results, so we removed extraction entirely.
 
-### 5. Image descriptions are hidden evidence
+### 6. Multi-hop: iterative search improves recall, not yet F1
 
-LoCoMo conversations include shared images with `blip_caption` descriptions (e.g., "a painting of a sunset over a lake"). These were stored in metadata but invisible to search. Appending them to the content text made 1,226 turns searchable for the first time, improving temporal recall from 0.879 to 0.970.
+Multi-hop is our weakest category. Inspecting the zero-recall failures in the full run showed that 15 of 38 stopped after one or two searches. We added a prompt instruction to decompose multi-fact questions into sub-queries and let each search inform the next.
 
-### 6. Facts are useless (for this task)
+On the full benchmark with Sonnet, multi-hop recall rose from 0.592 to 0.651 (error-corrected; the paired interval on all questions is +0.028 to +0.092), temporal recall also rose, and the number of multi-hop questions with zero recall fell from 38 to 26 of 282. F1 did not move. The mechanism is less clear than we first thought: average tool calls on multi-hop questions barely changed (4.0 to 4.2), so the gain appears to come from different queries rather than more of them, and an ingestion change that made image queries searchable shipped in the same run.
 
-We tried having Haiku extract atomic facts per session and storing them alongside raw turns. 10-sample result: F1=0.642 with facts vs F1=0.641 without — zero difference. Facts added ~50% ingestion time and diluted search results. The raw dialogue turns contain all the information the agent needs.
+### 7. Adversarial is the binding constraint, and we paid for our gains with it
 
-### 7. Retrieval depth matters (with diminishing returns)
+The pattern that recurred throughout: any change that made the model more willing to answer, or added more retrievable content, hurt adversarial rejection. A blanket instruction to infer from available evidence collapsed adversarial on the tuning conversation. Three-turn sliding-window memories, per-speaker profile memories, and "use exact words from the memories" all hurt it, the last one catastrophically. Most were reverted for that reason alone. The one inference change that survived was narrow, limited to questions phrased as "might," "would," or "could," and it held adversarial on the full benchmark.
 
-Increasing the candidate pool from 30 to 60 and result limit from 10 to 15 improved evidence recall from 0.380 to 0.492. Pushing further to 100/20 improved recall more but hurt adversarial accuracy — too many results means more noise for the agent to sift through. There's a sweet spot.
+The full-benchmark trajectory shows the cost we did accept. From the first 10-sample checkpoint to the final Sonnet run, overall F1 rose +0.050 (CI +0.035 to +0.065): multi-hop +0.105, single-hop +0.079, temporal +0.062. Adversarial fell from 0.922 to 0.870 (CI −0.076 to −0.027). Anyone scoring without adversarial would have seen only the gains. That is the strongest argument we know for keeping it in the metric.
 
-### 8. Multi-hop needs iterative search, not broader search
+### 8. What didn't help
 
-Multi-hop was our weakest category. Analysis of recall=0 failures revealed the pattern: 10 of 26 failures gave up after just 1-2 searches, and 23 of 26 repeated the same query verbatim instead of reformulating. The agent wasn't decomposing multi-hop questions into sub-queries.
-
-Prompting the model to "search for each sub-topic separately, use results from one search to guide the next, and do at least 3 searches for multi-fact questions" improved multi-hop recall from 0.592 to 0.651 (+10%) with no regression in other categories. The key insight: multi-hop doesn't need more results per search — it needs more searches with different queries, each informed by what the previous search found.
+Reverted with no signal or negative on the tuning conversation, none validated further: RRF weight tuning, score-based truncation, showing relevance scores to the agent, set-union merging from the Omni-SimpleMem paper, category-aware prompting, semantic-only search for inferential questions, and relative-to-absolute date prompting. Candidate-pool depth had no measurable F1 effect at any setting; we kept 60 candidates and 15 results for recall. A standalone grep tool scored the same as the grep parameter and was dropped to keep a three-tool interface. No fact-extraction variant survived: more thorough extraction, cross-session aggregation, and speaker profiles each hurt, and the base version added nothing on the full benchmark.
 
 ### 9. Open-domain has a low ceiling on this benchmark
 
-Deep analysis of open-domain failures (the weakest non-adversarial category) revealed that many gold answers are creative inferences never stated in the conversation — "What hobby could Andrew pick up?" expects "install a bird feeder," which appears nowhere in the text. Others require recognizing locations from shared photos (e.g., identifying a trail map image as a specific national park). We identified several benchmark errors in this category.
-
-The practical limit for open-domain is the benchmark itself, not the retrieval system. We improved open-domain accuracy by encouraging the model to make inferences rather than defaulting to "no information available," but diminishing returns set in quickly.
+Analysis of open-domain failures showed that many gold answers are creative inferences never stated in the conversation. "What hobby could Andrew pick up?" expects "install a bird feeder," which appears nowhere in the text. Others require recognizing a location from a shared photo. We reported two benchmark errors in this category where the gold answer is supported by no text or image metadata. Encouraging the model to infer rather than refuse helped a little; the practical limit is the benchmark, not the retrieval system.
 
 ## Comparison with Prior Work
 
@@ -230,7 +225,7 @@ Our system on LoCoMo (full 10 samples, error-corrected metrics). We exclude 164 
 | Adversarial | 0.893 | 0.880 | 0.896 | — |
 | **Overall** | **0.666** | **0.694** | **0.887** | **0.831** |
 
-Our fixed retrieval baseline started at F1=0.493. Agentic search brought this to F1=0.694 with Sonnet — a **41% improvement** from better tools alone, with no change to the underlying architecture.
+The fixed retrieval pipeline was measured only on the tuning conversation, where its best configuration reached F1 0.481 and the final agentic system reaches 0.627, both raw. See finding 1.
 
 ## The Stack
 
